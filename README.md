@@ -4,14 +4,15 @@
 
 # 文颜 UI 库
 
-> 文颜的前端 UI 组件库
-> 基于 **Svelte 5 + Tailwind CSS**，用于 Markdown 编辑、预览与发布。
-
 `@wenyan-md/ui` 是 Wenyan 生态中的 **UI 层**，封装了 Markdown 编辑、渲染预览、主题选择等通用界面组件，可同时服务于：
 
 * Web App（SvelteKit）
 * 桌面应用（Tauri / macOS）
 * 内嵌式工具（WebView / IFrame）
+
+**Web App 截图**
+
+![Web App Screenshot](assets/1.webp)
 
 ## 特性
 
@@ -36,28 +37,13 @@
 npm install @wenyan-md/ui
 ```
 
-> > [!NOTE]
+> [!NOTE]
 > 
 > 本项目是 **Svelte 组件库**，仅适用于 Svelte 5 项目。
 
-## Peer & Runtime 依赖
-
-`@wenyan-md/ui` 依赖以下运行时库（会自动安装）：
-
-* `svelte`
-* `tailwindcss`
-* `@wenyan-md/core`
-
-编辑器相关依赖：
-
-* `codemirror`
-* `@codemirror/lang-markdown`
-* `@codemirror/state`
-* `@codemirror/theme-one-dark`
-
 ## 快速开始
 
-### 1️在 Svelte 项目中引入
+### 在 Svelte 项目中引入
 
 ```svelte
 <script lang="ts">
@@ -139,34 +125,6 @@ components/
 * Wenyan PC（Tauri）
 * 内部 CMS / 编辑器
 * Markdown → 微信工具
-
-## 开发
-
-```bash
-pnpm dev
-```
-
-```bash
-pnpm build
-```
-
-```bash
-pnpm prepack
-```
-
-## 打包与发布
-
-本项目使用 `@sveltejs/package` 构建为组件库：
-
-* 输出目录：`dist/`
-* 支持 tree-shaking
-* CSS 被标记为 `sideEffects`
-
-```json
-"sideEffects": [
-  "**/*.css"
-]
-```
 
 ## 注意事项
 

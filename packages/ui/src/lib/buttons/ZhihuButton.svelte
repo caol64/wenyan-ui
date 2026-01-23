@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Juejin from "$lib/icons/Juejin.svelte";
+    import Zhihu from "../icons/Zhihu.svelte";
 
     let { onClick, w = "20px" }: { onClick: () => void; w?: string } = $props();
 
@@ -9,5 +9,5 @@
 </script>
 
 <button onclick={handleClick} class="cursor-pointer">
-    <Juejin w={w} />
+    <Zhihu w={w} />
 </button>

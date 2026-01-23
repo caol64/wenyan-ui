@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Zhihu from "$lib/icons/Zhihu.svelte";
+    import Medium from "../icons/Medium.svelte";
 
     let { onClick, w = "20px" }: { onClick: () => void; w?: string } = $props();
 
@@ -9,5 +9,5 @@
 </script>
 
 <button onclick={handleClick} class="cursor-pointer">
-    <Zhihu w={w} />
+    <Medium w={w} />
 </button>

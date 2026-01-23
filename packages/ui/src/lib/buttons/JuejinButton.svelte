@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Medium from "$lib/icons/Medium.svelte";
+    import Juejin from "../icons/Juejin.svelte";
 
     let { onClick, w = "20px" }: { onClick: () => void; w?: string } = $props();
 
@@ -9,5 +9,5 @@
 </script>
 
 <button onclick={handleClick} class="cursor-pointer">
-    <Medium w={w} />
+    <Juejin w={w} />
 </button>

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { CodeblockSettings, ParagraphSettings } from "$lib/types";
-    import { WenyanRenderer } from "$lib/wenyan.svelte";
+    import type { CodeblockSettings, ParagraphSettings } from "../types";
+    import { wenyanRenderer } from "../wenyan.svelte";
     import { getTheme, createCssModifier, monospace, getHlTheme, macStyleCss } from "@wenyan-md/core";
 
     let {
@@ -8,17 +8,17 @@
         themeIdOrCss = "default",
         paragraphSettings = {},
         codeblockSettings = {},
+        scrollRef = $bindable(),
     }: {
         markdownText?: string;
         themeIdOrCss?: string;
         paragraphSettings?: ParagraphSettings;
         codeblockSettings?: CodeblockSettings;
+        scrollRef?: HTMLElement | null;
     } = $props();
 
-    const renderer = new WenyanRenderer();
-
     $effect(() => {
-        renderer.render(markdownText);
+        wenyanRenderer.render(markdownText);
     });
 
     $effect(() => {
@@ -102,6 +102,8 @@
     }
 </script>
 
-<section id="wenyan" class="relative m-auto w-105 outline-none shadow-[0_0_60px_rgba(0,0,0,0.1)] overflow-auto p-5">
-    {@html renderer.html}
-</section>
+<div bind:this={scrollRef} class="h-full w-full overflow-auto">
+    <section id="wenyan" class="m-auto w-105 outline-none shadow-[0_0_60px_rgba(0,0,0,0.1)] p-5">
+        {@html wenyanRenderer.html}
+    </section>
+</div>

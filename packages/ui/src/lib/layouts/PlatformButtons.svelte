@@ -1,10 +1,9 @@
 <script lang="ts">
-    import WeChatButton from "$lib/components/WeChatButton.svelte";
-    import ToutiaoButton from "$lib/components/ToutiaoButton.svelte";
-    import ZhihuButton from "$lib/components/ZhihuButton.svelte";
-    import JuejinButton from "$lib/components/JuejinButton.svelte";
-    import MediumButton from "$lib/components/MediumButton.svelte";
-
+    import WeChatButton from "../buttons/WeChatButton.svelte";
+    import ToutiaoButton from "../buttons/ToutiaoButton.svelte";
+    import ZhihuButton from "../buttons/ZhihuButton.svelte";
+    import JuejinButton from "../buttons/JuejinButton.svelte";
+    import MediumButton from "../buttons/MediumButton.svelte";
     let { w = "20px" } = $props();
 </script>
 
@@ -21,17 +20,17 @@
     />
     <ZhihuButton
         onClick={() => {
-            console.log("Toutiao button clicked");
+            console.log("Zhihu button clicked");
         }} w={w}
     />
     <JuejinButton
         onClick={() => {
-            console.log("Toutiao button clicked");
+            console.log("Juejin button clicked");
         }} w={w}
     />
     <MediumButton
         onClick={() => {
-            console.log("Toutiao button clicked");
+            console.log("Medium button clicked");
         }} w={w}
     />
 </div>

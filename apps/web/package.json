@@ -26,9 +26,12 @@
     "@codemirror/lang-markdown": "catalog:",
     "@codemirror/state": "catalog:",
     "@codemirror/view": "catalog:",
+    "@codemirror/language-data": "catalog:",
+    "@fsegurai/codemirror-theme-vscode-dark": "catalog:",
+    "@fsegurai/codemirror-theme-vscode-light": "catalog:",
+    "@wenyan-md/core": "catalog:",
+    "@wenyan-md/ui": "workspace:^",
     "codemirror": "catalog:",
-    "dompurify": "catalog:",
-    "@wenyan-md/core": "workspace:^",
-    "@wenyan-md/ui": "workspace:^"
+    "dompurify": "catalog:"
   }
 }

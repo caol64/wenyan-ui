@@ -1,7 +1,7 @@
 <script lang="ts">
-    import CopyButton from "$lib/components/CopyButton.svelte";
-    import FootnoteButton from "$lib/components/FootnoteButton.svelte";
-    import ThemeButton from "$lib/components/ThemeButton.svelte";
+    import CopyButton from "../buttons/CopyButton.svelte";
+    import FootnoteButton from "../buttons/FootnoteButton.svelte";
+    import ThemeButton from "../buttons/ThemeButton.svelte";
 
 </script>
 
@@ -14,7 +14,5 @@
     <FootnoteButton onClick={() => {
         console.log("Footnote button clicked");
     }} />
-    <CopyButton onCopy={(result) => {
-        console.log("Copied HTML:", result);
-    }} />
+    <CopyButton />
 </div>

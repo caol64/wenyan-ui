@@ -11,8 +11,13 @@
 
     let {
         value = $bindable(),
+        scrollRef = $bindable(),
         onUploadImage,
-    }: { value: string; onUploadImage?: (file: File) => Promise<string | null> } = $props();
+    }: {
+        value: string;
+        scrollRef?: HTMLElement | null;
+        onUploadImage?: (file: File) => Promise<string | null>;
+    } = $props();
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
@@ -71,6 +76,8 @@
             state,
             parent: editorElement,
         });
+
+        scrollRef = view.scrollDOM; // 将滚动容器暴露出去
 
         return () => {
             mediaQuery.removeEventListener("change", handler);

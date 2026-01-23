@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Wenyan from "$lib/icons/WenYan.svelte";
+    import Wenyan from "../icons/WenYan.svelte";
 
     let { onClick, w = "32px" }: { onClick: () => void; w?: string } = $props();
 

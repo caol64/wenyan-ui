@@ -6,7 +6,7 @@ type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 let globalCore: WenyanCoreInstance | null = null;
 let initPromise: Promise<WenyanCoreInstance> | null = null;
 
-export class WenyanRenderer {
+class WenyanRenderer {
     html = $state("");
     isReady = $state(false);
 
@@ -53,7 +53,9 @@ export class WenyanRenderer {
     }
 }
 
-export class WenyanCopier {
+export const wenyanRenderer = new WenyanRenderer();
+
+class WenyanCopier {
     html = $state("");
     isReady = $state(false);
 
@@ -88,3 +90,5 @@ export class WenyanCopier {
         this.html = DOMPurify.sanitize(rendered);
     }
 }
+
+export const wenyanCopier = new WenyanCopier();

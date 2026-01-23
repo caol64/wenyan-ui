@@ -25,6 +25,7 @@ catalog:
   "@codemirror/language-data": ^6.5.2
   "@fsegurai/codemirror-theme-vscode-dark": ^6.2.3
   "@fsegurai/codemirror-theme-vscode-light": ^6.2.3
+  "@wenyan-md/core": ^2.0.0
 catalogs:
   prod:
     svelte: ^5.0.0

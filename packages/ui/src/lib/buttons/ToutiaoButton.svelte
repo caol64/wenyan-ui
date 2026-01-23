@@ -1,5 +1,5 @@
 <script lang="ts">
-    import WeChat from "$lib/icons/WeChat.svelte";
+    import Toutiao from "../icons/Toutiao.svelte";
 
     let { onClick, w = "20px" }: { onClick: () => void; w?: string } = $props();
 
@@ -9,5 +9,5 @@
 </script>
 
 <button onclick={handleClick} class="cursor-pointer">
-    <WeChat w={w} />
+    <Toutiao w={w} />
 </button>

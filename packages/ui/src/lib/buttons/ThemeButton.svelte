@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Footnote from "$lib/icons/Footnote.svelte";
+    import Theme from "../icons/Theme.svelte";
 
     let { onClick }: { onClick: () => void } = $props();
 
@@ -9,6 +9,6 @@
 </script>
 
 <button onclick={handleClick} class="overlay-button">
-    <Footnote />
-    脚注
+    <Theme />
+    主题
 </button>
