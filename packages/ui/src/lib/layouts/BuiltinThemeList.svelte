@@ -4,7 +4,7 @@
 
 </script>
 
-<div class="mb-2 space-y-0.5">
+<div class="mb-2">
     {#each getAllGzhThemes() as theme}
         <ThemeButton themeMeta={theme.meta} />
     {/each}

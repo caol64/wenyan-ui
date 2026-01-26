@@ -4,12 +4,10 @@
     import { getTheme, createCssModifier, monospace, getHlTheme, macStyleCss } from "@wenyan-md/core";
 
     let {
-        markdownText = "",
         paragraphSettings = {},
         codeblockSettings = {},
         scrollRef = $bindable(),
     }: {
-        markdownText?: string;
         paragraphSettings?: ParagraphSettings;
         codeblockSettings?: CodeblockSettings;
         scrollRef?: HTMLElement | null;
@@ -18,7 +16,7 @@
     let themeIdOrCss = $derived(globalState.getCurrentTheme());
 
     $effect(() => {
-        wenyanRenderer.render(markdownText);
+        wenyanRenderer.render(globalState.getMarkdownText());
     });
 
     $effect(() => {

@@ -7,12 +7,16 @@
         Sidebar,
         TitleBar,
         globalState,
+        localStorageAdapter,
+        themeStore,
     } from "@wenyan-md/ui";
     import markdownContent from "../../../../assets/example.md?raw";
-    import { setContext } from "svelte";
+    import { onMount, setContext } from "svelte";
     import { copyHtmlToClipboard } from "$lib/utils";
 
-    let markdownText = $state(markdownContent);
+    globalState.setMarkdownText(markdownContent);
+    globalState.setThemeEditMode(false);
+    globalState.setSidebarOpen(false);
 
     function getWenyanElement(): HTMLElement {
         const wenyanElement = document.getElementById("wenyan");
@@ -40,15 +44,19 @@
     setContext(COPY_CONTEXT_KEY, handleCopy);
     setContext(GET_WENYAN_ELEMENT_CONTEXT_KEY, getWenyanElement);
     setContext(STYLE_CONTEXT_KEY, handleStyleClick);
+
+    onMount(() => {
+        themeStore.register(localStorageAdapter);
+    });
 </script>
 
 <div class="flex h-screen w-full flex-col overflow-hidden">
     <TitleBar />
     <div class="flex h-full w-full flex-col overflow-hidden md:flex-row">
-        <MainPage {markdownText} />
+        <MainPage />
 
         {#if globalState.getSidebarOpen()}
-            <div class="hidden h-full w-80 flex-col border-l border-gray-300 bg-gray-50 md:flex">
+            <div class="h-full w-80">
                 <Sidebar />
             </div>
         {/if}

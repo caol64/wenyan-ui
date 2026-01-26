@@ -8,29 +8,9 @@
 </script>
 
 <div class="flex flex-row gap-4">
-    <WeChatButton
-        onClick={() => {
-            console.log("WeChat button clicked");
-        }} w={w}
-    />
-    <ToutiaoButton
-        onClick={() => {
-            console.log("Toutiao button clicked");
-        }} w={w}
-    />
-    <ZhihuButton
-        onClick={() => {
-            console.log("Zhihu button clicked");
-        }} w={w}
-    />
-    <JuejinButton
-        onClick={() => {
-            console.log("Juejin button clicked");
-        }} w={w}
-    />
-    <MediumButton
-        onClick={() => {
-            console.log("Medium button clicked");
-        }} w={w}
-    />
+    <WeChatButton {w} />
+    <ToutiaoButton {w} />
+    <ZhihuButton {w} />
+    <JuejinButton {w} />
+    <MediumButton {w} />
 </div>

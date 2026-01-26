@@ -7,3 +7,4 @@ export { default as MainPage } from "./layouts/MainPage.svelte";
 
 export * from "./keys";
 export * from "./wenyan.svelte";
+export * from "./utils";

@@ -1,13 +1,10 @@
 <script lang="ts">
     import Wenyan from "../icons/WenYan.svelte";
 
-    let { onClick, w = "32px" }: { onClick: () => void; w?: string } = $props();
+    let { w = "28px" }: { w?: string } = $props();
 
-    async function handleClick() {
-
-    }
 </script>
 
-<button onclick={handleClick}>
+<button>
     <Wenyan w={w} />
 </button>

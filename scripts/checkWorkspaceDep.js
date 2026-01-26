@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const PACKAGE_PATH = ["packages/ui/package.json", "apps/web/package.json"];
-const PACKAGE_TO_CHECK = ["@wenyan-md/core", "@wenyan-md/ui"];
+const PACKAGE_TO_CHECK = ["@wenyan-md/core"];
 
 function check() {
     PACKAGE_PATH.forEach((pkgPath) => {

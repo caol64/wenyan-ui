@@ -1,5 +1,8 @@
 <script lang="ts">
     import { OverlayButtons } from "$lib";
+    import { globalState } from "$lib/wenyan.svelte";
+
+    globalState.setThemeEditMode(true);
 
 </script>
 

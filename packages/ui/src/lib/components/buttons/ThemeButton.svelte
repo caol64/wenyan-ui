@@ -6,13 +6,13 @@
 </script>
 
 <button
-    class="flex w-full items-center justify-between px-2 py-1.5 text-sm transition-colors"
+    class="flex w-full items-center justify-between px-1 py-0.5 transition-colors cursor-pointer"
     class:bg-blue-600={globalState.getCurrentTheme() === themeMeta.id}
     class:text-white={globalState.getCurrentTheme() === themeMeta.id}
     class:hover:bg-gray-200={globalState.getCurrentTheme() !== themeMeta.id}
     onclick={() => globalState.setCurrentTheme(themeMeta.id)}
 >
-    <span class="font-medium">{themeMeta.name}</span>
+    <span class="font-medium text-sm">{themeMeta.appName}</span>
     {#if themeMeta.author}
         <span
             class="text-xs"
