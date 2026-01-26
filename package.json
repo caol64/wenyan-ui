@@ -1,8 +1,8 @@
 {
-	"name": "@wenyan-md/ui-root",
-	"private": true,
-	"version": "1.0.0",
-	"type": "module",
+  "name": "@wenyan-md/ui-root",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "install:all": "pnpm -r install",
     "web:install": "pnpm --filter @wenyan-md/web install",
@@ -10,9 +10,11 @@
     "web:dev": "pnpm --filter @wenyan-md/web dev",
     "ui:install": "pnpm --filter @wenyan-md/ui install",
     "ui:build": "pnpm --filter @wenyan-md/ui build",
-    "ui:dev": "pnpm --filter @wenyan-md/ui dev"
+    "ui:dev": "pnpm --filter @wenyan-md/ui dev",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "typescript": "^5.9.3"
   }
 }

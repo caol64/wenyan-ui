@@ -1,15 +1,18 @@
 <script lang="ts">
-    import { COPY_CONTEXT_KEY, GET_WENYAN_ELEMENT_CONTEXT_KEY, MainPage, TitleBar } from "@wenyan-md/ui";
+    import {
+        COPY_CONTEXT_KEY,
+        GET_WENYAN_ELEMENT_CONTEXT_KEY,
+        STYLE_CONTEXT_KEY,
+        MainPage,
+        Sidebar,
+        TitleBar,
+        globalState,
+    } from "@wenyan-md/ui";
     import markdownContent from "../../../../assets/example.md?raw";
     import { setContext } from "svelte";
     import { copyHtmlToClipboard } from "$lib/utils";
 
     let markdownText = $state(markdownContent);
-    let showSidebar = $state(false);
-
-    function toggleSidebar() {
-        showSidebar = !showSidebar;
-    }
 
     function getWenyanElement(): HTMLElement {
         const wenyanElement = document.getElementById("wenyan");
@@ -30,8 +33,13 @@
         copyHtmlToClipboard(result);
     }
 
+    function handleStyleClick() {
+        globalState.setSidebarOpen(!globalState.getSidebarOpen());
+    }
+
     setContext(COPY_CONTEXT_KEY, handleCopy);
     setContext(GET_WENYAN_ELEMENT_CONTEXT_KEY, getWenyanElement);
+    setContext(STYLE_CONTEXT_KEY, handleStyleClick);
 </script>
 
 <div class="flex h-screen w-full flex-col overflow-hidden">
@@ -39,9 +47,9 @@
     <div class="flex h-full w-full flex-col overflow-hidden md:flex-row">
         <MainPage {markdownText} />
 
-        {#if showSidebar}
+        {#if globalState.getSidebarOpen()}
             <div class="hidden h-full w-80 flex-col border-l border-gray-300 bg-gray-50 md:flex">
-                <div class="p-4">Sidebar content goes here</div>
+                <Sidebar />
             </div>
         {/if}
     </div>

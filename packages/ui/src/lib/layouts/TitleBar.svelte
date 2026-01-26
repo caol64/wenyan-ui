@@ -1,5 +1,5 @@
 <script lang="ts">
-    import WenYanButton from "../buttons/WenYanButton.svelte";
+    import WenYanButton from "../components/buttons/WenYanButton.svelte";
     import PlatformButtons from "./PlatformButtons.svelte";
 </script>
 

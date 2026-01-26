@@ -1,10 +1,11 @@
 <script lang="ts">
     import Juejin from "../icons/Juejin.svelte";
+    import { globalState } from "$lib/wenyan.svelte";
 
-    let { onClick, w = "20px" }: { onClick: () => void; w?: string } = $props();
+    let { w = "20px" } = $props();
 
     async function handleClick() {
-
+        globalState.setPlatform("juejin");
     }
 </script>
 

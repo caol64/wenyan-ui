@@ -1,21 +1,21 @@
 <script lang="ts">
     import type { CodeblockSettings, ParagraphSettings } from "../types";
-    import { wenyanRenderer } from "../wenyan.svelte";
+    import { wenyanRenderer, globalState } from "../wenyan.svelte";
     import { getTheme, createCssModifier, monospace, getHlTheme, macStyleCss } from "@wenyan-md/core";
 
     let {
         markdownText = "",
-        themeIdOrCss = "default",
         paragraphSettings = {},
         codeblockSettings = {},
         scrollRef = $bindable(),
     }: {
         markdownText?: string;
-        themeIdOrCss?: string;
         paragraphSettings?: ParagraphSettings;
         codeblockSettings?: CodeblockSettings;
         scrollRef?: HTMLElement | null;
     } = $props();
+
+    let themeIdOrCss = $derived(globalState.getCurrentTheme());
 
     $effect(() => {
         wenyanRenderer.render(markdownText);

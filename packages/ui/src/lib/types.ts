@@ -14,3 +14,5 @@ export interface CodeblockSettings {
     fontFamily?: string;
     hlThemeId?: string;
 }
+
+export type Platform = "wechat" | "toutiao" | "zhihu" | "juejin" | "medium";
