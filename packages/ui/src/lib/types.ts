@@ -1,14 +1,15 @@
 export interface ParagraphSettings {
+    isFollowTheme?: boolean;
     lineHeight?: string;
     fontSize?: string;
-    fontType?: string;
     fontWeight?: string;
     fontFamily?: string;
-    margin?: string;
+    paragraphSpacing?: string;
     letterSpacing?: string;
 }
 
 export interface CodeblockSettings {
+    isFollowTheme?: boolean;
     isMacStyle?: boolean;
     fontSize?: string;
     fontFamily?: string;
@@ -18,11 +19,8 @@ export interface CodeblockSettings {
 export type Platform = "wechat" | "toutiao" | "zhihu" | "juejin" | "medium";
 
 export interface ThemeStorageAdapter {
-    // 初始化/加载所有自定义主题
     load(): Promise<Record<string, CustomTheme>> | Record<string, CustomTheme>;
-    // 保存单个主题
     save(id: string, name: string, css: string): Promise<void> | void;
-    // 删除单个主题
     remove(id: string): Promise<void> | void;
 }
 
@@ -30,4 +28,54 @@ export interface CustomTheme {
     id: string;
     name: string;
     css: string;
+    // created: number;
 }
+
+export interface ArticleStorageAdapter {
+    load(): Promise<Article[]> | Article[];
+    save(id: string, title: string, content: string): Promise<void> | void;
+    remove(id: string): Promise<void> | void;
+}
+
+export interface Article {
+    id: string;
+    title: string;
+    content: string;
+    // created: number;
+}
+
+export interface SettingsStorageAdapter {
+    load(): Promise<Settings> | Settings;
+    save(settings: Settings): Promise<void> | void;
+}
+
+export interface Settings {
+    wechatTheme?: string;
+    paragraphSettings?: ParagraphSettings;
+    codeblockSettings?: CodeblockSettings;
+}
+
+export const DEFAULT_SETTINGS: Settings = {
+    wechatTheme: "default",
+    codeblockSettings: {
+        isFollowTheme: true,
+        hlThemeId: "github",
+        isMacStyle: true,
+        fontSize: "12px",
+    },
+    paragraphSettings: {
+        isFollowTheme: true,
+        fontSize: "14px",
+        fontFamily: "sans",
+        fontWeight: "normal",
+        letterSpacing: "standard",
+        lineHeight: "standard",
+        paragraphSpacing: "standard",
+    },
+};
+
+export type CssUpdate = {
+    property: string;
+    value?: string;
+    append?: boolean;
+};

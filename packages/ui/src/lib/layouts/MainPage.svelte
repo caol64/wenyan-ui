@@ -1,14 +1,9 @@
 <script lang="ts">
     import CssEditor from "$lib/components/CssEditor.svelte";
-    import { MarkdownEditor, OverlayButtons, ThemePreview } from "../";
-    import { ScrollSynchronizer } from "../scrollSync.svelte";
-    import { globalState } from "../wenyan.svelte";
-
-    let {
-        isShowOverlayButtons = $bindable(true),
-    }: {
-        isShowOverlayButtons?: boolean;
-    } = $props();
+    import { MarkdownEditor, OverlayButtons, ThemePreview } from "$lib";
+    import { ScrollSynchronizer } from "$lib/scrollSync.svelte";
+    import { globalState } from "$lib/wenyan.svelte";
+    import EditorOverlayPanel from "./EditorOverlayPanel.svelte";
 
     const scroller = new ScrollSynchronizer();
 </script>
@@ -16,9 +11,10 @@
 <div
     class="flex h-1/2 w-full flex-col border-b border-gray-300 md:h-full md:flex-1 md:min-w-0 md:border-b-0 md:border-r"
 >
-    <div class="flex-1 overflow-hidden">
+    <div class="relative flex-1 overflow-hidden">
         {#if globalState.getThemeEditMode()}
             <CssEditor />
+            <EditorOverlayPanel />
         {:else}
             <MarkdownEditor bind:scrollRef={scroller.left} />
         {/if}
@@ -26,7 +22,7 @@
 </div>
 
 <div class="relative flex h-1/2 w-full flex-col md:h-full md:flex-1 md:min-w-0">
-    {#if isShowOverlayButtons}
+    {#if !globalState.getThemeEditMode()}
         <OverlayButtons />
     {/if}
 

@@ -7,16 +7,19 @@
         Sidebar,
         TitleBar,
         globalState,
-        localStorageAdapter,
         themeStore,
+        settingsStore,
+        localStorageSettingsAdapter,
     } from "@wenyan-md/ui";
     import markdownContent from "../../../../assets/example.md?raw";
     import { onMount, setContext } from "svelte";
     import { copyHtmlToClipboard } from "$lib/utils";
+    import { indexedDbAdapter } from "$lib/store";
 
-    globalState.setMarkdownText(markdownContent);
-    globalState.setThemeEditMode(false);
-    globalState.setSidebarOpen(false);
+    themeStore.register(indexedDbAdapter);
+    settingsStore.register(localStorageSettingsAdapter);
+
+    let codeblockSettings = $derived(settingsStore.getSettings().codeblockSettings || {});
 
     function getWenyanElement(): HTMLElement {
         const wenyanElement = document.getElementById("wenyan");
@@ -33,7 +36,6 @@
     }
 
     function handleCopy(result: string) {
-        console.log("复制成功:", result);
         copyHtmlToClipboard(result);
     }
 
@@ -46,7 +48,12 @@
     setContext(STYLE_CONTEXT_KEY, handleStyleClick);
 
     onMount(() => {
-        themeStore.register(localStorageAdapter);
+        console.log("App mounted", codeblockSettings.hlThemeId);
+        globalState.setMarkdownText(markdownContent);
+        globalState.setThemeEditMode(false);
+        globalState.setSidebarOpen(false);
+        globalState.setCurrentTheme(settingsStore.getSettings().wechatTheme || "default");
+        globalState.setCurrentHlTheme(codeblockSettings.hlThemeId || "github");
     });
 </script>
 

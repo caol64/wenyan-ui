@@ -2,41 +2,38 @@
     import { onMount } from "svelte";
     import { EditorView, basicSetup } from "codemirror";
     import { EditorState, Compartment } from "@codemirror/state";
-    import { markdown } from "@codemirror/lang-markdown";
+    import { css } from "@codemirror/lang-css";
     import { keymap } from "@codemirror/view";
     import { indentWithTab } from "@codemirror/commands";
     import { vsCodeLight } from "@fsegurai/codemirror-theme-vscode-light";
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
-    import { languages } from "@codemirror/language-data";
     import { globalState } from "$lib/wenyan.svelte";
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
     const themeConfig = new Compartment();
     let isDarkMode = $state(false);
+    let cssContent = $derived(globalState.getCurrentThemeCss());
 
     onMount(() => {
-        // --- 初始化系统主题检测 ---
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
         isDarkMode = mediaQuery.matches;
-        const handler = (e: MediaQueryListEvent) => {
-            isDarkMode = e.matches;
-        };
+        const handler = (e: MediaQueryListEvent) => (isDarkMode = e.matches);
         mediaQuery.addEventListener("change", handler);
 
         const state = EditorState.create({
-            doc: globalState.getCustomThemeCss(),
+            doc: cssContent,
             extensions: [
                 basicSetup,
                 keymap.of([indentWithTab]),
-                markdown({ codeLanguages: languages }),
+                css(),
                 themeConfig.of(isDarkMode ? vsCodeDark : vsCodeLight),
                 EditorState.tabSize.of(2),
                 EditorView.lineWrapping,
-                // 监听编辑器变化，同步回 Svelte state
                 EditorView.updateListener.of((update) => {
                     if (update.docChanged) {
-                        globalState.setCustomThemeCss(update.state.doc.toString());
+                        // 1. 用户输入 -> 更新 State
+                        globalState.setCurrentThemeCss(update.state.doc.toString());
                     }
                 }),
                 EditorView.theme({
@@ -46,10 +43,7 @@
             ],
         });
 
-        view = new EditorView({
-            state,
-            parent: editorElement,
-        });
+        view = new EditorView({ state, parent: editorElement });
 
         return () => {
             mediaQuery.removeEventListener("change", handler);
@@ -57,11 +51,24 @@
         };
     });
 
+    // 主题切换副作用
     $effect(() => {
         if (view) {
             view.dispatch({
                 effects: themeConfig.reconfigure(isDarkMode ? vsCodeDark : vsCodeLight),
             });
+        }
+    });
+
+    // State 外部变化 -> 更新编辑器
+    $effect(() => {
+        if (view && cssContent !== undefined) {
+            const currentDoc = view.state.doc.toString();
+            if (currentDoc !== cssContent) {
+                view.dispatch({
+                    changes: { from: 0, to: currentDoc.length, insert: cssContent },
+                });
+            }
         }
     });
 </script>

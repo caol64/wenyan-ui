@@ -5,11 +5,13 @@
      */
     let {
         options,
-        current = $bindable(),
+        current,
+        onChange,
         class: className = "",
     }: {
         options: { label: string; value: string }[];
         current: string;
+        onChange: (value: string) => void;
         class?: string;
     } = $props();
 </script>
@@ -17,7 +19,8 @@
 <div class="relative bg-white dark:bg-gray-800 text-gray-700 dark:text-white rounded-md border border-gray-300 dark:border-gray-700 {className}">
     <select
         bind:value={current}
-        class="w-full appearance-none py-1 pl-3 pr-8 text-sm leading-5 rounded-md focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        onchange={(e) => onChange((e.target as HTMLSelectElement).value)}
+        class="w-full appearance-none py-1 pl-3 pr-8 text-sm leading-5 rounded-md focus:outline-none"
     >
         {#each options as option}
             <option value={option.value}>{option.label}</option>

@@ -25,7 +25,7 @@
     {#each options as option}
         {@const isActive = current === option.value}
         <button
-            class="flex-1 rounded-sm py-1 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+            class="flex-1 rounded-sm py-0.5 text-xs font-medium transition-all duration-200 focus:outline-none cursor-pointer"
             class:bg-white={isActive}
             class:dark:bg-gray-600={isActive}
             class:shadow-sm={isActive}

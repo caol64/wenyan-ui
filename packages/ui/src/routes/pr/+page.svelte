@@ -1,10 +1,17 @@
 <script lang="ts">
-    import { ThemePreview } from "$lib";
+    import { globalState, ThemePreview, settingsStore, localStorageSettingsAdapter } from "$lib";
+    import { onMount } from "svelte";
     import markdownContent from "../../../../../assets/example.md?raw";
 
-    let markdownText = $state(markdownContent);
+    settingsStore.register(localStorageSettingsAdapter);
+
+    onMount(() => {
+        globalState.setMarkdownText(markdownContent);
+        globalState.setCurrentTheme("default");
+        globalState.setCurrentHlTheme("github");
+    });
 </script>
 
 <div class="h-screen w-full overflow-auto">
-    <ThemePreview {markdownText} />
+    <ThemePreview />
 </div>

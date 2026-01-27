@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@codemirror/commands": "catalog:",
+    "@codemirror/lang-css": "catalog:",
     "@codemirror/lang-markdown": "catalog:",
     "@codemirror/state": "catalog:",
     "@codemirror/view": "catalog:",
@@ -32,6 +33,7 @@
     "@wenyan-md/core": "catalog:",
     "@wenyan-md/ui": "workspace:^",
     "codemirror": "catalog:",
-    "dompurify": "catalog:"
+    "dompurify": "catalog:",
+    "idb-keyval": "catalog:"
   }
 }

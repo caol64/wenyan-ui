@@ -24,6 +24,8 @@
     let isDarkMode = $state(false);
     const imgType = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 
+    let markdownContent = $derived(globalState.getMarkdownText());
+
     onMount(() => {
         // --- 初始化系统主题检测 ---
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -34,7 +36,7 @@
         mediaQuery.addEventListener("change", handler);
 
         const state = EditorState.create({
-            doc: globalState.getMarkdownText(),
+            doc: markdownContent,
             extensions: [
                 basicSetup,
                 keymap.of([indentWithTab]),
@@ -89,6 +91,17 @@
             view.dispatch({
                 effects: themeConfig.reconfigure(isDarkMode ? vsCodeDark : vsCodeLight),
             });
+        }
+    });
+
+    $effect(() => {
+        if (view && markdownContent !== undefined) {
+            const currentDoc = view.state.doc.toString();
+            if (currentDoc !== markdownContent) {
+                view.dispatch({
+                    changes: { from: 0, to: currentDoc.length, insert: markdownContent },
+                });
+            }
         }
     });
 

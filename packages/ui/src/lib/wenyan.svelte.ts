@@ -1,6 +1,7 @@
 import DOMPurify from "dompurify";
-import { createWenyanCore, type ApplyStylesOptions } from "@wenyan-md/core";
-import type { CustomTheme, Platform, ThemeStorageAdapter } from "./types";
+import { createWenyanCore, getHlTheme, getTheme, type ApplyStylesOptions } from "@wenyan-md/core";
+import type { Article, ArticleStorageAdapter, CustomTheme, Platform, Settings, SettingsStorageAdapter, ThemeStorageAdapter } from "./types";
+import { themeStore } from "./store.svelte";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 
@@ -88,9 +89,11 @@ class GlobalState {
     private markdownText = $state("");
     private isSidebarOpen = $state(false);
     private currentPlatform = $state<Platform>("wechat");
-    private currentTheme = $state("default");
     private themeEditMode = $state(false);
-    private customThemeCss = $state("");
+    private currentTheme = $state("default");
+    private currentThemeCss = $state("");
+    private currentHlTheme = $state("github");
+    private currentHlThemeCss = $state("");
 
     setMarkdownText(text: string) {
         this.markdownText = text;
@@ -118,6 +121,7 @@ class GlobalState {
 
     setCurrentTheme(theme: string) {
         this.currentTheme = theme;
+        this.loadThemeCss(theme);
     }
 
     getCurrentTheme(): string {
@@ -132,89 +136,53 @@ class GlobalState {
         return this.themeEditMode;
     }
 
-    setCustomThemeCss(css: string) {
-        this.customThemeCss = css;
+    setCurrentThemeCss(css: string) {
+        this.currentThemeCss = css;
     }
 
-    getCustomThemeCss(): string {
-        return this.customThemeCss;
+    getCurrentThemeCss(): string {
+        return this.currentThemeCss;
     }
-}
 
-export class ThemeStore {
-    // 内存中的缓存，UI 直接读取这个对象
-    private _customThemes = $state<Record<string, CustomTheme>>({});
+    setCurrentHlTheme(theme: string) {
+        this.currentHlTheme = theme;
+        this.loadHlThemeCss(theme);
+    }
 
-    // 持有存储适配器的引用
-    private adapter: ThemeStorageAdapter | null = null;
+    getCurrentHlTheme(): string {
+        return this.currentHlTheme;
+    }
 
-    // 状态：是否已加载完成
-    isLoaded = $state(false);
+    getCurrentHlThemeCss(): string {
+        return this.currentHlThemeCss;
+    }
 
-    /**
-     * 注册存储适配器并加载初始数据
-     * @param adapter 实现 ThemeStorageAdapter 接口的对象
-     */
-    async register(adapter: ThemeStorageAdapter) {
-        this.adapter = adapter;
-        try {
-            const loadedThemes = await adapter.load();
-            this._customThemes = loadedThemes || {};
-            this.isLoaded = true;
-        } catch (error) {
-            console.error("Failed to load custom themes:", error);
+    private async loadThemeCss(themeId: string) {
+        if (!themeId) return;
+        if (themeId.startsWith("0:")) {
+            themeStore.addCustomTheme("0", "自定义主题", "");
+            themeId = themeId.slice(2);
         }
-    }
-
-    /**
-     * 获取单个自定义主题 CSS
-     */
-    getCustomTheme(id: string): CustomTheme | null {
-        return this._customThemes[id] ?? null;
-    }
-
-    /**
-     * 添加或更新自定义主题
-     */
-    async addCustomTheme(id: string, name: string, css: string) {
-        // 1. 乐观更新：先更新内存状态，让 UI 立即响应
-        this._customThemes[id] = { id, name, css };
-
-        // 2. 持久化存储
-        if (this.adapter) {
-            try {
-                await this.adapter.save(id, name, css);
-            } catch (error) {
-                console.error(`Failed to save theme ${id}:`, error);
+        if (themeId.startsWith("custom:")) {
+            themeId = themeId.slice(7);
+            const customTheme = themeStore.getCustomTheme(themeId);
+            const cssText = customTheme ? customTheme.css : "";
+            this.currentThemeCss = cssText;
+        } else {
+            const theme = getTheme(themeId);
+            if (theme) {
+                const css = await theme.getCss();
+                this.currentThemeCss = css;
             }
         }
     }
 
-    /**
-     * 删除自定义主题
-     */
-    async deleteCustomTheme(id: string) {
-        // 1. 乐观更新
-        const temp = this._customThemes[id]; // 暂存以备回滚
-        delete this._customThemes[id];
-
-        // 2. 持久化删除
-        if (this.adapter) {
-            try {
-                await this.adapter.remove(id);
-            } catch (error) {
-                console.error(`Failed to delete theme ${id}:`, error);
-                // 回滚
-                if (temp) this._customThemes[id] = temp;
-            }
+    private async loadHlThemeCss(themeId: string) {
+        const theme = getHlTheme(themeId);
+        if (theme) {
+            const css = await theme.getCss();
+            this.currentHlThemeCss = css;
         }
-    }
-
-    /**
-     * 获取所有自定义主题（只读）
-     */
-    getAllCustomThemes(): Record<string, CustomTheme> {
-        return this._customThemes;
     }
 }
 
@@ -222,4 +190,3 @@ export class ThemeStore {
 export const wenyanRenderer = new WenyanRenderer();
 export const wenyanCopier = new WenyanCopier();
 export const globalState = new GlobalState();
-export const themeStore = new ThemeStore();
