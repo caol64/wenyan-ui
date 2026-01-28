@@ -2,9 +2,10 @@
     import { globalState } from "$lib/wenyan.svelte";
     import { themeStore } from "$lib/store.svelte";
 
-    function save() {
+    async function save() {
         if (globalState.getCurrentTheme().startsWith("0:")) {
-            themeStore.saveNewCustomTheme(globalState.getCurrentThemeCss());
+            const id = await themeStore.saveNewCustomTheme(globalState.getCurrentThemeCss());
+            globalState.setCurrentTheme(`custom:${id}`);
         } else {
             const themeId = globalState.getCurrentTheme();
             if (themeId.startsWith("custom:")) {

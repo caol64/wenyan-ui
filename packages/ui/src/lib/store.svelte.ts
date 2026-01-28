@@ -9,6 +9,7 @@ import {
     type SettingsStorageAdapter,
     type ThemeStorageAdapter,
 } from "./types";
+import { v4 as uuidv4 } from "uuid";
 
 class ThemeStore {
     // 内存中的缓存，UI 直接读取这个对象
@@ -62,9 +63,17 @@ class ThemeStore {
         }
     }
 
-    async saveNewCustomTheme(css: string) {
-        this.deleteCustomTheme("0");
-        await this.saveCustomTheme(uuidv4(), "自定义主题", css);
+    async saveNewCustomTheme(css: string): Promise<string> {
+        await this.cancelNewCustomTheme();
+        const id = uuidv4();
+        await this.saveCustomTheme(id, "自定义主题", css);
+        return id;
+    }
+
+    async cancelNewCustomTheme() {
+        this._customThemes = Object.fromEntries(
+            Object.entries(this._customThemes).filter(([key]) => !key.startsWith("0:")),
+        );
     }
 
     /**
@@ -207,7 +216,3 @@ export const localStorageSettingsAdapter: SettingsStorageAdapter = {
         localStorage.setItem("wenyan-settings", JSON.stringify(settings));
     },
 };
-function uuidv4(): string {
-    throw new Error("Function not implemented.");
-}
-

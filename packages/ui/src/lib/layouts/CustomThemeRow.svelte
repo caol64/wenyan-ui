@@ -2,7 +2,7 @@
     import { globalState } from "$lib/wenyan.svelte";
 
     let { id, name }: { id: string; name: string } = $props();
-    let customThemeId = $derived(`custom:${id}`);
+    let customThemeId = $derived(id.startsWith("0:") ? id : `custom:${id}`);
 
     function customThemeRowClick() {
         if (globalState.getCurrentTheme() !== customThemeId) {

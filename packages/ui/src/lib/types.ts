@@ -17,6 +17,7 @@ export interface CodeblockSettings {
 }
 
 export type Platform = "wechat" | "toutiao" | "zhihu" | "juejin" | "medium";
+export type CopyContentType = "html" | "txt";
 
 export interface ThemeStorageAdapter {
     load(): Promise<Record<string, CustomTheme>> | Record<string, CustomTheme>;
@@ -55,23 +56,27 @@ export interface Settings {
     codeblockSettings?: CodeblockSettings;
 }
 
+export const DEFAULT_CODEBLOCK_SETTINGS: CodeblockSettings = {
+    isFollowTheme: true,
+    hlThemeId: "github",
+    isMacStyle: true,
+    fontSize: "12px",
+};
+
+export const DEFAULT_PARAGRAPH_SETTINGS: ParagraphSettings = {
+    isFollowTheme: true,
+    fontSize: "16px",
+    fontFamily: "sans",
+    fontWeight: "400",
+    letterSpacing: "0.1em",
+    lineHeight: "1.75",
+    paragraphSpacing: "1em",
+};
+
 export const DEFAULT_SETTINGS: Settings = {
     wechatTheme: "default",
-    codeblockSettings: {
-        isFollowTheme: true,
-        hlThemeId: "github",
-        isMacStyle: true,
-        fontSize: "12px",
-    },
-    paragraphSettings: {
-        isFollowTheme: true,
-        fontSize: "14px",
-        fontFamily: "sans",
-        fontWeight: "normal",
-        letterSpacing: "standard",
-        lineHeight: "standard",
-        paragraphSpacing: "standard",
-    },
+    codeblockSettings: DEFAULT_CODEBLOCK_SETTINGS,
+    paragraphSettings: DEFAULT_PARAGRAPH_SETTINGS,
 };
 
 export type CssUpdate = {

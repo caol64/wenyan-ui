@@ -1,10 +1,15 @@
 <script lang="ts">
     import SaveCustomThemeButton from "$lib/components/buttons/SaveCustomThemeButton.svelte";
+    import { themeStore } from "$lib/store.svelte";
     import { globalState } from "$lib/wenyan.svelte";
 
     function cancel() {
+        const currentTheme = globalState.getCurrentTheme();
+        themeStore.cancelNewCustomTheme();
         globalState.setThemeEditMode(false);
-        // discard unsaved changes
+        if (currentTheme.startsWith("0:")) {
+            globalState.setCurrentTheme(currentTheme.slice(2));
+        }
     }
 </script>
 

@@ -8,7 +8,9 @@
     {#each Object.values(themeStore.getAllCustomThemes()) as theme}
         <CustomThemeRow id={theme.id} name={theme.name} />
     {/each}
-    <div class="flex items-center justify-end w-full">
-        <AddCustomThemeButton />
-    </div>
+    {#if Object.values(themeStore.getAllCustomThemes()).length <= 6}
+        <div class="flex items-center justify-end w-full">
+            <AddCustomThemeButton />
+        </div>
+    {/if}
 </div>

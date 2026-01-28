@@ -34,6 +34,7 @@
     "@wenyan-md/ui": "workspace:^",
     "codemirror": "catalog:",
     "dompurify": "catalog:",
-    "idb-keyval": "catalog:"
+    "idb-keyval": "catalog:",
+    "uuid": "catalog:"
   }
 }

@@ -7,13 +7,13 @@
 
     let followTheme = $derived(paragraphSettings.isFollowTheme ? true : false);
 
-    let fontSize = $derived(paragraphSettings.fontSize ?? "14px");
+    let fontSize = $derived(paragraphSettings.fontSize ?? "16px");
     let fontFamily = $derived(paragraphSettings.fontFamily ?? "sans"); // serif, sans, mono
-    let fontWeight = $derived(paragraphSettings.fontWeight ?? "normal"); // light, normal, bold
+    let fontWeight = $derived(paragraphSettings.fontWeight ?? "400"); // light, normal, bold
 
-    let letterSpacing = $derived(paragraphSettings.letterSpacing ?? "standard"); // small, standard, large, huge
-    let lineHeight = $derived(paragraphSettings.lineHeight ?? "standard");
-    let paragraphSpacing = $derived(paragraphSettings.paragraphSpacing ?? "standard");
+    let letterSpacing = $derived(paragraphSettings.letterSpacing ?? "0.1em"); // small, standard, large, huge
+    let lineHeight = $derived(paragraphSettings.lineHeight ?? "1.75");
+    let paragraphSpacing = $derived(paragraphSettings.paragraphSpacing ?? "1em");
 
     function handleFollowThemeChange(value: boolean) {
         followTheme = value;

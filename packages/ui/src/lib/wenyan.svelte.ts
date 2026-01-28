@@ -1,7 +1,15 @@
 import DOMPurify from "dompurify";
-import { createWenyanCore, getHlTheme, getTheme, type ApplyStylesOptions } from "@wenyan-md/core";
-import type { Article, ArticleStorageAdapter, CustomTheme, Platform, Settings, SettingsStorageAdapter, ThemeStorageAdapter } from "./types";
-import { themeStore } from "./store.svelte";
+import {
+    createWenyanCore,
+    getContentForMedium,
+    getContentForToutiao,
+    getContentForZhihu,
+    getHlTheme,
+    getTheme,
+} from "@wenyan-md/core";
+import type { Platform } from "./types";
+import { themeStore, settingsStore } from "./store.svelte";
+import { comboCodeblockSettings, comboParagraphSettings } from "./stylesCombo";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 
@@ -31,6 +39,7 @@ const coreManager = new WenyanCoreManager();
 
 class WenyanRenderer {
     html = $state("");
+    postHandlerContent = "";
 
     constructor() {
         // 初始化时自动预加载核心库
@@ -53,6 +62,7 @@ class WenyanRenderer {
                 body = `# ${preHandlerContent.title}\n\n${body}`;
             }
 
+            this.postHandlerContent = body;
             // 渲染
             const rendered = await core.renderMarkdown(body);
             this.html = DOMPurify.sanitize(rendered);
@@ -76,12 +86,34 @@ class WenyanCopier {
             throw new Error("Wenyan element is null");
         }
 
-        const core = await coreManager.get();
-        const options: ApplyStylesOptions = {
-            themeId: globalState.getCurrentTheme(),
-        };
-        const rendered = await core.applyStylesWithTheme(wenyanElement, options);
-        this.html = DOMPurify.sanitize(rendered);
+        if (globalState.getPlatform() === "wechat") {
+            const core = await coreManager.get();
+            let themeCss = globalState.getCurrentThemeCss();
+            const codeblockSettings = settingsStore.getSettings().codeblockSettings;
+            if (codeblockSettings && !codeblockSettings.isFollowTheme) {
+                themeCss = comboCodeblockSettings(themeCss, codeblockSettings);
+            }
+            const paragraphSettings = settingsStore.getSettings().paragraphSettings;
+            if (paragraphSettings && !paragraphSettings.isFollowTheme) {
+                themeCss = comboParagraphSettings(themeCss, paragraphSettings);
+            }
+            const options = {
+                themeCss,
+                hlThemeCss: globalState.getCurrentHlThemeCss(),
+                isMacStyle: codeblockSettings?.isMacStyle ?? true,
+                isAddFootnote: true,
+            };
+            const rendered = await core.applyStylesWithTheme(wenyanElement, options);
+            this.html = DOMPurify.sanitize(rendered);
+        } else if (globalState.getPlatform() === "toutiao") {
+            this.html = DOMPurify.sanitize(getContentForToutiao(wenyanElement));
+        } else if (globalState.getPlatform() === "zhihu") {
+            this.html = DOMPurify.sanitize(getContentForZhihu(wenyanElement));
+        } else if (globalState.getPlatform() === "medium") {
+            this.html = DOMPurify.sanitize(getContentForMedium(wenyanElement));
+        } else {
+            this.html = DOMPurify.sanitize(getContentForToutiao(wenyanElement));
+        }
     }
 }
 
@@ -111,8 +143,20 @@ class GlobalState {
         return this.isSidebarOpen;
     }
 
+    judgeSidebarOpen(): boolean {
+        return this.isSidebarOpen && this.getPlatform() === "wechat";
+    }
+
     setPlatform(platform: Platform) {
         this.currentPlatform = platform;
+        if (platform === "wechat") {
+            const wechatTheme = settingsStore.getSettings().wechatTheme ?? "default";
+            this.setCurrentTheme(wechatTheme);
+            this.setCurrentHlTheme(settingsStore.getSettings().codeblockSettings?.hlThemeId ?? "github");
+        } else {
+            this.loadThemeCss(`${this.currentPlatform}_default`);
+            this.loadHlThemeCss("github");
+        }
     }
 
     getPlatform(): Platform {
@@ -122,6 +166,11 @@ class GlobalState {
     setCurrentTheme(theme: string) {
         this.currentTheme = theme;
         this.loadThemeCss(theme);
+        if (this.getPlatform() === "wechat") {
+            const settings = settingsStore.getSettings();
+            settings.wechatTheme = theme;
+            settingsStore.saveSettings(settings);
+        }
     }
 
     getCurrentTheme(): string {
@@ -160,7 +209,7 @@ class GlobalState {
     private async loadThemeCss(themeId: string) {
         if (!themeId) return;
         if (themeId.startsWith("0:")) {
-            themeStore.addCustomTheme("0", "自定义主题", "");
+            themeStore.addCustomTheme(themeId, "自定义主题（未保存）", "");
             themeId = themeId.slice(2);
         }
         if (themeId.startsWith("custom:")) {

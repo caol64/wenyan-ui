@@ -1,12 +1,9 @@
 <script lang="ts">
+    import { globalState } from "$lib/wenyan.svelte";
     import RightSplitRect from "./icons/RightSplitRect.svelte";
-    import { getContext } from "svelte";
-    import { STYLE_CONTEXT_KEY } from "../keys";
-
-    const onStyleClick = getContext<() => void>(STYLE_CONTEXT_KEY);
 
     async function handleClick() {
-        onStyleClick();
+        globalState.setSidebarOpen(!globalState.getSidebarOpen());
     }
 </script>
 
