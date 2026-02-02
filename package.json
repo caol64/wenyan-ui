@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "install:all": "pnpm -r install",
+    "ui:install": "pnpm --filter @wenyan-md/ui install",
     "web:install": "pnpm --filter @wenyan-md/web install",
+    "install:all": "pnpm ui:install && pnpm web:install",
     "web:build": "pnpm --filter @wenyan-md/web build",
     "web:dev": "pnpm --filter @wenyan-md/web dev",
-    "ui:install": "pnpm --filter @wenyan-md/ui install",
     "ui:build": "pnpm --filter @wenyan-md/ui build",
     "ui:dev": "pnpm --filter @wenyan-md/ui dev",
     "prepare": "husky"

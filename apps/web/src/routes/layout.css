@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @source "../../node_modules/@wenyan-md/ui";
 
 :root {

@@ -9,6 +9,8 @@
         globalState.setThemeEditMode(false);
         if (currentTheme.startsWith("0:")) {
             globalState.setCurrentTheme(currentTheme.slice(2));
+        } else {
+            globalState.setCurrentTheme(currentTheme);
         }
     }
 </script>

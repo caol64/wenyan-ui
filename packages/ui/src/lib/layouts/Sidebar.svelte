@@ -2,8 +2,8 @@
     import BuiltinThemeList from "./BuiltinThemeList.svelte";
     import RightSideToggle from "$lib/components/RightSideToggle.svelte";
     import CustomThemeList from "./CustomThemeList.svelte";
-    import CodeblockSettings from "./CodeblockSettings.svelte";
-    import ParagraphSettings from "./ParagraphSettings.svelte";
+    import CodeblockSettings from "./CodeblockSettingsPanel.svelte";
+    import ParagraphSettings from "./ParagraphSettingsPanel.svelte";
 
 </script>
 

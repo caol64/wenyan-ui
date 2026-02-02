@@ -31,6 +31,7 @@
     "@sveltejs/package": "catalog:",
     "@sveltejs/vite-plugin-svelte": "catalog:",
     "@tailwindcss/vite": "catalog:",
+    "postcss": "catalog:",
     "publint": "catalog:",
     "svelte": "catalog:",
     "svelte-check": "catalog:",
@@ -49,9 +50,9 @@
     "@wenyan-md/core": "catalog:",
     "codemirror": "catalog:",
     "dompurify": "catalog:",
-    "uuid": "catalog:",
     "svelte": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwindcss": "catalog:",
+    "uuid": "catalog:"
   },
   "keywords": [
     "svelte"

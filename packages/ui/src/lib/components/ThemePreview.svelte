@@ -3,7 +3,7 @@
     import { comboCodeblockSettings, comboParagraphSettings } from "$lib/stylesCombo";
     import { type CodeblockSettings, type ParagraphSettings } from "$lib/types";
     import { wenyanRenderer, globalState } from "$lib/wenyan.svelte";
-    import { macStyleCss } from "@wenyan-md/core";
+    import { getMacStyleCss } from "@wenyan-md/core";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
     let codeblockSettings = $derived(settingsStore.getSettings().codeblockSettings ?? {});
@@ -67,7 +67,7 @@
             s.id = "wenyan-macstyle-style";
             document.head.appendChild(s);
         }
-        s.textContent = isMacStyle ? macStyleCss : "";
+        s.textContent = isMacStyle ? getMacStyleCss() : "";
     }
 
     function updateParagraph(paragraphSettings: ParagraphSettings) {
