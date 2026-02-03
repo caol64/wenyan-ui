@@ -57,9 +57,6 @@ catalogs:
     idb-keyval:
       specifier: ^6.2.2
       version: 6.2.2
-    postcss:
-      specifier: ^8.5.6
-      version: 8.5.6
     publint:
       specifier: ^0.3.15
       version: 0.3.16
@@ -92,48 +89,12 @@ importers:
 
   apps/web:
     dependencies:
-      '@codemirror/commands':
-        specifier: 'catalog:'
-        version: 6.10.1
-      '@codemirror/lang-css':
-        specifier: 'catalog:'
-        version: 6.3.1
-      '@codemirror/lang-markdown':
-        specifier: 'catalog:'
-        version: 6.5.0
-      '@codemirror/language-data':
-        specifier: 'catalog:'
-        version: 6.5.2
-      '@codemirror/state':
-        specifier: 'catalog:'
-        version: 6.5.4
-      '@codemirror/view':
-        specifier: 'catalog:'
-        version: 6.39.11
-      '@fsegurai/codemirror-theme-vscode-dark':
-        specifier: 'catalog:'
-        version: 6.2.3(@codemirror/language@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.39.11)(@lezer/highlight@1.2.3)
-      '@fsegurai/codemirror-theme-vscode-light':
-        specifier: 'catalog:'
-        version: 6.2.3(@codemirror/language@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.39.11)(@lezer/highlight@1.2.3)
-      '@wenyan-md/core':
-        specifier: 'catalog:'
-        version: 2.0.1
       '@wenyan-md/ui':
         specifier: workspace:^
         version: link:../../packages/ui
-      codemirror:
-        specifier: 'catalog:'
-        version: 6.0.2
-      dompurify:
-        specifier: 'catalog:'
-        version: 3.3.1
       idb-keyval:
         specifier: 'catalog:'
         version: 6.2.2
-      uuid:
-        specifier: 'catalog:'
-        version: 13.0.0
     devDependencies:
       '@sveltejs/adapter-static':
         specifier: 'catalog:'
@@ -214,9 +175,6 @@ importers:
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.1.18(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2))
-      postcss:
-        specifier: 'catalog:'
-        version: 8.5.6
       publint:
         specifier: 'catalog:'
         version: 0.3.16

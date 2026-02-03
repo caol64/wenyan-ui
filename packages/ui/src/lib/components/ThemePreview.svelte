@@ -81,10 +81,25 @@
     }
 </script>
 
-<div bind:this={scrollRef} class="h-full w-full overflow-auto">
+<div bind:this={scrollRef} class="h-full w-full scroll-container">
     <div class="m-auto w-105 outline-none shadow-[0_0_60px_rgba(0,0,0,0.1)] p-5">
         <section id="wenyan">
             {@html wenyanRenderer.html}
         </section>
     </div>
 </div>
+
+<style>
+    .scroll-container {
+        scrollbar-width: auto;
+        scrollbar-color: #dadada #ffffff;
+        overflow: auto;
+        overscroll-behavior: none;
+    }
+
+    @supports (background: -webkit-named-image(i)) {
+        .scroll-container {
+            scrollbar-width: thin;
+        }
+    }
+</style>

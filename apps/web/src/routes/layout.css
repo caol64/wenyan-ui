@@ -3,12 +3,7 @@
 
 :root {
     color-scheme: light dark;
-    scroll-behavior: smooth;
     @apply font-sans;
-}
-
-* {
-    @apply box-border;
 }
 
 body {

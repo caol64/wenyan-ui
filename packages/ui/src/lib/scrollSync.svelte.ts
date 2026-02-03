@@ -6,21 +6,22 @@ export class ScrollSynchronizer {
     // 2. 内部互斥锁
     private isSyncingLeft = false;
     private isSyncingRight = false;
+    private lastLeftScrollTop = 0;
+    private lastRightScrollTop = 0;
 
     constructor() {
         // 3. 在构造函数中使用 $effect
-        // 当 left 或 right 发生变化时（组件挂载/卸载），自动重新绑定事件
         $effect(() => {
             const l = this.left;
             const r = this.right;
 
             if (!l || !r) return;
 
-            const onLeftScroll = () => this.handleScroll(l, r, "left");
-            const onRightScroll = () => this.handleScroll(r, l, "right");
+            const onLeftScroll = (e: Event) => this.handleScroll(l, r, "left", e);
+            const onRightScroll = (e: Event) => this.handleScroll(r, l, "right", e);
 
-            l.addEventListener("scroll", onLeftScroll);
-            r.addEventListener("scroll", onRightScroll);
+            l.addEventListener("scroll", onLeftScroll, { passive: true });
+            r.addEventListener("scroll", onRightScroll, { passive: true });
 
             // Svelte 5 effect 清理函数
             return () => {
@@ -31,7 +32,24 @@ export class ScrollSynchronizer {
     }
 
     // 处理滚动事件
-    private handleScroll(source: HTMLElement, target: HTMLElement, direction: "left" | "right") {
+    private handleScroll(
+        source: HTMLElement,
+        target: HTMLElement,
+        direction: "left" | "right",
+        event: Event
+    ) {
+        // 过滤主动修改 scrollTop 触发的 scroll 事件（核心解决 Safari 额外事件问题）
+        const currentScrollTop = source.scrollTop;
+        const lastScrollTop = direction === "left" ? this.lastLeftScrollTop : this.lastRightScrollTop;
+
+        // 判断：如果是主动修改导致的滚动（差值极小，小于 1），直接返回
+        if (Math.abs(currentScrollTop - lastScrollTop) < 1) {
+            // 更新最后一次滚动值，避免偏差累积
+            if (direction === "left") this.lastLeftScrollTop = currentScrollTop;
+            else this.lastRightScrollTop = currentScrollTop;
+            return;
+        }
+
         // 互斥锁检查
         if (direction === "left" && this.isSyncingRight) return;
         if (direction === "right" && this.isSyncingLeft) return;
@@ -40,25 +58,41 @@ export class ScrollSynchronizer {
         if (direction === "left") this.isSyncingLeft = true;
         else this.isSyncingRight = true;
 
-        // 执行同步计算
-        this.syncPosition(source, target);
+        // 执行同步计算（优化数值精度）
+        this.syncPosition(source, target, direction);
 
-        // 解锁（使用 requestAnimationFrame 确保在下一帧渲染前解锁，防止抖动）
-        requestAnimationFrame(() => {
-            if (direction === "left") this.isSyncingLeft = false;
-            else this.isSyncingRight = false;
-        });
+        // 放弃 requestAnimationFrame，直接同步解锁（关键解决 Safari 解锁延迟）
+        // 原因：Safari 中 requestAnimationFrame 延迟导致锁释放过晚，同步解锁无抖动（互斥锁已拦截重复事件）
+        if (direction === "left") this.isSyncingLeft = false;
+        else this.isSyncingRight = false;
     }
 
-    // 核心算法：百分比同步
-    private syncPosition(source: HTMLElement, target: HTMLElement) {
+    // 核心算法：百分比同步（优化：增加 direction 参数，更新最后一次滚动值，优化数值精度）
+    private syncPosition(
+        source: HTMLElement,
+        target: HTMLElement,
+        direction: "left" | "right"
+    ) {
         const sourceScrollHeight = source.scrollHeight - source.clientHeight;
         const targetScrollHeight = target.scrollHeight - target.clientHeight;
 
         // 防止除以 0
         if (sourceScrollHeight <= 0 || targetScrollHeight <= 0) return;
 
+        // 优化数值精度，将百分比结果取整（避免 Safari 浮点数偏差累积）
         const percentage = source.scrollTop / sourceScrollHeight;
-        target.scrollTop = percentage * targetScrollHeight;
+        const targetScrollTop = Math.round(percentage * targetScrollHeight); // 取整，消除浮点数误差
+
+        // 更新最后一次滚动值（用于过滤主动修改的 scroll 事件）
+        if (direction === "left") {
+            this.lastRightScrollTop = targetScrollTop;
+        } else {
+            this.lastLeftScrollTop = targetScrollTop;
+        }
+
+        // 执行滚动同步（仅当目标 scrollTop 变化时才赋值，减少额外事件触发）
+        if (target.scrollTop !== targetScrollTop) {
+            target.scrollTop = targetScrollTop;
+        }
     }
 }

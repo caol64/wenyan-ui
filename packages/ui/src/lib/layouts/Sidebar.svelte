@@ -8,7 +8,7 @@
 </script>
 
 <!-- 主容器 -->
-<div class="mx-auto w-full h-full bg-[#f2f2f2] dark:bg-[#323232] p-2 overflow-y-auto">
+<div class="mx-auto w-full h-full bg-[#f2f2f2] dark:bg-[#323232] p-2 scroll-container">
     <!-- 顶部标题 -->
     <div class="mb-4 flex items-center justify-between border-b border-gray-300 pb-3">
         <h2 class="text-sm font-bold">选择主题</h2>
@@ -33,3 +33,18 @@
     <!-- 代码块设置 -->
     <CodeblockSettings />
 </div>
+
+<style>
+    .scroll-container {
+        scrollbar-width: auto;
+        scrollbar-color: #dadada #ffffff;
+        overflow: auto;
+        overscroll-behavior: none;
+    }
+
+    @supports (background: -webkit-named-image(i)) {
+        .scroll-container {
+            scrollbar-width: thin;
+        }
+    }
+</style>

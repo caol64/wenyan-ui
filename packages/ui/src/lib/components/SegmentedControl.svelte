@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type HTMLAttributes } from "svelte/elements";
+    import type { HTMLAttributes } from "svelte/elements";
 
     /**
      * 分段控制器组件 (Segmented Control)
