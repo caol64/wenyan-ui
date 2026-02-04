@@ -10,3 +10,4 @@ export { default as CustomThemeRow } from "./CustomThemeRow.svelte";
 export { default as CustomThemeList } from "./CustomThemeList.svelte";
 export { default as CodeblockSettingsPanel } from "./CodeblockSettingsPanel.svelte";
 export { default as BuiltinThemeList } from "./BuiltinThemeList.svelte";
+export { default as AlertModal } from "./AlertModal.svelte";

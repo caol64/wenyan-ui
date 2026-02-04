@@ -91,7 +91,7 @@
 <style>
     .scroll-container {
         scrollbar-width: auto;
-        scrollbar-color: #dadada #ffffff;
+        scrollbar-color: #c2c2c2 transparent;
         overflow: auto;
         overscroll-behavior: none;
     }

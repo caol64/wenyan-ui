@@ -4,10 +4,10 @@
     import { globalState, wenyanCopier, wenyanRenderer } from "$lib/wenyan.svelte";
     import { getContext } from "svelte";
     import { COPY_CONTEXT_KEY, GET_WENYAN_ELEMENT_CONTEXT_KEY } from "$lib/contextKeys";
-    import type { CopyContentType } from "$lib/constants";
+    import type { CopyFn, GetWenyanElementFn } from "$lib/constants";
 
-    const onCopy = getContext<(result: string, contentType: CopyContentType) => void>(COPY_CONTEXT_KEY);
-    const getWenyanElement = getContext<() => HTMLElement>(GET_WENYAN_ELEMENT_CONTEXT_KEY);
+    const onCopy = getContext<CopyFn>(COPY_CONTEXT_KEY);
+    const getWenyanElement = getContext<GetWenyanElementFn>(GET_WENYAN_ELEMENT_CONTEXT_KEY);
     let copiedFlag = $state(false);
 
     async function handleCopy() {

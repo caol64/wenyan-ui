@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { EditorView, basicSetup } from "codemirror";
     import { EditorState, Compartment } from "@codemirror/state";
     import { markdown } from "@codemirror/lang-markdown";
@@ -9,21 +9,18 @@
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
     import { languages } from "@codemirror/language-data";
     import { globalState } from "$lib/wenyan.svelte";
+    import { EDITOR_DROP_HANDLER_CONTEXT_KEY, EDITOR_PASTE_HANDLER_CONTEXT_KEY } from "$lib/contextKeys";
+    import type { EditorDropFn, EditorPasteFn } from "$lib/constants";
 
-    let {
-        scrollRef = $bindable(),
-        onUploadImage,
-    }: {
-        scrollRef?: HTMLElement | null;
-        onUploadImage?: (file: File) => Promise<string | null>;
-    } = $props();
+    let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
+
+    const onPaste = getContext<EditorPasteFn>(EDITOR_PASTE_HANDLER_CONTEXT_KEY);
+    const onDrop = getContext<EditorDropFn>(EDITOR_DROP_HANDLER_CONTEXT_KEY);
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
     const themeConfig = new Compartment();
     let isDarkMode = $state(false);
-    const imgType = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-
     let markdownContent = $derived(globalState.getMarkdownText());
 
     onMount(() => {
@@ -56,18 +53,10 @@
                 }),
                 EditorView.domEventHandlers({
                     paste: (event, view) => {
-                        const files = event.clipboardData?.files;
-                        if (files && files.length > 0) {
-                            handleImageUpload(files[0], view);
-                            event.preventDefault(); // 阻止默认粘贴行为
-                        }
+                        onPaste?.(event, view);
                     },
                     drop: (event, view) => {
-                        const files = event.dataTransfer?.files;
-                        if (files && files.length > 0) {
-                            handleImageUpload(files[0], view);
-                            event.preventDefault();
-                        }
+                        onDrop?.(event, view);
                     },
                 }),
             ],
@@ -104,32 +93,6 @@
             }
         }
     });
-
-    async function handleImageUpload(file: File, view: EditorView) {
-        if (!file || !imgType.includes(file.type)) return;
-
-        if (onUploadImage) {
-            try {
-                const placeholder = `![上传中...](${file.name})`;
-                const transaction = view.state.replaceSelection(placeholder);
-                view.dispatch(transaction);
-
-                const url = await onUploadImage(file);
-
-                if (url) {
-                    const insertedText = `![](${url})`;
-                    const text = view.state.doc.toString();
-                    const newText = text.replace(placeholder, insertedText);
-
-                    view.dispatch({
-                        changes: { from: 0, to: text.length, insert: newText },
-                    });
-                }
-            } catch (error) {
-                console.error("Upload failed", error);
-            }
-        }
-    }
 </script>
 
 <div bind:this={editorElement} class="h-full w-full overflow-hidden text-base"></div>

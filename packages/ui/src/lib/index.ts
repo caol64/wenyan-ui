@@ -7,3 +7,4 @@ export * from "./articleStore.svelte";
 export * from "./themeStore.svelte";
 export * from "./settingsStore.svelte";
 export * from "./utils";
+export * from "./editorHandler";

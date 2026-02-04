@@ -15,6 +15,12 @@ import { comboCodeblockSettings, comboParagraphSettings } from "./stylesCombo";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 
+interface AlertMessage {
+    type: "info" | "success" | "warning" | "error";
+    message: string;
+    title?: string;
+}
+
 class WenyanCoreManager {
     // 核心实例
     instance = $state<WenyanCoreInstance | null>(null);
@@ -128,6 +134,7 @@ class GlobalState {
     private currentThemeCss = $state("");
     private currentHlTheme = $state("github");
     private currentHlThemeCss = $state("");
+    private alertMessage = $state<AlertMessage | null>(null);
 
     setMarkdownText(text: string) {
         if (text !== this.markdownText) {
@@ -150,6 +157,14 @@ class GlobalState {
 
     judgeSidebarOpen(): boolean {
         return this.isSidebarOpen && this.getPlatform() === "wechat";
+    }
+
+    setAlertMessage(message: AlertMessage | null) {
+        this.alertMessage = message;
+    }
+
+    getAlertMessage(): AlertMessage | null {
+        return this.alertMessage;
     }
 
     setPlatform(platform: Platform) {
