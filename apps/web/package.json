@@ -22,7 +22,6 @@
     "vite": "catalog:"
   },
   "dependencies": {
-    "@wenyan-md/ui": "workspace:^",
-    "idb-keyval": "catalog:"
+    "@wenyan-md/ui": "workspace:^"
   }
 }

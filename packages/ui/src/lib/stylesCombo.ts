@@ -4,8 +4,13 @@ import {
     DEFAULT_PARAGRAPH_SETTINGS,
     type CodeblockSettings,
     type ParagraphSettings,
-    type CssUpdate,
-} from "./types";
+} from "./settingsStore.svelte";
+
+type CssUpdate = {
+    property: string;
+    value?: string;
+    append?: boolean;
+};
 
 export function comboCodeblockSettings(css: string, codeblockSettings: CodeblockSettings): string {
     if (codeblockSettings?.isFollowTheme) {

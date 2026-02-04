@@ -1,7 +1,7 @@
 <script lang="ts">
     import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
     import SegmentedControl from "$lib/components/SegmentedControl.svelte";
-    import { settingsStore } from "$lib/store.svelte";
+    import { settingsStore } from "$lib/settingsStore.svelte";
 
     let paragraphSettings = $derived(settingsStore.getSettings().paragraphSettings || {});
 

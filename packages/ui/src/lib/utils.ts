@@ -11,3 +11,10 @@ export async function copyHtmlToClipboard(htmlString: string) {
     ];
     await navigator.clipboard.write(data);
 }
+
+export async function copyTextToClipboard(text: string) {
+    if (!navigator.clipboard?.writeText) {
+        throw new Error("Clipboard API not available.");
+    }
+    await navigator.clipboard.writeText(text);
+}

@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { settingsStore } from "$lib/store.svelte";
+    import { settingsStore, type CodeblockSettings, type ParagraphSettings } from "$lib/settingsStore.svelte";
     import { comboCodeblockSettings, comboParagraphSettings } from "$lib/stylesCombo";
-    import { type CodeblockSettings, type ParagraphSettings } from "$lib/types";
     import { wenyanRenderer, globalState } from "$lib/wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
 

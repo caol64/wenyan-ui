@@ -3,7 +3,7 @@
     import SegmentedControl from "$lib/components/SegmentedControl.svelte";
     import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
     import { getAllHlThemes } from "@wenyan-md/core";
-    import { settingsStore } from "$lib/store.svelte";
+    import { settingsStore } from "$lib/settingsStore.svelte";
     import { globalState } from "$lib/wenyan.svelte";
 
     let codeblockSettings = $derived(settingsStore.getSettings().codeblockSettings || {});

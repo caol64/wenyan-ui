@@ -6,60 +6,18 @@ settings:
 
 catalogs:
   default:
-    '@codemirror/commands':
-      specifier: ^6.10.1
-      version: 6.10.1
-    '@codemirror/lang-css':
-      specifier: ^6.3.1
-      version: 6.3.1
-    '@codemirror/lang-markdown':
-      specifier: ^6.5.0
-      version: 6.5.0
-    '@codemirror/language-data':
-      specifier: ^6.5.2
-      version: 6.5.2
-    '@codemirror/state':
-      specifier: ^6.5.4
-      version: 6.5.4
-    '@codemirror/view':
-      specifier: ^6.39.11
-      version: 6.39.11
-    '@fsegurai/codemirror-theme-vscode-dark':
-      specifier: ^6.2.3
-      version: 6.2.3
-    '@fsegurai/codemirror-theme-vscode-light':
-      specifier: ^6.2.3
-      version: 6.2.3
     '@sveltejs/adapter-static':
       specifier: ^3.0.10
       version: 3.0.10
     '@sveltejs/kit':
       specifier: ^2.49.1
       version: 2.49.4
-    '@sveltejs/package':
-      specifier: ^2.5.6
-      version: 2.5.7
     '@sveltejs/vite-plugin-svelte':
       specifier: ^6.2.1
       version: 6.2.4
     '@tailwindcss/vite':
       specifier: ^4.1.17
       version: 4.1.18
-    '@wenyan-md/core':
-      specifier: ^2.0.1
-      version: 2.0.1
-    codemirror:
-      specifier: ^6.0.2
-      version: 6.0.2
-    dompurify:
-      specifier: ^3.3.1
-      version: 3.3.1
-    idb-keyval:
-      specifier: ^6.2.2
-      version: 6.2.2
-    publint:
-      specifier: ^0.3.15
-      version: 0.3.16
     svelte:
       specifier: ^5.45.6
       version: 5.46.3
@@ -69,9 +27,6 @@ catalogs:
     tailwindcss:
       specifier: ^4.1.17
       version: 4.1.18
-    uuid:
-      specifier: ^13.0.0
-      version: 13.0.0
     vite:
       specifier: ^7.2.6
       version: 7.3.1
@@ -92,9 +47,6 @@ importers:
       '@wenyan-md/ui':
         specifier: workspace:^
         version: link:../../packages/ui
-      idb-keyval:
-        specifier: 'catalog:'
-        version: 6.2.2
     devDependencies:
       '@sveltejs/adapter-static':
         specifier: 'catalog:'
@@ -124,71 +76,74 @@ importers:
   packages/ui:
     dependencies:
       '@codemirror/commands':
-        specifier: 'catalog:'
+        specifier: ^6.10.1
         version: 6.10.1
       '@codemirror/lang-css':
-        specifier: 'catalog:'
+        specifier: ^6.3.1
         version: 6.3.1
       '@codemirror/lang-markdown':
-        specifier: 'catalog:'
+        specifier: ^6.5.0
         version: 6.5.0
       '@codemirror/language-data':
-        specifier: 'catalog:'
+        specifier: ^6.5.2
         version: 6.5.2
       '@codemirror/state':
-        specifier: 'catalog:'
+        specifier: ^6.5.4
         version: 6.5.4
       '@codemirror/view':
-        specifier: 'catalog:'
+        specifier: ^6.39.11
         version: 6.39.11
       '@fsegurai/codemirror-theme-vscode-dark':
-        specifier: 'catalog:'
+        specifier: ^6.2.3
         version: 6.2.3(@codemirror/language@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.39.11)(@lezer/highlight@1.2.3)
       '@fsegurai/codemirror-theme-vscode-light':
-        specifier: 'catalog:'
+        specifier: ^6.2.3
         version: 6.2.3(@codemirror/language@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.39.11)(@lezer/highlight@1.2.3)
       '@wenyan-md/core':
-        specifier: 'catalog:'
+        specifier: ^2.0.1
         version: 2.0.1
       codemirror:
-        specifier: 'catalog:'
+        specifier: ^6.0.2
         version: 6.0.2
       dompurify:
-        specifier: 'catalog:'
+        specifier: ^3.3.1
         version: 3.3.1
+      idb-keyval:
+        specifier: ^6.2.2
+        version: 6.2.2
       uuid:
-        specifier: 'catalog:'
+        specifier: ^13.0.0
         version: 13.0.0
     devDependencies:
       '@sveltejs/adapter-static':
-        specifier: 'catalog:'
+        specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.49.4(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.46.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.46.3)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)))
       '@sveltejs/kit':
-        specifier: 'catalog:'
+        specifier: ^2.49.1
         version: 2.49.4(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.46.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.46.3)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2))
       '@sveltejs/package':
-        specifier: 'catalog:'
+        specifier: ^2.5.6
         version: 2.5.7(svelte@5.46.3)(typescript@5.9.3)
       '@sveltejs/vite-plugin-svelte':
-        specifier: 'catalog:'
+        specifier: ^6.2.1
         version: 6.2.4(svelte@5.46.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2))
       '@tailwindcss/vite':
-        specifier: 'catalog:'
+        specifier: ^4.1.17
         version: 4.1.18(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2))
       publint:
-        specifier: 'catalog:'
+        specifier: ^0.3.15
         version: 0.3.16
       svelte:
-        specifier: 'catalog:'
+        specifier: ^5.45.6
         version: 5.46.3
       svelte-check:
-        specifier: 'catalog:'
+        specifier: ^4.3.4
         version: 4.3.5(picomatch@4.0.3)(svelte@5.46.3)(typescript@5.9.3)
       tailwindcss:
-        specifier: 'catalog:'
+        specifier: ^4.1.17
         version: 4.1.18
       vite:
-        specifier: 'catalog:'
+        specifier: ^7.2.6
         version: 7.3.1(jiti@2.6.1)(lightningcss@1.30.2)
 
   packages/wenyan-core: {}

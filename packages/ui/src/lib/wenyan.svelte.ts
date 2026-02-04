@@ -7,8 +7,10 @@ import {
     getHlTheme,
     getTheme,
 } from "@wenyan-md/core";
-import type { Platform } from "./types";
-import { themeStore, settingsStore } from "./store.svelte";
+import type { Platform } from "./constants";
+import { themeStore } from "./themeStore.svelte";
+import { settingsStore } from "./settingsStore.svelte";
+import { articleStore } from "./articleStore.svelte";
 import { comboCodeblockSettings, comboParagraphSettings } from "./stylesCombo";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
@@ -128,7 +130,10 @@ class GlobalState {
     private currentHlThemeCss = $state("");
 
     setMarkdownText(text: string) {
-        this.markdownText = text;
+        if (text !== this.markdownText) {
+            this.markdownText = text;
+            articleStore.saveLastArticle(text);
+        }
     }
 
     getMarkdownText(): string {
