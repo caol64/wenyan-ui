@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const PACKAGE_PATH = ["packages/ui/package.json", "apps/web/package.json"];
+const PACKAGE_PATH = ["package.json"];
 const PACKAGE_TO_CHECK = ["@wenyan-md/core"];
 
 function check() {
@@ -21,15 +21,14 @@ function check() {
             const pkg = JSON.parse(content);
 
             const depTypes = ["dependencies", "devDependencies", "peerDependencies"];
-            const forbiddenVersion = "workspace:^";
 
             let fileHasError = false;
 
             depTypes.forEach((type) => {
                 PACKAGE_TO_CHECK.forEach((targetPackage) => {
-                    if (pkg[type] && pkg[type][targetPackage] === forbiddenVersion) {
+                    if (pkg[type] && !pkg[type][targetPackage].startsWith("^")) {
                         console.error(`❌ [${pkgPath}] 在 ${type} 中发现禁止的依赖版本:`);
-                        console.error(`   "${targetPackage}": "${forbiddenVersion}"`);
+                        console.error(`   "${targetPackage}": "${pkg[type][targetPackage]}"`);
                         fileHasError = true;
                     }
                 });

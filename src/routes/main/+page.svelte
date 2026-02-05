@@ -11,9 +11,9 @@
         AlertModal,
         setEditorPaste,
         setEditorDrop,
+        getExampleArticle,
     } from "$lib";
     import { onMount } from "svelte";
-    import markdownContent from "../../../../../assets/example.md?raw";
 
     setEditorPaste(defaultEditorPasteHandler);
     setEditorDrop(defaultEditorDropHandler);
@@ -21,14 +21,14 @@
     onMount(async () => {
         await articleStore.register(indexedDbArticleAdapter);
         await settingsStore.register(localStorageSettingsAdapter);
-        globalState.setMarkdownText(getArticle());
+        globalState.setMarkdownText(await getArticle());
         globalState.setCurrentTheme("default");
         globalState.setCurrentHlTheme("github");
     });
 
-    function getArticle(): string {
+    async function getArticle(): Promise<string> {
         const article = articleStore.getLastArticle();
-        return article ? article : markdownContent;
+        return article ? article : await getExampleArticle();
     }
 </script>
 

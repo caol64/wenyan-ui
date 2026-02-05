@@ -2,11 +2,7 @@
     import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
     import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
-    const enabledImageHost = settingsStore.enabledImageHost;
-
-    function isImageHostEnabled(host: string) {
-        return enabledImageHost === host;
-    }
+    let isWechatChecked = $derived(settingsStore.enabledImageHost === "wechat");
 
     function toggleImageHost(host: string, enabled: boolean) {
         settingsStore.enabledImageHost = enabled ? host : "";
@@ -24,6 +20,6 @@
 
     <div class="flex items-center justify-between">
         <div class="text-sm font-medium">公众号图床</div>
-        <ToggleSwitcher isChecked={isImageHostEnabled("wechat")} onChange={(v) => toggleImageHost("wechat", v)} />
+        <ToggleSwitcher isChecked={isWechatChecked} onChange={(v) => toggleImageHost("wechat", v)} />
     </div>
 </div>

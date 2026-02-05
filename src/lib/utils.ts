@@ -27,3 +27,12 @@ export function createDebouncer(delay = 500) {
         timer = setTimeout(callback, delay);
     };
 }
+
+export async function getExampleArticle(): Promise<string> {
+    const response = await fetch("/example.md");
+    if (!response.ok) {
+        console.error(`无法获取文件: ${response.statusText}`);
+        return "";
+    }
+    return await response.text();
+}
