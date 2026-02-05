@@ -6,17 +6,17 @@
         settingsStore,
         articleStore,
         indexedDbArticleAdapter,
-        EDITOR_PASTE_HANDLER_CONTEXT_KEY,
         defaultEditorPasteHandler,
-        EDITOR_DROP_HANDLER_CONTEXT_KEY,
         defaultEditorDropHandler,
         AlertModal,
+        setEditorPaste,
+        setEditorDrop,
     } from "$lib";
-    import { onMount, setContext } from "svelte";
+    import { onMount } from "svelte";
     import markdownContent from "../../../../../assets/example.md?raw";
 
-    setContext(EDITOR_PASTE_HANDLER_CONTEXT_KEY, defaultEditorPasteHandler);
-    setContext(EDITOR_DROP_HANDLER_CONTEXT_KEY, defaultEditorDropHandler);
+    setEditorPaste(defaultEditorPasteHandler);
+    setEditorDrop(defaultEditorDropHandler);
 
     onMount(async () => {
         await articleStore.register(indexedDbArticleAdapter);

@@ -1,29 +1,30 @@
 export interface ParagraphSettings {
-    isFollowTheme?: boolean;
-    lineHeight?: string;
-    fontSize?: string;
-    fontWeight?: string;
-    fontFamily?: string;
-    paragraphSpacing?: string;
-    letterSpacing?: string;
+    isFollowTheme: boolean;
+    lineHeight: string;
+    fontSize: string;
+    fontWeight: string;
+    fontFamily: string;
+    paragraphSpacing: string;
+    letterSpacing: string;
 }
 
 export interface CodeblockSettings {
-    isFollowTheme?: boolean;
-    isMacStyle?: boolean;
-    fontSize?: string;
+    isFollowTheme: boolean;
+    isMacStyle: boolean;
+    fontSize: string;
     fontFamily?: string;
-    hlThemeId?: string;
+    hlThemeId: string;
 }
 
 export interface Settings {
-    wechatTheme?: string;
-    paragraphSettings?: ParagraphSettings;
-    codeblockSettings?: CodeblockSettings;
+    wechatTheme: string;
+    enabledImageHost?: string;
+    paragraphSettings: ParagraphSettings;
+    codeblockSettings: CodeblockSettings;
 }
 
 export interface SettingsStorageAdapter {
-    load(): Promise<Settings> | Settings;
+    load(): Promise<Settings | null> | Settings | null;
     save(settings: Settings): Promise<void> | void;
 }
 
@@ -75,40 +76,40 @@ class SettingsStore {
         }
     }
 
-    getSettings(): Settings {
-        return this._settings;
+    get paragraphSettings(): ParagraphSettings {
+        return this._settings.paragraphSettings;
     }
 
-    async saveSettings(settings: Settings) {
-        this._settings = settings;
-        if (this.adapter) {
-            const plainSettings = $state.snapshot(settings);
-            this.adapter.save(plainSettings);
-        }
+    set paragraphSettings(value: ParagraphSettings) {
+        this._settings.paragraphSettings = value;
     }
 
-    updateCodeblockSetting<K extends keyof CodeblockSettings>(key: K, value: CodeblockSettings[K]) {
-        const current = this._settings;
-
-        this.saveSettings({
-            ...current,
-            codeblockSettings: {
-                ...(current.codeblockSettings || {}),
-                [key]: value,
-            },
-        });
+    get codeblockSettings(): CodeblockSettings {
+        return this._settings.codeblockSettings;
     }
 
-    updateParagraphSetting<K extends keyof ParagraphSettings>(key: K, value: ParagraphSettings[K]) {
-        const current = this._settings;
+    set codeblockSettings(value: CodeblockSettings) {
+        this._settings.codeblockSettings = value;
+    }
 
-        this.saveSettings({
-            ...current,
-            paragraphSettings: {
-                ...(current.paragraphSettings || {}),
-                [key]: value,
-            },
-        });
+    get enabledImageHost(): string | undefined {
+        return this._settings.enabledImageHost;
+    }
+
+    set enabledImageHost(value: string) {
+        this._settings.enabledImageHost = value;
+    }
+
+    get wechatTheme(): string {
+        return this._settings.wechatTheme;
+    }
+
+    set wechatTheme(value: string) {
+        this._settings.wechatTheme = value;
+    }
+
+    async saveSettings() {
+        this.adapter?.save($state.snapshot(this._settings));
     }
 }
 
@@ -118,9 +119,9 @@ export const settingsStore = new SettingsStore();
  * 一个基于浏览器 localStorage 的 SettingsStorageAdapter 实现
  */
 export const localStorageSettingsAdapter: SettingsStorageAdapter = {
-    async load(): Promise<Settings> {
+    async load(): Promise<Settings | null> {
         const data = localStorage.getItem("wenyan-settings");
-        return data ? JSON.parse(data) : {};
+        return data ? JSON.parse(data) : null;
     },
     async save(settings: Settings): Promise<void> {
         localStorage.setItem("wenyan-settings", JSON.stringify(settings));

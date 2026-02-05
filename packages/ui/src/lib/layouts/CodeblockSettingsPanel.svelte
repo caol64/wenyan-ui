@@ -3,14 +3,10 @@
     import SegmentedControl from "$lib/components/SegmentedControl.svelte";
     import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
     import { getAllHlThemes } from "@wenyan-md/core";
-    import { settingsStore } from "$lib/settingsStore.svelte";
+    import { settingsStore } from "$lib/stores/settingsStore.svelte";
     import { globalState } from "$lib/wenyan.svelte";
 
-    let codeblockSettings = $derived(settingsStore.getSettings().codeblockSettings || {});
-    let followTheme = $derived(codeblockSettings.isFollowTheme ? true : false);
-    let isMacStyle = $derived(codeblockSettings.isMacStyle ? "1" : "0"); // 1 开启，0 关闭
-    let fontSize = $derived(codeblockSettings.fontSize ?? "12px");
-    let hlThemeId = $derived(codeblockSettings.hlThemeId ?? "github");
+    let codeblockSettings = settingsStore.codeblockSettings;
     const allHlThemes = getAllHlThemes();
     const hlThemeOptions = allHlThemes.map((theme) => ({
         label: theme.id,
@@ -18,24 +14,24 @@
     }));
 
     function handleFollowThemeChange(value: boolean) {
-        followTheme = value;
-        settingsStore.updateCodeblockSetting("isFollowTheme", followTheme);
+        codeblockSettings.isFollowTheme = value;
+        settingsStore.saveSettings();
     }
 
     function handleMacStyleChange(value: string) {
-        isMacStyle = value;
-        settingsStore.updateCodeblockSetting("isMacStyle", isMacStyle === "1");
+        codeblockSettings.isMacStyle = value === "1";
+        settingsStore.saveSettings();
     }
 
     function handleHlThemeChange(value: string) {
-        hlThemeId = value;
-        globalState.setCurrentHlTheme(hlThemeId);
-        settingsStore.updateCodeblockSetting("hlThemeId", hlThemeId);
+        codeblockSettings.hlThemeId = value;
+        globalState.setCurrentHlTheme(codeblockSettings.hlThemeId);
+        settingsStore.saveSettings();
     }
 
     function handleFontSizeChange(value: string) {
-        fontSize = value;
-        settingsStore.updateCodeblockSetting("fontSize", fontSize);
+        codeblockSettings.fontSize = value;
+        settingsStore.saveSettings();
     }
 </script>
 
@@ -44,9 +40,9 @@
     <!-- 跟随主题开关 -->
     <div class="flex items-center justify-between">
         <span class="text-sm">跟随主题</span>
-        <ToggleSwitcher isChecked={followTheme} onChange={handleFollowThemeChange} />
+        <ToggleSwitcher isChecked={codeblockSettings.isFollowTheme} onChange={handleFollowThemeChange} />
     </div>
-    {#if !followTheme}
+    {#if !codeblockSettings.isFollowTheme}
         <!-- Mac 风格 -->
         <div class="space-y-4">
             <div class="space-y-2">
@@ -56,7 +52,7 @@
                         { label: "开启", value: "1" },
                         { label: "关闭", value: "0" },
                     ]}
-                    current={isMacStyle}
+                    current={codeblockSettings.isMacStyle ? "1" : "0"}
                     onChange={handleMacStyleChange}
                     title="Mac 风格选择"
                 />
@@ -72,7 +68,7 @@
                         { label: "15px", value: "15px" },
                         { label: "16px", value: "16px" },
                     ]}
-                    current={fontSize}
+                    current={codeblockSettings.fontSize}
                     onChange={handleFontSizeChange}
                     title="字体大小选择"
                 />
@@ -82,7 +78,7 @@
                 <span class="text-sm font-medium text-gray-700">高亮主题</span>
                 <DropdownList
                     options={hlThemeOptions}
-                    current={hlThemeId}
+                    current={codeblockSettings.hlThemeId}
                     onChange={handleHlThemeChange}
                     class="w-48"
                 />

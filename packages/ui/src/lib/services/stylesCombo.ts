@@ -4,7 +4,7 @@ import {
     DEFAULT_PARAGRAPH_SETTINGS,
     type CodeblockSettings,
     type ParagraphSettings,
-} from "./settingsStore.svelte";
+} from "../stores/settingsStore.svelte";
 
 type CssUpdate = {
     property: string;

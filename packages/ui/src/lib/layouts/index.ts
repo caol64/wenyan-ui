@@ -11,3 +11,5 @@ export { default as CustomThemeList } from "./CustomThemeList.svelte";
 export { default as CodeblockSettingsPanel } from "./CodeblockSettingsPanel.svelte";
 export { default as BuiltinThemeList } from "./BuiltinThemeList.svelte";
 export { default as AlertModal } from "./AlertModal.svelte";
+export { default as SettingsPage } from "./settings/SettingsPage.svelte";
+export { default as SettingsModal } from "./settings/SettingsModal.svelte";

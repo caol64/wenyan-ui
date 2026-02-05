@@ -18,3 +18,12 @@ export async function copyTextToClipboard(text: string) {
     }
     await navigator.clipboard.writeText(text);
 }
+
+export function createDebouncer(delay = 500) {
+    let timer: ReturnType<typeof setTimeout>;
+
+    return (callback: () => void) => {
+        clearTimeout(timer);
+        timer = setTimeout(callback, delay);
+    };
+}

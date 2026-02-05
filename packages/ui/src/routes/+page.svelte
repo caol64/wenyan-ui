@@ -6,4 +6,5 @@
     <li><a href="/titlebar">Title Bar Page</a></li>
     <li><a href="/main">Main Page</a></li>
     <li><a href="/sidebar">Sidebar Page</a></li>
+    <li><a href="/settings">Settings Page</a></li>
 </ul>

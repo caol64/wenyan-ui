@@ -1,6 +1,6 @@
 <script lang="ts">
     import SaveCustomThemeButton from "$lib/components/buttons/SaveCustomThemeButton.svelte";
-    import { themeStore } from "$lib/themeStore.svelte";
+    import { themeStore } from "$lib/stores/themeStore.svelte";
     import { globalState } from "$lib/wenyan.svelte";
 
     function cancel() {

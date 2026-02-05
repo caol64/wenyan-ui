@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte";
+    import { onMount } from "svelte";
     import { EditorView, basicSetup } from "codemirror";
     import { EditorState, Compartment } from "@codemirror/state";
     import { markdown } from "@codemirror/lang-markdown";
@@ -9,13 +9,13 @@
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
     import { languages } from "@codemirror/language-data";
     import { globalState } from "$lib/wenyan.svelte";
-    import { EDITOR_DROP_HANDLER_CONTEXT_KEY, EDITOR_PASTE_HANDLER_CONTEXT_KEY } from "$lib/contextKeys";
-    import type { EditorDropFn, EditorPasteFn } from "$lib/constants";
+    import { getEditorClick, getEditorPaste, getEditorDrop } from "$lib/contexts/editor";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
-    const onPaste = getContext<EditorPasteFn>(EDITOR_PASTE_HANDLER_CONTEXT_KEY);
-    const onDrop = getContext<EditorDropFn>(EDITOR_DROP_HANDLER_CONTEXT_KEY);
+    const onPaste = getEditorPaste();
+    const onDrop = getEditorDrop();
+    const onEditorClick = getEditorClick();
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
@@ -93,6 +93,20 @@
             }
         }
     });
+
+    function handleClick(node: HTMLElement) {
+        const onClick = (e: MouseEvent) => {
+            onEditorClick?.();
+        };
+
+        node.addEventListener("click", onClick);
+
+        return {
+            destroy() {
+                node.removeEventListener("click", onClick);
+            },
+        };
+    }
 </script>
 
-<div bind:this={editorElement} class="h-full w-full overflow-hidden text-base"></div>
+<div use:handleClick bind:this={editorElement} class="h-full w-full overflow-hidden text-base"></div>

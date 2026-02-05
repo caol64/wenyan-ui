@@ -2,12 +2,10 @@
     import Clipboard from "../icons/Clipboard.svelte";
     import Check from "../icons/Check.svelte";
     import { globalState, wenyanCopier, wenyanRenderer } from "$lib/wenyan.svelte";
-    import { getContext } from "svelte";
-    import { COPY_CONTEXT_KEY, GET_WENYAN_ELEMENT_CONTEXT_KEY } from "$lib/contextKeys";
-    import type { CopyFn, GetWenyanElementFn } from "$lib/constants";
+    import { getCopyClick, getGetWenyanElement } from "$lib/contexts/copy";
 
-    const onCopy = getContext<CopyFn>(COPY_CONTEXT_KEY);
-    const getWenyanElement = getContext<GetWenyanElementFn>(GET_WENYAN_ELEMENT_CONTEXT_KEY);
+    const onCopy = getCopyClick();
+    const getWenyanElement = getGetWenyanElement();
     let copiedFlag = $state(false);
 
     async function handleCopy() {

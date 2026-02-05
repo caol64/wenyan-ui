@@ -7,11 +7,11 @@ import {
     getHlTheme,
     getTheme,
 } from "@wenyan-md/core";
-import type { Platform } from "./constants";
-import { themeStore } from "./themeStore.svelte";
-import { settingsStore } from "./settingsStore.svelte";
-import { articleStore } from "./articleStore.svelte";
-import { comboCodeblockSettings, comboParagraphSettings } from "./stylesCombo";
+import type { Platform } from "./types";
+import { themeStore } from "./stores/themeStore.svelte";
+import { settingsStore } from "./stores/settingsStore.svelte";
+import { articleStore } from "./stores/articleStore.svelte";
+import { comboCodeblockSettings, comboParagraphSettings } from "./services/stylesCombo";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 
@@ -97,11 +97,11 @@ class WenyanCopier {
         if (globalState.getPlatform() === "wechat") {
             const core = await coreManager.get();
             let themeCss = globalState.getCurrentThemeCss();
-            const codeblockSettings = settingsStore.getSettings().codeblockSettings;
+            const codeblockSettings = settingsStore.codeblockSettings;
             if (codeblockSettings && !codeblockSettings.isFollowTheme) {
                 themeCss = comboCodeblockSettings(themeCss, codeblockSettings);
             }
-            const paragraphSettings = settingsStore.getSettings().paragraphSettings;
+            const paragraphSettings = settingsStore.paragraphSettings;
             if (paragraphSettings && !paragraphSettings.isFollowTheme) {
                 themeCss = comboParagraphSettings(themeCss, paragraphSettings);
             }
@@ -170,9 +170,8 @@ class GlobalState {
     setPlatform(platform: Platform) {
         this.currentPlatform = platform;
         if (platform === "wechat") {
-            const wechatTheme = settingsStore.getSettings().wechatTheme ?? "default";
-            this.setCurrentTheme(wechatTheme);
-            this.setCurrentHlTheme(settingsStore.getSettings().codeblockSettings?.hlThemeId ?? "github");
+            this.setCurrentTheme(settingsStore.wechatTheme);
+            this.setCurrentHlTheme(settingsStore.codeblockSettings.hlThemeId);
         } else {
             this.loadThemeCss(`${this.currentPlatform}_default`);
             this.loadHlThemeCss("github");
@@ -187,9 +186,8 @@ class GlobalState {
         this.currentTheme = theme;
         this.loadThemeCss(theme);
         if (this.getPlatform() === "wechat") {
-            const settings = settingsStore.getSettings();
-            settings.wechatTheme = theme;
-            settingsStore.saveSettings(settings);
+            settingsStore.wechatTheme = theme;
+            settingsStore.saveSettings();
         }
     }
 

@@ -1,12 +1,13 @@
 <script lang="ts">
-    import { settingsStore, type CodeblockSettings, type ParagraphSettings } from "$lib/settingsStore.svelte";
-    import { comboCodeblockSettings, comboParagraphSettings } from "$lib/stylesCombo";
+    import { settingsStore, type CodeblockSettings, type ParagraphSettings } from "$lib/stores/settingsStore.svelte";
+    import { comboCodeblockSettings, comboParagraphSettings } from "$lib/services/stylesCombo";
     import { wenyanRenderer, globalState } from "$lib/wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
+    import { getPreviewClick } from "$lib/contexts/preview";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
-    let codeblockSettings = $derived(settingsStore.getSettings().codeblockSettings ?? {});
-    let paragraphSettings = $derived(settingsStore.getSettings().paragraphSettings ?? {});
+
+    const onPreviewClick = getPreviewClick();
 
     $effect(() => {
         wenyanRenderer.render(globalState.getMarkdownText());
@@ -15,9 +16,9 @@
     $effect(() => {
         updateTheme(globalState.getCurrentThemeCss());
         if (globalState.getPlatform() === "wechat") {
-            updateCodeblock(codeblockSettings);
-            updateParagraph(paragraphSettings);
-            updateMacStyle(codeblockSettings);
+            updateCodeblock(settingsStore.codeblockSettings);
+            updateParagraph(settingsStore.paragraphSettings);
+            updateMacStyle(settingsStore.codeblockSettings);
         } else {
             updateMacStyle({ isFollowTheme: false, isMacStyle: false });
         }
@@ -57,7 +58,7 @@
         s.textContent = hlThemeCss;
     }
 
-    function updateMacStyle(codeblockSettings: CodeblockSettings) {
+    function updateMacStyle(codeblockSettings: Partial<CodeblockSettings>) {
         const isFollowTheme = codeblockSettings.isFollowTheme ?? true;
         const isMacStyle = isFollowTheme ? true : (codeblockSettings.isMacStyle ?? true);
         let s = document.getElementById("wenyan-macstyle-style") as HTMLStyleElement | null;
@@ -78,9 +79,23 @@
             }
         }
     }
+
+    function handleClick(node: HTMLElement) {
+        const onClick = (e: MouseEvent) => {
+            onPreviewClick?.();
+        };
+
+        node.addEventListener("click", onClick);
+
+        return {
+            destroy() {
+                node.removeEventListener("click", onClick);
+            },
+        };
+    }
 </script>
 
-<div bind:this={scrollRef} class="h-full w-full scroll-container">
+<div use:handleClick bind:this={scrollRef} class="h-full w-full scroll-container">
     <div class="m-auto w-105 outline-none shadow-[0_0_60px_rgba(0,0,0,0.1)] p-5">
         <section id="wenyan">
             {@html wenyanRenderer.html}

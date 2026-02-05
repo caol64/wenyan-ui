@@ -1,53 +1,43 @@
 <script lang="ts">
     import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
     import SegmentedControl from "$lib/components/SegmentedControl.svelte";
-    import { settingsStore } from "$lib/settingsStore.svelte";
+    import { settingsStore } from "$lib/stores/settingsStore.svelte";
 
-    let paragraphSettings = $derived(settingsStore.getSettings().paragraphSettings || {});
-
-    let followTheme = $derived(paragraphSettings.isFollowTheme ? true : false);
-
-    let fontSize = $derived(paragraphSettings.fontSize ?? "16px");
-    let fontFamily = $derived(paragraphSettings.fontFamily ?? "sans"); // serif, sans, mono
-    let fontWeight = $derived(paragraphSettings.fontWeight ?? "400"); // light, normal, bold
-
-    let letterSpacing = $derived(paragraphSettings.letterSpacing ?? "0.1em"); // small, standard, large, huge
-    let lineHeight = $derived(paragraphSettings.lineHeight ?? "1.75");
-    let paragraphSpacing = $derived(paragraphSettings.paragraphSpacing ?? "1em");
+    let paragraphSettings = settingsStore.paragraphSettings;
 
     function handleFollowThemeChange(value: boolean) {
-        followTheme = value;
-        settingsStore.updateParagraphSetting("isFollowTheme", followTheme);
+        paragraphSettings.isFollowTheme = value;
+        settingsStore.saveSettings();
     }
 
     function handleFontSizeChange(value: string) {
-        fontSize = value;
-        settingsStore.updateParagraphSetting("fontSize", fontSize);
+        paragraphSettings.fontSize = value;
+        settingsStore.saveSettings();
     }
 
     function handleFontFamilyChange(value: string) {
-        fontFamily = value;
-        settingsStore.updateParagraphSetting("fontFamily", fontFamily);
+        paragraphSettings.fontFamily = value;
+        settingsStore.saveSettings();
     }
 
     function handleFontWeightChange(value: string) {
-        fontWeight = value;
-        settingsStore.updateParagraphSetting("fontWeight", fontWeight);
+        paragraphSettings.fontWeight = value;
+        settingsStore.saveSettings();
     }
 
     function handleLetterSpacingChange(value: string) {
-        letterSpacing = value;
-        settingsStore.updateParagraphSetting("letterSpacing", letterSpacing);
+        paragraphSettings.letterSpacing = value;
+        settingsStore.saveSettings();
     }
 
     function handleLineHeightChange(value: string) {
-        lineHeight = value;
-        settingsStore.updateParagraphSetting("lineHeight", lineHeight);
+        paragraphSettings.lineHeight = value;
+        settingsStore.saveSettings();
     }
 
     function handleParagraphSpacingChange(value: string) {
-        paragraphSpacing = value;
-        settingsStore.updateParagraphSetting("paragraphSpacing", paragraphSpacing);
+        paragraphSettings.paragraphSpacing = value;
+        settingsStore.saveSettings();
     }
 </script>
 
@@ -57,11 +47,11 @@
     <!-- 跟随主题开关 -->
     <div class="flex items-center justify-between">
         <span class="text-sm">跟随主题</span>
-        <ToggleSwitcher isChecked={followTheme} onChange={handleFollowThemeChange} />
+        <ToggleSwitcher isChecked={paragraphSettings.isFollowTheme} onChange={handleFollowThemeChange} />
     </div>
 
-    {#if !followTheme}
-        <div class="space-y-4" class:opacity-50={followTheme} class:pointer-events-none={followTheme}>
+    {#if !paragraphSettings.isFollowTheme}
+        <div class="space-y-4" class:opacity-50={paragraphSettings.isFollowTheme} class:pointer-events-none={paragraphSettings.isFollowTheme}>
             <!-- 字体大小 -->
             <div class="space-y-2">
                 <span class="text-sm font-medium text-gray-700">字体大小</span>
@@ -75,7 +65,7 @@
                         { label: "17px", value: "17px" },
                         { label: "18px", value: "18px" },
                     ]}
-                    current={fontSize}
+                    current={paragraphSettings.fontSize}
                     onChange={handleFontSizeChange}
                     title="字体大小选择"
                 />
@@ -90,7 +80,7 @@
                         { label: "无衬线", value: "sans" },
                         { label: "等宽", value: "mono" },
                     ]}
-                    current={fontFamily}
+                    current={paragraphSettings.fontFamily}
                     onChange={handleFontFamilyChange}
                     title="字体选择"
                 />
@@ -105,7 +95,7 @@
                         { label: "标准", value: "400" },
                         { label: "较粗", value: "500" },
                     ]}
-                    current={fontWeight}
+                    current={paragraphSettings.fontWeight}
                     onChange={handleFontWeightChange}
                     title="文字粗细选择"
                 />
@@ -121,7 +111,7 @@
                         { label: "较大", value: "0.15em" },
                         { label: "大", value: "0.2em" },
                     ]}
-                    current={letterSpacing}
+                    current={paragraphSettings.letterSpacing}
                     onChange={handleLetterSpacingChange}
                     title="字间距选择"
                 />
@@ -137,7 +127,7 @@
                         { label: "较大", value: "2" },
                         { label: "大", value: "2.25" },
                     ]}
-                    current={lineHeight}
+                    current={paragraphSettings.lineHeight}
                     onChange={handleLineHeightChange}
                     title="行间距选择"
                 />
@@ -153,7 +143,7 @@
                         { label: "较大", value: "1.5em" },
                         { label: "大", value: "2em" },
                     ]}
-                    current={paragraphSpacing}
+                    current={paragraphSettings.paragraphSpacing}
                     onChange={handleParagraphSpacingChange}
                     title="段落间距选择"
                 />
