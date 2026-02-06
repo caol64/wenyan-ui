@@ -12,11 +12,11 @@
         try {
             copiedFlag = true;
             if (globalState.getPlatform() === "juejin") {
-                onCopy(wenyanRenderer.postHandlerContent, "txt");
+                onCopy?.(wenyanRenderer.postHandlerContent, "txt");
             } else {
                 const wenyanElement = getWenyanElement();
                 await wenyanCopier.copy(wenyanElement);
-                onCopy(wenyanCopier.html, "html");
+                onCopy?.(wenyanCopier.html, "html");
             }
         } finally {
             setTimeout(() => {

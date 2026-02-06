@@ -3,11 +3,13 @@
     import { comboCodeblockSettings, comboParagraphSettings } from "../services/stylesCombo";
     import { wenyanRenderer, globalState } from "../wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
-    import { getPreviewClick } from "../contexts/preview";
+    import { getDownloadImageToBase64, getPreviewClick } from "../contexts/preview";
+    import { processImages } from "../services/processImages.svelte";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
     const onPreviewClick = getPreviewClick();
+    const downloadImageToBase64 = getDownloadImageToBase64();
 
     $effect(() => {
         wenyanRenderer.render(globalState.getMarkdownText());
@@ -97,7 +99,7 @@
 
 <div use:handleClick bind:this={scrollRef} class="h-full w-full scroll-container">
     <div class="m-auto w-105 outline-none shadow-[0_0_60px_rgba(0,0,0,0.1)] p-5">
-        <section id="wenyan">
+        <section id="wenyan" use:processImages={{ download: downloadImageToBase64 }}>
             {@html wenyanRenderer.html}
         </section>
     </div>

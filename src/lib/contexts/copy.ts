@@ -1,3 +1,4 @@
+import { copyHtmlToClipboard, copyTextToClipboard } from "../utils";
 import type { CopyContentType } from "../types";
 import { setContext, getContext } from "svelte";
 
@@ -12,7 +13,16 @@ export function setCopyClick(fn: CopyClickFn) {
 }
 
 export function getCopyClick(): CopyClickFn {
-    return getContext<CopyClickFn>(COPY_CLICK_KEY);
+    return (
+        getContext<CopyClickFn>(COPY_CLICK_KEY) ??
+        ((result: string, contentType: CopyContentType) => {
+            if (contentType === "html") {
+                copyHtmlToClipboard(result);
+            } else {
+                copyTextToClipboard(result);
+            }
+        })
+    );
 }
 
 export function setGetWenyanElement(fn: GetWenyanElementFn) {
@@ -20,5 +30,15 @@ export function setGetWenyanElement(fn: GetWenyanElementFn) {
 }
 
 export function getGetWenyanElement(): GetWenyanElementFn {
-    return getContext<GetWenyanElementFn>(GET_WENYAN_ELEMENT_KEY);
+    return (
+        getContext<GetWenyanElementFn>(GET_WENYAN_ELEMENT_KEY) ??
+        (() => {
+            const wenyanElement = document.getElementById("wenyan");
+            if (!wenyanElement) {
+                throw new Error("Wenyan element not found");
+            }
+            const clonedWenyan = wenyanElement.cloneNode(true) as HTMLElement;
+            return clonedWenyan;
+        })
+    );
 }

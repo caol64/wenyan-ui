@@ -135,6 +135,7 @@ class GlobalState {
     private currentHlTheme = $state("github");
     private currentHlThemeCss = $state("");
     private alertMessage = $state<AlertMessage | null>(null);
+    private _isLoading = $state(false);
 
     setMarkdownText(text: string) {
         if (text !== this.markdownText) {
@@ -222,6 +223,14 @@ class GlobalState {
 
     getCurrentHlThemeCss(): string {
         return this.currentHlThemeCss;
+    }
+
+    set isLoading(loading: boolean) {
+        this._isLoading = loading;
+    }
+
+    get isLoading(): boolean {
+        return this._isLoading;
     }
 
     private async loadThemeCss(themeId: string) {

@@ -6,17 +6,12 @@
         settingsStore,
         articleStore,
         indexedDbArticleAdapter,
-        defaultEditorPasteHandler,
-        defaultEditorDropHandler,
         AlertModal,
-        setEditorPaste,
-        setEditorDrop,
         getExampleArticle,
-    } from "../../..";
+        Sidebar,
+        TitleBar,
+    } from "$lib";
     import { onMount } from "svelte";
-
-    setEditorPaste(defaultEditorPasteHandler);
-    setEditorDrop(defaultEditorDropHandler);
 
     onMount(async () => {
         await articleStore.register(indexedDbArticleAdapter);
@@ -32,8 +27,17 @@
     }
 </script>
 
-<div class="flex h-screen w-full flex-col overflow-hidden md:flex-row">
-    <MainPage />
+<div class="flex h-screen w-full flex-col overflow-hidden">
+    <TitleBar />
+    <div class="flex h-full w-full flex-col overflow-hidden md:flex-row">
+        <MainPage />
+
+        {#if globalState.judgeSidebarOpen()}
+            <div class="h-full w-80">
+                <Sidebar />
+            </div>
+        {/if}
+    </div>
 </div>
 
 <AlertModal />

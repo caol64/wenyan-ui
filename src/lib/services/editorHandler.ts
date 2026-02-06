@@ -1,7 +1,7 @@
 import type { EditorView } from "codemirror";
 import { globalState } from "../wenyan.svelte";
 
-const imgType = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+const imgType = ["image/bmp", "image/png", "image/jpeg", "image/gif", "video/mp4"];
 const alertMessage = "网页版暂不支持上传图片功能，请使用桌面客户端。";
 
 export function defaultEditorPasteHandler(event: ClipboardEvent, view: EditorView) {
@@ -29,29 +29,3 @@ export function defaultEditorDropHandler(event: DragEvent, view: EditorView) {
 function canHandleFile(file: File) {
     return file && imgType.includes(file.type);
 }
-
-// async function handleImageUpload(file: File, view: EditorView) {
-//     if (!file || !imgType.includes(file.type)) return;
-
-//     if (onUploadImage) {
-//         try {
-//             const placeholder = `![上传中...](${file.name})`;
-//             const transaction = view.state.replaceSelection(placeholder);
-//             view.dispatch(transaction);
-
-//             const url = await onUploadImage(file);
-
-//             if (url) {
-//                 const insertedText = `![](${url})`;
-//                 const text = view.state.doc.toString();
-//                 const newText = text.replace(placeholder, insertedText);
-
-//                 view.dispatch({
-//                     changes: { from: 0, to: text.length, insert: newText },
-//                 });
-//             }
-//         } catch (error) {
-//             console.error("Upload failed", error);
-//         }
-//     }
-// }

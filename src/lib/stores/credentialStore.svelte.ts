@@ -40,6 +40,14 @@ class CredentialStore {
         return this._credentials[type];
     }
 
+    async saveCredentialDirect(type: CredentialType, updated: Partial<GenericCredential>) {
+        const data = this._credentials[type];
+        if (data && this.adapter) {
+            const updatedCredential = { ...$state.snapshot(data), ...updated } as GenericCredential;
+            await this.adapter.save(updatedCredential);
+        }
+    }
+
     async saveCredential(type: CredentialType) {
         const data = this._credentials[type];
         if (data && this.adapter) {

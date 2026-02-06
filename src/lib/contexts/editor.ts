@@ -1,3 +1,4 @@
+import { defaultEditorDropHandler, defaultEditorPasteHandler } from "../services/editorHandler";
 import type { EditorView } from "@codemirror/view";
 import { setContext, getContext } from "svelte";
 
@@ -22,7 +23,7 @@ export function setEditorPaste(fn: EditorPasteFn) {
 }
 
 export function getEditorPaste(): EditorPasteFn {
-    return getContext<EditorPasteFn>(EDITOR_PASTE_KEY);
+    return getContext<EditorPasteFn>(EDITOR_PASTE_KEY) ?? defaultEditorPasteHandler;
 }
 
 export function setEditorDrop(fn: EditorDropFn) {
@@ -30,5 +31,5 @@ export function setEditorDrop(fn: EditorDropFn) {
 }
 
 export function getEditorDrop(): EditorDropFn {
-    return getContext<EditorDropFn>(EDITOR_DROP_KEY);
+    return getContext<EditorDropFn>(EDITOR_DROP_KEY) ?? defaultEditorDropHandler;
 }
