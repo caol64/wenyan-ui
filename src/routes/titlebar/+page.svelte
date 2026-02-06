@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { TitleBar } from "$lib";
+    import { TitleBar } from "../../..";
 
 </script>
 

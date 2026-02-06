@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../wenyan.svelte";
 
     let { id, name }: { id: string; name: string } = $props();
     let customThemeId = $derived(id.startsWith("0:") ? id : `custom:${id}`);

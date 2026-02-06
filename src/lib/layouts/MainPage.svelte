@@ -1,8 +1,8 @@
 <script lang="ts">
-    import CssEditor from "$lib/components/CssEditor.svelte";
-    import { MarkdownEditor, OverlayButtons, ThemePreview } from "$lib";
-    import { ScrollSynchronizer } from "$lib/services/scrollSync.svelte";
-    import { globalState } from "$lib/wenyan.svelte";
+    import CssEditor from "../components/CssEditor.svelte";
+    import { MarkdownEditor, OverlayButtons, ThemePreview } from "..";
+    import { ScrollSynchronizer } from "../services/scrollSync.svelte";
+    import { globalState } from "../wenyan.svelte";
     import EditorOverlayPanel from "./EditorOverlayPanel.svelte";
 
     const scroller = new ScrollSynchronizer();

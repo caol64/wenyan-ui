@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../../wenyan.svelte";
 
     async function newCustomTheme() {
         const currentTheme = globalState.getCurrentTheme();

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
-    import { settingsStore } from "$lib/stores/settingsStore.svelte";
+    import ToggleSwitcher from "../../components/ToggleSwitcher.svelte";
+    import { settingsStore } from "../../stores/settingsStore.svelte";
 
     let isWechatChecked = $derived(settingsStore.enabledImageHost === "wechat");
 

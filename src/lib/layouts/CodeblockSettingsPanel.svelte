@@ -1,10 +1,10 @@
 <script lang="ts">
-    import DropdownList from "$lib/components/DropdownList.svelte";
-    import SegmentedControl from "$lib/components/SegmentedControl.svelte";
-    import ToggleSwitcher from "$lib/components/ToggleSwitcher.svelte";
+    import DropdownList from "../components/DropdownList.svelte";
+    import SegmentedControl from "../components/SegmentedControl.svelte";
+    import ToggleSwitcher from "../components/ToggleSwitcher.svelte";
     import { getAllHlThemes } from "@wenyan-md/core";
-    import { settingsStore } from "$lib/stores/settingsStore.svelte";
-    import { globalState } from "$lib/wenyan.svelte";
+    import { settingsStore } from "../stores/settingsStore.svelte";
+    import { globalState } from "../wenyan.svelte";
 
     let codeblockSettings = settingsStore.codeblockSettings;
     const allHlThemes = getAllHlThemes();

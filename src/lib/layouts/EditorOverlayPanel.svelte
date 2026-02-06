@@ -1,7 +1,7 @@
 <script lang="ts">
-    import SaveCustomThemeButton from "$lib/components/buttons/SaveCustomThemeButton.svelte";
-    import { themeStore } from "$lib/stores/themeStore.svelte";
-    import { globalState } from "$lib/wenyan.svelte";
+    import SaveCustomThemeButton from "../components/buttons/SaveCustomThemeButton.svelte";
+    import { themeStore } from "../stores/themeStore.svelte";
+    import { globalState } from "../wenyan.svelte";
 
     function cancel() {
         const currentTheme = globalState.getCurrentTheme();

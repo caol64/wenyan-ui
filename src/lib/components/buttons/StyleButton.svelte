@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../../wenyan.svelte";
     import Theme from "../icons/Theme.svelte";
 
     async function handleClick() {

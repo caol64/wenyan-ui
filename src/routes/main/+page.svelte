@@ -12,7 +12,7 @@
         setEditorPaste,
         setEditorDrop,
         getExampleArticle,
-    } from "$lib";
+    } from "../../..";
     import { onMount } from "svelte";
 
     setEditorPaste(defaultEditorPasteHandler);

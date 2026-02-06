@@ -1,4 +1,4 @@
-import type { CopyContentType } from "$lib/types";
+import type { CopyContentType } from "../types";
 import { setContext, getContext } from "svelte";
 
 const COPY_CLICK_KEY = Symbol("COPY_CLICK");

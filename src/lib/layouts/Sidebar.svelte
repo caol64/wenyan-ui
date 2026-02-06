@@ -1,6 +1,6 @@
 <script lang="ts">
     import BuiltinThemeList from "./BuiltinThemeList.svelte";
-    import RightSideToggle from "$lib/components/RightSideToggle.svelte";
+    import RightSideToggle from "../components/RightSideToggle.svelte";
     import CustomThemeList from "./CustomThemeList.svelte";
     import CodeblockSettings from "./CodeblockSettingsPanel.svelte";
     import ParagraphSettings from "./ParagraphSettingsPanel.svelte";

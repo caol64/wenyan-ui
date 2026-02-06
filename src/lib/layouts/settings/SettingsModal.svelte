@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Modal from "$lib/components/Modal.svelte";
+    import Modal from "../../components/Modal.svelte";
     import SettingsPage from "./SettingsPage.svelte";
 
     let { isOpen, onClose, title }: { isOpen: boolean, onClose: () => void, title?: string } = $props();

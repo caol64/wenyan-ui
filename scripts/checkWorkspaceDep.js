@@ -26,7 +26,7 @@ function check() {
 
             depTypes.forEach((type) => {
                 PACKAGE_TO_CHECK.forEach((targetPackage) => {
-                    if (pkg[type] && !pkg[type][targetPackage].startsWith("^")) {
+                    if (pkg[type] && pkg[type][targetPackage] && !pkg[type][targetPackage].startsWith("^")) {
                         console.error(`❌ [${pkgPath}] 在 ${type} 中发现禁止的依赖版本:`);
                         console.error(`   "${targetPackage}": "${pkg[type][targetPackage]}"`);
                         fileHasError = true;

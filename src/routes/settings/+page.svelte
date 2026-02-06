@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { settingsStore, localStorageSettingsAdapter } from "$lib";
-    import SettingsModal from "$lib/layouts/settings/SettingsModal.svelte";
+    import { settingsStore, localStorageSettingsAdapter, SettingsModal } from "../../..";
     import { onMount } from "svelte";
 
     onMount(async () => {

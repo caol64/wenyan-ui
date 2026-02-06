@@ -1,8 +1,11 @@
 <script lang="ts">
-    import { credentialStore } from '$lib/stores/credentialStore.svelte';
+    import { credentialStore } from "../../../stores/credentialStore.svelte";
+    import { getUploadHelpClick } from "../../../contexts/externalLink";
 
     let wechat = credentialStore.wechat;
     let debounceTimer: ReturnType<typeof setTimeout>;
+
+    const handleHelpClick = getUploadHelpClick();
 
     $effect(() => {
         const _deps = [wechat.appId, wechat.appSecret];
@@ -50,10 +53,9 @@
         <!-- 帮助链接 -->
         <div class="flex flex-col items-end gap-1 pt-2">
             <p class="text-xs text-amber-600 font-medium">⚠️ 请务必开启“IP白名单”</p>
-            <a
-                href="https://yuzhi.tech/docs/wenyan/upload"
-                target="_blank"
-                class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1"
+            <button
+                onclick={handleHelpClick}
+                class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 cursor-pointer"
             >
                 使用帮助
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -64,7 +66,7 @@
                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     /></svg
                 >
-            </a>
+            </button>
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { settingsStore, type CodeblockSettings, type ParagraphSettings } from "$lib/stores/settingsStore.svelte";
-    import { comboCodeblockSettings, comboParagraphSettings } from "$lib/services/stylesCombo";
-    import { wenyanRenderer, globalState } from "$lib/wenyan.svelte";
+    import { settingsStore, type CodeblockSettings, type ParagraphSettings } from "../stores/settingsStore.svelte";
+    import { comboCodeblockSettings, comboParagraphSettings } from "../services/stylesCombo";
+    import { wenyanRenderer, globalState } from "../wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
-    import { getPreviewClick } from "$lib/contexts/preview";
+    import { getPreviewClick } from "../contexts/preview";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { globalState } from "$lib/wenyan.svelte";
-    import { themeStore } from "$lib/stores/themeStore.svelte";
+    import { globalState } from "../../wenyan.svelte";
+    import { themeStore } from "../../stores/themeStore.svelte";
 
     async function save() {
         if (globalState.getCurrentTheme().startsWith("0:")) {

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import WenYanButton from "$lib/components/buttons/WenYanButton.svelte";
+    import WenYanButton from "../components/buttons/WenYanButton.svelte";
     import PlatformButtons from "./PlatformButtons.svelte";
 </script>
 

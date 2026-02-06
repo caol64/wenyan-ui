@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type ThemeMeta } from "@wenyan-md/core";
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../../wenyan.svelte";
 
     let { themeMeta }: { themeMeta: ThemeMeta } = $props();
 
@@ -8,7 +8,7 @@
         if (globalState.getCurrentTheme() !== themeMeta.id) {
             // alert not saved changes
             // clear unsaved changes state
-            // reset 
+            // reset
         }
         globalState.setCurrentTheme(themeMeta.id);
     }

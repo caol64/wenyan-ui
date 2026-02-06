@@ -17,3 +17,4 @@ export * from "./stores/credentialStore.svelte";
 export * from "./contexts/preview";
 export * from "./contexts/editor";
 export * from "./contexts/copy";
+export * from "./contexts/externalLink";

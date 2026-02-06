@@ -8,8 +8,8 @@
     import { vsCodeLight } from "@fsegurai/codemirror-theme-vscode-light";
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
     import { languages } from "@codemirror/language-data";
-    import { globalState } from "$lib/wenyan.svelte";
-    import { getEditorClick, getEditorPaste, getEditorDrop } from "$lib/contexts/editor";
+    import { globalState } from "../wenyan.svelte";
+    import { getEditorClick, getEditorPaste, getEditorDrop } from "../contexts/editor";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 

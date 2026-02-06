@@ -1,8 +1,8 @@
 <script lang="ts">
-    import CopyButton from "$lib/components/buttons/CopyButton.svelte";
-    import FootnoteButton from "$lib/components/buttons/FootnoteButton.svelte";
-    import StyleButton from "$lib/components/buttons/StyleButton.svelte";
-    import { globalState } from "$lib/wenyan.svelte";
+    import CopyButton from "../components/buttons/CopyButton.svelte";
+    import FootnoteButton from "../components/buttons/FootnoteButton.svelte";
+    import StyleButton from "../components/buttons/StyleButton.svelte";
+    import { globalState } from "../wenyan.svelte";
 </script>
 
 <div

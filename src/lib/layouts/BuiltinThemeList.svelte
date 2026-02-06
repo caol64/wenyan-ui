@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ThemeButton from "$lib/components/buttons/ThemeButton.svelte";
+    import ThemeButton from "../components/buttons/ThemeButton.svelte";
     import { getAllGzhThemes } from "@wenyan-md/core";
 
 </script>

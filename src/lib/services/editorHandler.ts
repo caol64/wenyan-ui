@@ -1,5 +1,5 @@
 import type { EditorView } from "codemirror";
-import { globalState } from "$lib/wenyan.svelte";
+import { globalState } from "../wenyan.svelte";
 
 const imgType = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 const alertMessage = "网页版暂不支持上传图片功能，请使用桌面客户端。";

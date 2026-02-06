@@ -1,9 +1,9 @@
 <script lang="ts">
-    import WeChatButton from "$lib/components/buttons/WeChatButton.svelte";
-    import ToutiaoButton from "$lib/components/buttons/ToutiaoButton.svelte";
-    import ZhihuButton from "$lib/components/buttons/ZhihuButton.svelte";
-    import JuejinButton from "$lib/components/buttons/JuejinButton.svelte";
-    import MediumButton from "$lib/components/buttons/MediumButton.svelte";
+    import WeChatButton from "../components/buttons/WeChatButton.svelte";
+    import ToutiaoButton from "../components/buttons/ToutiaoButton.svelte";
+    import ZhihuButton from "../components/buttons/ZhihuButton.svelte";
+    import JuejinButton from "../components/buttons/JuejinButton.svelte";
+    import MediumButton from "../components/buttons/MediumButton.svelte";
     let { w = "20px" } = $props();
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Sidebar } from "$lib";
+    import { Sidebar } from "../../..";
 
 </script>
 

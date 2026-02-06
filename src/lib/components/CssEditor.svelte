@@ -7,7 +7,7 @@
     import { indentWithTab } from "@codemirror/commands";
     import { vsCodeLight } from "@fsegurai/codemirror-theme-vscode-light";
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../wenyan.svelte";
 
     let editorElement: HTMLDivElement;
     let view: EditorView;

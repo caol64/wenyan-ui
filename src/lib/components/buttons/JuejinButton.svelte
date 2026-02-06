@@ -1,6 +1,6 @@
 <script lang="ts">
     import Juejin from "../icons/Juejin.svelte";
-    import { globalState } from "$lib/wenyan.svelte";
+    import { globalState } from "../../wenyan.svelte";
 
     let { w = "20px" } = $props();
 

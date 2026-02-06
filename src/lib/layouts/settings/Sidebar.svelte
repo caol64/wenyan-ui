@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Gear from "$lib/components/icons/Gear.svelte";
+    import Gear from "../../components/icons/Gear.svelte";
     import { credentialMenuItems } from "./settings";
 
     let { activeId = $bindable() }: { activeId: string } = $props();

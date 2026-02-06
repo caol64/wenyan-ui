@@ -1,8 +1,8 @@
 <script lang="ts">
     import Clipboard from "../icons/Clipboard.svelte";
     import Check from "../icons/Check.svelte";
-    import { globalState, wenyanCopier, wenyanRenderer } from "$lib/wenyan.svelte";
-    import { getCopyClick, getGetWenyanElement } from "$lib/contexts/copy";
+    import { globalState, wenyanCopier, wenyanRenderer } from "../../wenyan.svelte";
+    import { getCopyClick, getGetWenyanElement } from "../../contexts/copy";
 
     const onCopy = getCopyClick();
     const getWenyanElement = getGetWenyanElement();

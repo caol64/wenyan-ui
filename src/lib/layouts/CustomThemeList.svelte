@@ -1,7 +1,7 @@
 <script lang="ts">
-    import AddCustomThemeButton from "$lib/components/buttons/AddCustomThemeButton.svelte";
-    import CustomThemeRow from "$lib/layouts/CustomThemeRow.svelte";
-    import { themeStore } from "$lib/stores/themeStore.svelte";
+    import AddCustomThemeButton from "../components/buttons/AddCustomThemeButton.svelte";
+    import CustomThemeRow from "../layouts/CustomThemeRow.svelte";
+    import { themeStore } from "../stores/themeStore.svelte";
 </script>
 
 <div class="mb-2">

@@ -6,7 +6,7 @@
         localStorageSettingsAdapter,
         articleStore,
         getExampleArticle,
-    } from "$lib";
+    } from "../../..";
     import { onMount } from "svelte";
 
     settingsStore.register(localStorageSettingsAdapter);
