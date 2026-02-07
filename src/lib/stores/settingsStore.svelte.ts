@@ -47,6 +47,7 @@ export const DEFAULT_PARAGRAPH_SETTINGS: ParagraphSettings = {
 
 export const DEFAULT_SETTINGS: Settings = {
     wechatTheme: "default",
+    enabledImageHost: "wechat",
     codeblockSettings: DEFAULT_CODEBLOCK_SETTINGS,
     paragraphSettings: DEFAULT_PARAGRAPH_SETTINGS,
 };

@@ -3,11 +3,11 @@
     import { themeStore } from "../../stores/themeStore.svelte";
 
     async function save() {
-        if (globalState.getCurrentTheme().startsWith("0:")) {
+        if (globalState.getCurrentThemeId().startsWith("0:")) {
             const id = await themeStore.saveNewCustomTheme(globalState.getCurrentThemeCss());
             globalState.setCurrentTheme(`custom:${id}`);
         } else {
-            const themeId = globalState.getCurrentTheme();
+            const themeId = globalState.getCurrentThemeId();
             if (themeId.startsWith("custom:")) {
                 const oldTheme = themeStore.getCustomTheme(themeId.slice(7));
                 if (!oldTheme) return;

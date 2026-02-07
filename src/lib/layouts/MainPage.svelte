@@ -3,7 +3,7 @@
     import { MarkdownEditor, OverlayButtons, ThemePreview } from "..";
     import { ScrollSynchronizer } from "../services/scrollSync.svelte";
     import { globalState } from "../wenyan.svelte";
-    import EditorOverlayPanel from "./EditorOverlayPanel.svelte";
+    import EditorOverlayPanel from "./customs/CustomThemeOverlayPanel.svelte";
 
     const scroller = new ScrollSynchronizer();
 </script>

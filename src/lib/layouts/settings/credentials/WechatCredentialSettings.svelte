@@ -1,11 +1,12 @@
 <script lang="ts">
     import { credentialStore } from "../../../stores/credentialStore.svelte";
-    import { getUploadHelpClick } from "../../../contexts/externalLink";
+    import { getResetTokenClick, getUploadHelpClick } from "../../../contexts/setting";
 
     let wechat = credentialStore.wechat;
     let debounceTimer: ReturnType<typeof setTimeout>;
 
     const handleHelpClick = getUploadHelpClick();
+    const handleResetTokenClick = getResetTokenClick();
 
     $effect(() => {
         const _deps = [wechat.appId, wechat.appSecret];
@@ -50,23 +51,32 @@
             />
         </div>
 
-        <!-- 帮助链接 -->
-        <div class="flex flex-col items-end gap-1 pt-2">
-            <p class="text-xs text-amber-600 font-medium">⚠️ 请务必开启“IP白名单”</p>
+        <!-- 底部区域：左侧重置按钮，右侧提示信息 -->
+        <div class="flex justify-between items-end pt-2">
             <button
-                onclick={handleHelpClick}
-                class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 cursor-pointer"
+                onclick={handleResetTokenClick}
+                class="px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 transition-colors cursor-pointer flex items-center gap-1"
+                title="清除本地缓存的 Token，强制重新获取"
             >
-                使用帮助
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    /></svg
-                >
+                重置 Token
             </button>
+            <div class="flex flex-col items-end gap-1">
+                <p class="text-xs text-amber-600 font-medium">⚠️ 请务必开启“IP白名单”</p>
+                <button
+                    onclick={handleHelpClick}
+                    class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                    使用帮助
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        /></svg
+                    >
+                </button>
+            </div>
         </div>
     </div>
 </div>

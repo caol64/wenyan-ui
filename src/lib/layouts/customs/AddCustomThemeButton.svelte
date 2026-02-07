@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { themeStore } from "../../stores/themeStore.svelte";
     import { globalState } from "../../wenyan.svelte";
 
     async function newCustomTheme() {
-        const currentTheme = globalState.getCurrentTheme();
-        globalState.setCurrentTheme(`0:${currentTheme}`);
+        const themeId = globalState.getCurrentThemeId();
+        themeStore.addCustomTheme(`0:${themeId}`);
+        globalState.setCurrentTheme(`0:${themeId}`);
         globalState.setThemeEditMode(true);
     }
 </script>
@@ -13,8 +15,8 @@
     <span class="text-blue-500">
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="13"
+            height="13"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

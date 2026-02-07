@@ -7,19 +7,13 @@ import {
     getHlTheme,
     getTheme,
 } from "@wenyan-md/core";
-import type { Platform } from "./types";
+import type { AlertMessage, ConfirmMessage, CurrentTheme, Platform } from "./types";
 import { themeStore } from "./stores/themeStore.svelte";
 import { settingsStore } from "./stores/settingsStore.svelte";
 import { articleStore } from "./stores/articleStore.svelte";
 import { comboCodeblockSettings, comboParagraphSettings } from "./services/stylesCombo";
 
 type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
-
-interface AlertMessage {
-    type: "info" | "success" | "warning" | "error";
-    message: string;
-    title?: string;
-}
 
 class WenyanCoreManager {
     // 核心实例
@@ -130,11 +124,11 @@ class GlobalState {
     private isSidebarOpen = $state(false);
     private currentPlatform = $state<Platform>("wechat");
     private themeEditMode = $state(false);
-    private currentTheme = $state("default");
-    private currentThemeCss = $state("");
+    private currentTheme = $state<CurrentTheme>({ id: "default", name: "默认", css: "" });
     private currentHlTheme = $state("github");
     private currentHlThemeCss = $state("");
     private alertMessage = $state<AlertMessage | null>(null);
+    private confirmMessage = $state<ConfirmMessage | null>(null);
     private _isLoading = $state(false);
 
     setMarkdownText(text: string) {
@@ -168,6 +162,14 @@ class GlobalState {
         return this.alertMessage;
     }
 
+    setConfirmMessage(message: ConfirmMessage | null) {
+        this.confirmMessage = message;
+    }
+
+    getConfirmMessage(): ConfirmMessage | null {
+        return this.confirmMessage;
+    }
+
     setPlatform(platform: Platform) {
         this.currentPlatform = platform;
         if (platform === "wechat") {
@@ -184,16 +186,20 @@ class GlobalState {
     }
 
     setCurrentTheme(theme: string) {
-        this.currentTheme = theme;
+        this.currentTheme.id = theme;
         this.loadThemeCss(theme);
-        if (this.getPlatform() === "wechat") {
+        if (this.getPlatform() === "wechat" && !theme.startsWith("0:")) {
             settingsStore.wechatTheme = theme;
             settingsStore.saveSettings();
         }
     }
 
-    getCurrentTheme(): string {
+    getCurrentTheme(): CurrentTheme {
         return this.currentTheme;
+    }
+
+    getCurrentThemeId(): string {
+        return this.currentTheme.id;
     }
 
     setThemeEditMode(editMode: boolean) {
@@ -205,11 +211,11 @@ class GlobalState {
     }
 
     setCurrentThemeCss(css: string) {
-        this.currentThemeCss = css;
+        this.currentTheme.css = css;
     }
 
     getCurrentThemeCss(): string {
-        return this.currentThemeCss;
+        return this.currentTheme.css;
     }
 
     setCurrentHlTheme(theme: string) {
@@ -236,19 +242,21 @@ class GlobalState {
     private async loadThemeCss(themeId: string) {
         if (!themeId) return;
         if (themeId.startsWith("0:")) {
-            themeStore.addCustomTheme(themeId, "自定义主题（未保存）", "");
             themeId = themeId.slice(2);
         }
         if (themeId.startsWith("custom:")) {
             themeId = themeId.slice(7);
             const customTheme = themeStore.getCustomTheme(themeId);
-            const cssText = customTheme ? customTheme.css : "";
-            this.currentThemeCss = cssText;
+            if (customTheme) {
+                this.currentTheme.name = customTheme.name;
+                this.currentTheme.css = customTheme.css;
+            }
         } else {
             const theme = getTheme(themeId);
             if (theme) {
                 const css = await theme.getCss();
-                this.currentThemeCss = css;
+                this.currentTheme.name = theme.meta.appName;
+                this.currentTheme.css = css;
             }
         }
     }

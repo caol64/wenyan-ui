@@ -10,15 +10,18 @@
         getExampleArticle,
         Sidebar,
         TitleBar,
+        themeStore,
+        indexedDbThemeStorageAdapter,
     } from "$lib";
+    import ConfirmModal from "$lib/layouts/ConfirmModal.svelte";
     import { onMount } from "svelte";
 
     onMount(async () => {
         await articleStore.register(indexedDbArticleAdapter);
         await settingsStore.register(localStorageSettingsAdapter);
+        await themeStore.register(indexedDbThemeStorageAdapter);
         globalState.setMarkdownText(await getArticle());
-        globalState.setCurrentTheme("default");
-        globalState.setCurrentHlTheme("github");
+        globalState.setPlatform("wechat");
     });
 
     async function getArticle(): Promise<string> {
@@ -41,3 +44,4 @@
 </div>
 
 <AlertModal />
+<ConfirmModal />

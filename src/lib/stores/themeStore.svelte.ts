@@ -45,8 +45,8 @@ class ThemeStore {
     /**
      * 添加或更新自定义主题（缓存）
      */
-    async addCustomTheme(id: string, name: string, css: string) {
-        this._customThemes[id] = { id, name, css };
+    async addCustomTheme(id: string) {
+        this._customThemes[id] = { id, name: "自定义主题（未保存）", css: "" };
     }
 
     /**
@@ -111,6 +111,18 @@ class ThemeStore {
      */
     getAllCustomThemes(): Record<string, CustomTheme> {
         return this._customThemes;
+    }
+
+    async renameCustomTheme(id: string, newName: string) {
+        if (!this._customThemes[id]) return;
+        this._customThemes[id].name = newName;
+        if (this.adapter) {
+            try {
+                await this.adapter.save(id, newName, this._customThemes[id].css);
+            } catch (error) {
+                console.error(`Failed to rename theme ${id}:`, error);
+            }
+        }
     }
 }
 
