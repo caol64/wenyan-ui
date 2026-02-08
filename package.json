@@ -33,13 +33,13 @@
     "@sveltejs/package": "^2.5.6",
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
     "@tailwindcss/vite": "^4.1.17",
+    "husky": "^9.1.7",
     "publint": "^0.3.15",
     "svelte": "^5.45.6",
     "svelte-check": "^4.3.4",
     "tailwindcss": "^4.1.17",
-    "vite": "^7.2.6",
-    "husky": "^9.1.7",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.1",
@@ -54,6 +54,7 @@
     "codemirror": "^6.0.2",
     "dompurify": "^3.3.1",
     "idb-keyval": "^6.2.2",
+    "modern-screenshot": "^4.6.8",
     "uuid": "^13.0.0"
   },
   "peerDependencies": {

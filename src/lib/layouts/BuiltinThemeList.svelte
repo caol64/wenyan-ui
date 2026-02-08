@@ -1,11 +1,11 @@
 <script lang="ts">
-    import ThemeButton from "../components/buttons/ThemeButton.svelte";
+    import BuiltinThemeRow from "./BuiltinThemeRow.svelte";
     import { getAllGzhThemes } from "@wenyan-md/core";
 
 </script>
 
 <div class="mb-2">
     {#each getAllGzhThemes() as theme}
-        <ThemeButton themeMeta={theme.meta} />
+        <BuiltinThemeRow themeMeta={theme.meta} />
     {/each}
 </div>

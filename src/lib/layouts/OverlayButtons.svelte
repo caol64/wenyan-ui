@@ -1,4 +1,5 @@
 <script lang="ts">
+    import ImageExportButton from "../components/buttons/ImageExportButton.svelte";
     import CopyButton from "../components/buttons/CopyButton.svelte";
     import FootnoteButton from "../components/buttons/FootnoteButton.svelte";
     import StyleButton from "../components/buttons/StyleButton.svelte";
@@ -12,5 +13,6 @@
         <StyleButton />
     {/if}
     <FootnoteButton />
+    <ImageExportButton />
     <CopyButton />
 </div>
