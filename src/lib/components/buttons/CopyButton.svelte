@@ -15,6 +15,12 @@
                 onCopy?.(wenyanRenderer.postHandlerContent, "txt");
             } else {
                 const wenyanElement = getWenyanElement();
+                wenyanElement.querySelectorAll("img").forEach(async (element) => {
+                    const dataSrc = element.getAttribute("data-src");
+                    if (dataSrc && dataSrc.startsWith("https://mmbiz.qpic.cn")) {
+                        element.src = dataSrc;
+                    }
+                });
                 await wenyanCopier.copy(wenyanElement);
                 onCopy?.(wenyanCopier.html, "html");
             }

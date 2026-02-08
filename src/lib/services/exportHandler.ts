@@ -3,12 +3,12 @@ import { domToPng } from "modern-screenshot";
 
 export async function defaultExportImageHandler() {
     globalState.setConfirmMessage({
-            title: "导出长图",
-            message: "网页版导出长图功能无法处理图片，如果文档中包含图片，请使用桌面版导出。",
-            action: async () => {
-                await exportImage();
-            },
-        });
+        title: "导出长图",
+        message: "网页版导出长图功能无法处理图片，如果文档中包含图片，请使用桌面版导出。",
+        action: async () => {
+            await exportImage();
+        },
+    });
 }
 
 async function exportImage() {
