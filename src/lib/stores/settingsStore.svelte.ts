@@ -16,11 +16,18 @@ export interface CodeblockSettings {
     hlThemeId: string;
 }
 
+export interface UploadSettings {
+    autoUploadLocal: boolean;
+    autoUploadNetwork: boolean;
+    autoCache: boolean;
+}
+
 export interface Settings {
     wechatTheme: string;
     enabledImageHost?: string;
     paragraphSettings: ParagraphSettings;
     codeblockSettings: CodeblockSettings;
+    uploadSettings: UploadSettings;
 }
 
 export interface SettingsStorageAdapter {
@@ -50,6 +57,11 @@ export const DEFAULT_SETTINGS: Settings = {
     enabledImageHost: "wechat",
     codeblockSettings: DEFAULT_CODEBLOCK_SETTINGS,
     paragraphSettings: DEFAULT_PARAGRAPH_SETTINGS,
+    uploadSettings: {
+        autoUploadLocal: false,
+        autoUploadNetwork: false,
+        autoCache: false,
+    },
 };
 
 class SettingsStore {
@@ -70,6 +82,10 @@ class SettingsStore {
                 paragraphSettings: {
                     ...DEFAULT_SETTINGS.paragraphSettings,
                     ...(loadedSettings?.paragraphSettings || {}),
+                },
+                uploadSettings: {
+                    ...DEFAULT_SETTINGS.uploadSettings,
+                    ...(loadedSettings?.uploadSettings || {}),
                 },
             };
         } catch (error) {
@@ -107,6 +123,14 @@ class SettingsStore {
 
     set wechatTheme(value: string) {
         this._settings.wechatTheme = value;
+    }
+
+    get uploadSettings(): UploadSettings {
+        return this._settings.uploadSettings;
+    }
+
+    set uploadSettings(value: UploadSettings) {
+        this._settings.uploadSettings = value;
     }
 
     async saveSettings() {

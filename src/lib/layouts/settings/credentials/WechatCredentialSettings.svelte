@@ -4,6 +4,7 @@
 
     let wechat = credentialStore.wechat;
     let debounceTimer: ReturnType<typeof setTimeout>;
+    let message = $state("");
 
     const handleHelpClick = getUploadHelpClick();
     const handleResetTokenClick = getResetTokenClick();
@@ -16,9 +17,19 @@
         }, 300);
         return () => clearTimeout(debounceTimer);
     });
+
+    function onResetToken() {
+        try {
+            handleResetTokenClick?.();
+            message = "Token 已重置，下一次上传图片或发布文章时会自动获取新 Token";
+        } catch (error) {
+            console.error("重置 Token 失败:", error);
+            message = `重置 Token 失败，${error instanceof Error ? error.message : String(error)}`;
+        }
+    }
 </script>
 
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-4">
     <header class="flex items-center border-b border-gray-100 dark:border-gray-700 pb-4">
         <div>
             <h2 class="text-xl font-bold">公众号凭据</h2>
@@ -35,7 +46,7 @@
                 id="appId"
                 bind:value={wechat.appId}
                 placeholder="如：wx6e1234567890efa3"
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm focus:outline-none transition-shadow"
+                class="w-full px-3 py-2 smooth-border rounded-lg text-sm focus:outline-none transition-shadow"
             />
         </div>
 
@@ -47,15 +58,15 @@
                 id="appSecret"
                 bind:value={wechat.appSecret}
                 placeholder="如：d9f1abcdef01234567890abcdef82397"
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm focus:outline-none transition-shadow"
+                class="w-full px-3 py-2 smooth-border rounded-lg text-sm focus:outline-none transition-shadow"
             />
         </div>
 
         <!-- 底部区域：左侧重置按钮，右侧提示信息 -->
-        <div class="flex justify-between items-end pt-2">
+        <div class="flex justify-between items-end">
             <button
-                onclick={handleResetTokenClick}
-                class="px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 transition-colors cursor-pointer flex items-center gap-1"
+                onclick={onResetToken}
+                class="px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded smooth-border transition-colors cursor-pointer flex items-center gap-1"
                 title="清除本地缓存的 Token，强制重新获取"
             >
                 重置 Token
@@ -77,6 +88,9 @@
                     >
                 </button>
             </div>
+        </div>
+        <div class="text-xs text-red-500">
+            {message}
         </div>
     </div>
 </div>
