@@ -1,14 +1,25 @@
 <script lang="ts">
     import { globalState } from "../../wenyan.svelte";
     import Pencil from "../../components/icons/Pencil.svelte";
+    import { themeStore } from "../../stores/themeStore.svelte";
 
     let { id }: { id: string } = $props();
 
     function editTheme() {
-        if (globalState.getCurrentThemeId() !== id) {
-            globalState.setCurrentTheme(id);
+        if (globalState.getThemeEditMode()) {
+            globalState.setConfirmMessage({
+                message: "编辑主题将丢失未保存的更改，是否继续？",
+                action: () => {
+                    themeStore.cancelNewCustomTheme();
+                    globalState.setCurrentTheme(id);
+                },
+            });
+        } else {
+            if (globalState.getCurrentThemeId() !== id) {
+                globalState.setCurrentTheme(id);
+            }
+            globalState.setThemeEditMode(true);
         }
-        globalState.setThemeEditMode(true);
     }
 </script>
 

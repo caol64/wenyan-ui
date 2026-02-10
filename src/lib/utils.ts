@@ -36,3 +36,12 @@ export async function getExampleArticle(): Promise<string> {
     }
     return await response.text();
 }
+
+export function getWenyanElement(): HTMLElement {
+    const wenyanElement = document.getElementById("wenyan");
+    if (!wenyanElement) {
+        throw new Error("Wenyan element not found");
+    }
+    const clonedWenyan = wenyanElement.cloneNode(true) as HTMLElement;
+    return clonedWenyan;
+}

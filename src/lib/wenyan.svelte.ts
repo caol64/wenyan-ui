@@ -7,7 +7,7 @@ import {
     getHlTheme,
     getTheme,
 } from "@wenyan-md/core";
-import type { AlertMessage, ConfirmMessage, CurrentTheme, Platform } from "./types";
+import type { AlertMessage, ConfirmMessage, CurrentTheme, FrontMatterResult, Platform } from "./types";
 import { themeStore } from "./stores/themeStore.svelte";
 import { settingsStore } from "./stores/settingsStore.svelte";
 import { articleStore } from "./stores/articleStore.svelte";
@@ -42,6 +42,7 @@ const coreManager = new WenyanCoreManager();
 class WenyanRenderer {
     html = $state("");
     postHandlerContent = "";
+    frontMatterResult: FrontMatterResult = { body: "" };
 
     constructor() {
         // 初始化时自动预加载核心库
@@ -58,11 +59,8 @@ class WenyanRenderer {
             const core = await coreManager.get();
 
             // 处理 FrontMatter
-            const preHandlerContent = await core.handleFrontMatter(markdownText);
-            let body = preHandlerContent.body;
-            if (preHandlerContent.title) {
-                body = `# ${preHandlerContent.title}\n\n${body}`;
-            }
+            this.frontMatterResult = await core.handleFrontMatter(markdownText);
+            let body = this.frontMatterResult.body;
 
             this.postHandlerContent = body;
             // 渲染
@@ -103,7 +101,7 @@ class WenyanCopier {
                 themeCss,
                 hlThemeCss: globalState.getCurrentHlThemeCss(),
                 isMacStyle: codeblockSettings?.isMacStyle ?? true,
-                isAddFootnote: true,
+                isAddFootnote: false,
             };
             const rendered = await core.applyStylesWithTheme(wenyanElement, options);
             this.html = DOMPurify.sanitize(rendered);

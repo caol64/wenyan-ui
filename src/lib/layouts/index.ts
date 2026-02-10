@@ -1,4 +1,5 @@
 export { default as Win32WindowButtons } from "./Win32WindowButtons.svelte";
+export { default as MacWindowButtons } from "./MacWindowButtons.svelte";
 export { default as OverlayButtons } from "./OverlayButtons.svelte";
 export { default as TitleBar } from "./TitleBar.svelte";
 export { default as Sidebar } from "./Sidebar.svelte";

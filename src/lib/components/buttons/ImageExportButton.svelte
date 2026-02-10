@@ -1,6 +1,6 @@
 <script lang="ts">
     import Screenshot from "../icons/Screenshot.svelte";
-    import { getExportImageClick } from "../../contexts/export";
+    import { getExportImageClick } from "../../contexts/operation";
 
     const exportImage = getExportImageClick();
 </script>

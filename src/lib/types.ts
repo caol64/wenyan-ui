@@ -22,3 +22,12 @@ export interface CurrentTheme {
 }
 
 export type ImageProcessorAction = Action<HTMLElement>;
+
+export interface FrontMatterResult {
+    body: string;
+    title?: string;
+    cover?: string;
+    description?: string;
+    author?: string;
+    source_url?: string;
+}

@@ -6,16 +6,31 @@
     let { id }: { id: string } = $props();
 
     function handleDelete() {
-        globalState.setConfirmMessage({
-            title: "删除主题",
-            message: "确定要删除主题吗？",
-            action: () => {
-                themeStore.removeCustomTheme(id.slice(7)); // id format: custom:xxx
-                if (globalState.getCurrentThemeId() === id) {
-                    globalState.setCurrentTheme("default"); // 删除后切回默认主题
-                }
-            },
-        });
+        if (globalState.getThemeEditMode()) {
+            globalState.setConfirmMessage({
+                title: "删除主题",
+                message: "删除主题将丢失未保存的更改，是否继续？",
+                action: () => {
+                    themeStore.cancelNewCustomTheme();
+                    themeStore.removeCustomTheme(id.slice(7)); // id format: custom:xxx
+                    if (globalState.getCurrentThemeId() === id) {
+                        globalState.setCurrentTheme("default"); // 删除后切回默认主题
+                    }
+                    globalState.setThemeEditMode(false);
+                },
+            });
+        } else {
+            globalState.setConfirmMessage({
+                title: "删除主题",
+                message: "确定要删除主题吗？",
+                action: () => {
+                    themeStore.removeCustomTheme(id.slice(7)); // id format: custom:xxx
+                    if (globalState.getCurrentThemeId() === id) {
+                        globalState.setCurrentTheme("default"); // 删除后切回默认主题
+                    }
+                },
+            });
+        }
     }
 </script>
 

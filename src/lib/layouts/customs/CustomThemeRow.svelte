@@ -118,7 +118,9 @@
         class="flex items-center gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity"
         class:opacity-100={globalState.getCurrentThemeId() === customThemeId || isRenaming}
     >
-        <EditCustomThemeButton id={customThemeId} />
-        <DeleteCustomThemeButton id={customThemeId} />
+        {#if !customThemeId.startsWith("0:")}
+            <EditCustomThemeButton id={customThemeId} />
+            <DeleteCustomThemeButton id={customThemeId} />
+        {/if}
     </div>
 </div>

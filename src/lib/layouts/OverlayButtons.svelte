@@ -4,6 +4,7 @@
     import FootnoteButton from "../components/buttons/FootnoteButton.svelte";
     import StyleButton from "../components/buttons/StyleButton.svelte";
     import { globalState } from "../wenyan.svelte";
+    import PublishButton from "../components/buttons/PublishButton.svelte";
 </script>
 
 <div
@@ -15,4 +16,7 @@
     <FootnoteButton />
     <ImageExportButton />
     <CopyButton />
+    {#if globalState.getPlatform() === "wechat"}
+        <PublishButton />
+    {/if}
 </div>
