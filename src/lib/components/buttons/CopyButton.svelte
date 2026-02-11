@@ -1,7 +1,7 @@
 <script lang="ts">
     import Clipboard from "../icons/Clipboard.svelte";
     import Check from "../icons/Check.svelte";
-    import { getCopyClick } from "../../contexts/operation";
+    import { getCopyClick } from "../../hooks/operation";
 
     const onCopy = getCopyClick();
     let copiedFlag = $state(false);

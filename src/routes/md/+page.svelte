@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { MarkdownEditor, articleStore, getExampleArticle, globalState } from "../../..";
+    import { MarkdownEditor, articleStore, getExampleArticle, globalState } from "$lib";
     import { onMount } from "svelte";
 
     onMount(async () => {

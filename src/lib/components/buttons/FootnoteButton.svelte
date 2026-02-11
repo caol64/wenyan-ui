@@ -1,6 +1,6 @@
 <script lang="ts">
     import Footnote from "../icons/Footnote.svelte";
-    import { getFootnoteClick } from "../../contexts/operation";
+    import { getFootnoteClick } from "../../hooks/operation";
 
     let isEnabled = $state(false);
     const footnoteClick = getFootnoteClick();

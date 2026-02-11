@@ -1,8 +1,11 @@
 <script lang="ts">
+    import { getAutoCacheChangeClick } from "../../hooks/setting";
     import ToggleSwitcher from "../../components/ToggleSwitcher.svelte";
     import { settingsStore } from "../../stores/settingsStore.svelte";
+    import { globalState } from "../../wenyan.svelte";
 
     let isWechatChecked = $derived(settingsStore.enabledImageHost === "wechat");
+    const onAutoCacheChange = getAutoCacheChangeClick();
 
     function toggleImageHost(host: string, enabled: boolean) {
         settingsStore.enabledImageHost = enabled ? host : "";
@@ -22,6 +25,16 @@
     function updateAutoCache(value: boolean) {
         settingsStore.uploadSettings.autoCache = value;
         settingsStore.saveSettings();
+        if (onAutoCacheChange) {
+            try {
+                onAutoCacheChange();
+            } catch (error) {
+                globalState.setAlertMessage({
+                    type: "error",
+                    message: `更新上传图片去重设置失败，${error instanceof Error ? error.message : String(error)}`,
+                });
+            }
+        }
     }
 </script>
 
@@ -62,7 +75,10 @@
                         打开或粘贴文章时，自动识别本地图片并上传至图床
                     </span>
                 </div>
-                <ToggleSwitcher isChecked={settingsStore.uploadSettings.autoUploadLocal} onChange={(v) => updateAutoUploadLocal(v)} />
+                <ToggleSwitcher
+                    isChecked={settingsStore.uploadSettings.autoUploadLocal}
+                    onChange={(v) => updateAutoUploadLocal(v)}
+                />
             </div>
 
             <!-- 自动转存 -->
@@ -73,7 +89,10 @@
                         打开或粘贴文章时，自动识别网络图片并上传至图床
                     </span>
                 </div>
-                <ToggleSwitcher isChecked={settingsStore.uploadSettings.autoUploadNetwork} onChange={(v) => updateAutoUploadNetwork(v)} />
+                <ToggleSwitcher
+                    isChecked={settingsStore.uploadSettings.autoUploadNetwork}
+                    onChange={(v) => updateAutoUploadNetwork(v)}
+                />
             </div>
 
             <!-- 图片缓存 -->
@@ -82,7 +101,10 @@
                     <span class="text-sm font-medium">上传图片去重</span>
                     <span class="text-xs text-gray-500 dark:text-gray-400">相同的图片不会重复上传，使用同一个链接</span>
                 </div>
-                <ToggleSwitcher isChecked={settingsStore.uploadSettings.autoCache} onChange={(v) => updateAutoCache(v)} />
+                <ToggleSwitcher
+                    isChecked={settingsStore.uploadSettings.autoCache}
+                    onChange={(v) => updateAutoCache(v)}
+                />
             </div>
         </div>
     </section>

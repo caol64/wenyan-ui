@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getPublishArticleClick } from "../../contexts/operation";
+    import { getPublishArticleClick } from "../../hooks/operation";
     import Upload from "../icons/Upload.svelte";
 
     const onPublish = getPublishArticleClick();

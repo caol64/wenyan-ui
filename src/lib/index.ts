@@ -13,8 +13,9 @@ export * from "./stores/themeStore.svelte";
 export * from "./stores/settingsStore.svelte";
 export * from "./stores/credentialStore.svelte";
 
-// contexts
-export * from "./contexts/preview";
-export * from "./contexts/editor";
-export * from "./contexts/operation";
-export * from "./contexts/setting";
+// hooks
+export * from "./hooks/preview";
+export * from "./hooks/editor";
+export * from "./hooks/operation";
+export * from "./hooks/setting";
+export * from "./hooks/link";

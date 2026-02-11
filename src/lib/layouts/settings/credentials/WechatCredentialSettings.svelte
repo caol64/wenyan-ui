@@ -1,6 +1,7 @@
 <script lang="ts">
     import { credentialStore } from "../../../stores/credentialStore.svelte";
-    import { getResetTokenClick, getUploadHelpClick } from "../../../contexts/setting";
+    import { getResetTokenClick } from "../../../hooks/setting";
+    import { getUploadHelpClick } from "../../../hooks/link";
 
     let wechat = credentialStore.wechat;
     let debounceTimer: ReturnType<typeof setTimeout>;
@@ -19,12 +20,13 @@
     });
 
     function onResetToken() {
-        try {
-            handleResetTokenClick?.();
-            message = "Token 已重置，下一次上传图片或发布文章时会自动获取新 Token";
-        } catch (error) {
-            console.error("重置 Token 失败:", error);
-            message = `重置 Token 失败，${error instanceof Error ? error.message : String(error)}`;
+        if (handleResetTokenClick) {
+            try {
+                handleResetTokenClick();
+                message = "Token 已重置，下一次上传图片或发布文章时会自动获取新 Token";
+            } catch (error) {
+                message = `重置 Token 失败，${error instanceof Error ? error.message : String(error)}`;
+            }
         }
     }
 </script>

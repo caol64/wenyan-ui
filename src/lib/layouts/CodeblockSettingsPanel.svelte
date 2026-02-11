@@ -46,7 +46,7 @@
         <!-- Mac 风格 -->
         <div class="space-y-4">
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">Mac 风格</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">Mac 风格</span>
                 <SegmentedControl
                     options={[
                         { label: "开启", value: "1" },
@@ -59,7 +59,7 @@
             </div>
             <!-- 字体大小 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">字体大小</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">字体大小</span>
                 <SegmentedControl
                     options={[
                         { label: "12px", value: "12px" },
@@ -75,7 +75,7 @@
             </div>
             <!-- 高亮主题 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">高亮主题</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">高亮主题</span>
                 <DropdownList
                     options={hlThemeOptions}
                     current={codeblockSettings.hlThemeId}

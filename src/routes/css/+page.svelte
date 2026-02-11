@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CssEditor, globalState } from "../../..";
+    import { CssEditor, globalState } from "$lib";
     import { getTheme } from "@wenyan-md/core";
     import { onMount } from "svelte";
 

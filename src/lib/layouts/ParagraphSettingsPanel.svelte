@@ -54,7 +54,7 @@
         <div class="space-y-4" class:opacity-50={paragraphSettings.isFollowTheme} class:pointer-events-none={paragraphSettings.isFollowTheme}>
             <!-- 字体大小 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">字体大小</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">字体大小</span>
                 <SegmentedControl
                     options={[
                         { label: "12px", value: "12px" },
@@ -73,7 +73,7 @@
 
             <!-- 字体 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">字体</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">字体</span>
                 <SegmentedControl
                     options={[
                         { label: "衬线", value: "serif" },
@@ -88,7 +88,7 @@
 
             <!-- 文字粗细 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">文字粗细</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">文字粗细</span>
                 <SegmentedControl
                     options={[
                         { label: "较细", value: "300" },
@@ -103,7 +103,7 @@
 
             <!-- 字间距 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">字间距</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">字间距</span>
                 <SegmentedControl
                     options={[
                         { label: "小", value: "0.05em" },
@@ -119,7 +119,7 @@
 
             <!-- 行间距 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">行间距</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">行间距</span>
                 <SegmentedControl
                     options={[
                         { label: "小", value: "1.5" },
@@ -135,7 +135,7 @@
 
             <!-- 段落间距 -->
             <div class="space-y-2">
-                <span class="text-sm font-medium text-gray-700">段落间距</span>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">段落间距</span>
                 <SegmentedControl
                     options={[
                         { label: "小", value: "0.75em" },

@@ -9,7 +9,7 @@
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
     import { languages } from "@codemirror/language-data";
     import { globalState } from "../wenyan.svelte";
-    import { getEditorClick, getEditorPaste, getEditorDrop } from "../contexts/editor";
+    import { getEditorClick, getEditorPaste, getEditorDrop } from "../hooks/editor";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 

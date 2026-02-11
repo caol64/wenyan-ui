@@ -3,7 +3,7 @@
     import { comboCodeblockSettings, comboParagraphSettings } from "../services/stylesCombo";
     import { wenyanRenderer, globalState } from "../wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
-    import { getImageProcessorAction, getPreviewClick } from "../contexts/preview";
+    import { getImageProcessorAction, getPreviewClick } from "../hooks/preview";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
