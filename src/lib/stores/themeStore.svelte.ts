@@ -53,13 +53,11 @@ class ThemeStore {
      * 添加或更新自定义主题（持久化）
      */
     async saveCustomTheme(id: string, name: string, css: string): Promise<string> {
-        // 1. 乐观更新：先更新内存状态，让 UI 立即响应
-        this._customThemes[id] = { id, name, css };
-
-        // 2. 持久化存储
         if (this.adapter) {
             try {
-                return await this.adapter.save(id, name, css);
+                const lastId = await this.adapter.save(id, name, css);
+                this._customThemes[lastId] = { id: lastId, name, css };
+                return lastId;
             } catch (error) {
                 console.error(`Failed to save theme ${id}:`, error);
             }
