@@ -13,6 +13,7 @@ export interface ConfirmMessage {
     message: string;
     title?: string;
     action: () => void;
+    actionLabel?: string;
 }
 
 export interface CurrentTheme {

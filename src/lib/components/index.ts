@@ -6,3 +6,4 @@ export { default as ThemePreview } from "./ThemePreview.svelte";
 export { default as SimpleLoader } from "./SimpleLoader.svelte";
 export { default as GithubButton } from "./buttons/GithubButton.svelte";
 export { default as Modal } from "./Modal.svelte";
+export { default as LeftSplitRect } from "./icons/LeftSplitRect.svelte";

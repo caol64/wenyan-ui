@@ -4,7 +4,7 @@
 
     async function save() {
         if (globalState.getCurrentThemeId().startsWith("0:")) {
-            const id = await themeStore.saveNewCustomTheme(globalState.getCurrentThemeCss());
+            const id = await themeStore.saveNewCustomTheme(globalState.getCurrentThemeCss(), globalState.customThemeName);
             globalState.setCurrentTheme(`custom:${id}`);
         } else {
             const themeId = globalState.getCurrentThemeId();

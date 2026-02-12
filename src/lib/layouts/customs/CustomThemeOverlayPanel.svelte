@@ -4,7 +4,7 @@
     import CancelCustomThemeButton from "./CancelCustomThemeButton.svelte";
 
     let isAdd = $derived(globalState.getCurrentThemeId().startsWith("0:"));
-    let title = $derived(isAdd ? "正在添加新主题，模版：" : "正在编辑主题");
+    let title = $derived(isAdd ? "正在添加新主题" : "正在编辑主题");
 </script>
 
 <div

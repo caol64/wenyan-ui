@@ -15,3 +15,4 @@ export { default as AlertModal } from "./AlertModal.svelte";
 export { default as ConfirmModal } from "./ConfirmModal.svelte";
 export { default as SettingsPage } from "./settings/SettingsPage.svelte";
 export { default as SettingsModal } from "./settings/SettingsModal.svelte";
+export { default as CreateThemeModal } from "./customs/CreateThemeModal.svelte";

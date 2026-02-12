@@ -7,4 +7,5 @@
     <li><a href="/main">Main Page</a></li>
     <li><a href="/sidebar">Sidebar Page</a></li>
     <li><a href="/settings">Settings Page</a></li>
+    <li><a href="/theme">Theme Page</a></li>
 </ul>

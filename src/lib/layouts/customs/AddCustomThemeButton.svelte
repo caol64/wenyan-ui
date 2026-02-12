@@ -1,16 +1,9 @@
 <script lang="ts">
-    import { themeStore } from "../../stores/themeStore.svelte";
     import { globalState } from "../../wenyan.svelte";
 
-    async function newCustomTheme() {
-        const themeId = globalState.getCurrentThemeId();
-        themeStore.addCustomTheme(`0:${themeId}`);
-        globalState.setCurrentTheme(`0:${themeId}`);
-        globalState.setThemeEditMode(true);
-    }
 </script>
 
-<button class="flex items-center justify-end gap-1 cursor-pointer" onclick={newCustomTheme}>
+<button class="flex items-center justify-end gap-1 cursor-pointer" onclick={() => globalState.isShowCreateThemeModal = true}>
     <span class="text-sm">创建新主题</span>
     <span class="text-blue-500">
         <svg

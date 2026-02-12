@@ -12,6 +12,7 @@
         TitleBar,
         themeStore,
         indexedDbThemeStorageAdapter,
+        CreateThemeModal,
     } from "$lib";
     import ConfirmModal from "$lib/layouts/ConfirmModal.svelte";
     import { onMount } from "svelte";
@@ -45,3 +46,4 @@
 
 <AlertModal />
 <ConfirmModal />
+<CreateThemeModal isOpen={globalState.isShowCreateThemeModal} onClose={() => (globalState.isShowCreateThemeModal = false)} />

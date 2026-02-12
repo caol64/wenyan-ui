@@ -1,7 +1,11 @@
+<script lang="ts">
+    let { w = "18px" } = $props();
+</script>
+
 <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width={w}
+    height={w}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"

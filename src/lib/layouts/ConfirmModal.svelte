@@ -37,7 +37,7 @@
                 class="rounded px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-sm transition-colors cursor-pointer"
                 onclick={handleConfirm}
             >
-                确认
+                {confirmMessage?.actionLabel || "确认"}
             </button>
         </div>
     {/snippet}

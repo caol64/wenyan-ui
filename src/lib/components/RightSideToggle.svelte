@@ -8,5 +8,5 @@
 </script>
 
 <button onclick={handleClick} class="cursor-pointer">
-    <RightSplitRect />
+    <RightSplitRect w="14px" />
 </button>

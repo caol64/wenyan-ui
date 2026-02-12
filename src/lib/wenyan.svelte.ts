@@ -128,6 +128,8 @@ class GlobalState {
     private alertMessage = $state<AlertMessage | null>(null);
     private confirmMessage = $state<ConfirmMessage | null>(null);
     private _isLoading = $state(false);
+    private _isShowCreateThemeModal = $state(false);
+    private _customThemeName = $state("");
 
     setMarkdownText(text: string) {
         if (text !== this.markdownText) {
@@ -235,6 +237,22 @@ class GlobalState {
 
     get isLoading(): boolean {
         return this._isLoading;
+    }
+
+    set isShowCreateThemeModal(show: boolean) {
+        this._isShowCreateThemeModal = show;
+    }
+
+    get isShowCreateThemeModal(): boolean {
+        return this._isShowCreateThemeModal;
+    }
+
+    set customThemeName(name: string) {
+        this._customThemeName = name;
+    }
+
+    get customThemeName(): string {
+        return this._customThemeName;
     }
 
     private async loadThemeCss(themeId: string) {

@@ -10,7 +10,7 @@ export interface CustomTheme {
 
 export interface ThemeStorageAdapter {
     load(): Promise<Record<string, CustomTheme>> | Record<string, CustomTheme>;
-    save(id: string, name: string, css: string): Promise<void> | void;
+    save(id: string, name: string, css: string): Promise<string> | string;
     remove(id: string): Promise<void> | void;
 }
 
@@ -45,32 +45,32 @@ class ThemeStore {
     /**
      * 添加或更新自定义主题（缓存）
      */
-    async addCustomTheme(id: string) {
-        this._customThemes[id] = { id, name: "自定义主题（未保存）", css: "" };
+    async addCustomTheme(id: string, name: string) {
+        this._customThemes[id] = { id, name: `${name}（未保存）`, css: "" };
     }
 
     /**
      * 添加或更新自定义主题（持久化）
      */
-    async saveCustomTheme(id: string, name: string, css: string) {
+    async saveCustomTheme(id: string, name: string, css: string): Promise<string> {
         // 1. 乐观更新：先更新内存状态，让 UI 立即响应
         this._customThemes[id] = { id, name, css };
 
         // 2. 持久化存储
         if (this.adapter) {
             try {
-                await this.adapter.save(id, name, css);
+                return await this.adapter.save(id, name, css);
             } catch (error) {
                 console.error(`Failed to save theme ${id}:`, error);
             }
         }
+        return "";
     }
 
-    async saveNewCustomTheme(css: string): Promise<string> {
+    async saveNewCustomTheme(css: string, name: string): Promise<string> {
         await this.cancelNewCustomTheme();
         const id = uuidv4();
-        await this.saveCustomTheme(id, "自定义主题", css);
-        return id;
+        return await this.saveCustomTheme(id, name, css);
     }
 
     async cancelNewCustomTheme() {
@@ -142,6 +142,7 @@ export const localStorageThemeStorageAdapter: ThemeStorageAdapter = {
         const current = this.load() as Record<string, CustomTheme>;
         current[id] = { id, name, css };
         localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(current));
+        return id;
     },
     remove(id) {
         const current = this.load() as Record<string, CustomTheme>;
@@ -176,6 +177,7 @@ export const indexedDbThemeStorageAdapter: ThemeStorageAdapter = {
     async save(id: string, name: string, css: string) {
         const theme: CustomTheme = { id, name, css };
         await set(id, theme, customThemeStore);
+        return id;
     },
 
     async remove(id: string) {

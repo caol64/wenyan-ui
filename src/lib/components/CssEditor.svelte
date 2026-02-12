@@ -8,6 +8,7 @@
     import { vsCodeLight } from "@fsegurai/codemirror-theme-vscode-light";
     import { vsCodeDark } from "@fsegurai/codemirror-theme-vscode-dark";
     import { globalState } from "../wenyan.svelte";
+    import { monospace } from "@wenyan-md/core";
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
@@ -39,6 +40,12 @@
                 EditorView.theme({
                     "&": { height: "100%" },
                     ".cm-scroller": { overflow: "auto" },
+                    ".cm-content": {
+                        fontFamily: monospace,
+                    },
+                    ".cm-gutters": {
+                        fontFamily: monospace,
+                    },
                 }),
             ],
         });

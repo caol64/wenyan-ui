@@ -10,6 +10,7 @@
     import { languages } from "@codemirror/language-data";
     import { globalState } from "../wenyan.svelte";
     import { getEditorClick, getEditorPaste, getEditorDrop } from "../hooks/editor";
+    import { monospace } from "@wenyan-md/core";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
@@ -50,6 +51,12 @@
                 EditorView.theme({
                     "&": { height: "100%" },
                     ".cm-scroller": { overflow: "auto" },
+                    ".cm-content": {
+                        fontFamily: monospace,
+                    },
+                    ".cm-gutters": {
+                        fontFamily: monospace,
+                    },
                 }),
                 EditorView.domEventHandlers({
                     paste: (event, view) => {
