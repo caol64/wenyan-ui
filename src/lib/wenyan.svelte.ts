@@ -64,8 +64,7 @@ class WenyanRenderer {
 
             this.postHandlerContent = body;
             // 渲染
-            const rendered = await core.renderMarkdown(body);
-            this.html = DOMPurify.sanitize(rendered);
+            this.html = await core.renderMarkdown(body);
         } catch (error) {
             console.error("Wenyan render error:", error);
             this.html = `<p style="color:red">Render Error</p>`;

@@ -1,5 +1,4 @@
 import type { ImageProcessorAction } from "../types";
-import { defaultProcessImagesAction } from "../services/processImages.svelte";
 import { setContext, getContext } from "svelte";
 
 const PREVIEW_CLICK_KEY = Symbol("PREVIEW_CLICK");
@@ -20,5 +19,5 @@ export function setImageProcessorAction(fn: ImageProcessorAction) {
 }
 
 export function getImageProcessorAction(): ImageProcessorAction {
-    return getContext<ImageProcessorAction>(IMAGE_PROCESSOR_ACTION_KEY) ?? defaultProcessImagesAction;
+    return getContext<ImageProcessorAction>(IMAGE_PROCESSOR_ACTION_KEY) ?? (() => {});
 }
