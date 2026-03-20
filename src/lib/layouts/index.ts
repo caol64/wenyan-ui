@@ -16,3 +16,8 @@ export { default as ConfirmModal } from "./ConfirmModal.svelte";
 export { default as SettingsPage } from "./settings/SettingsPage.svelte";
 export { default as SettingsModal } from "./settings/SettingsModal.svelte";
 export { default as CreateThemeModal } from "./customs/CreateThemeModal.svelte";
+export { default as FileSidebar } from "./explorer/FileSidebar.svelte";
+export { default as FileSidebarButton } from "./explorer/FileSidebarButton.svelte";
+export { default as FileTreeItem } from "./explorer/FileTreeItem.svelte";
+
+export * from "./explorer/fs";

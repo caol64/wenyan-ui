@@ -129,6 +129,7 @@ class GlobalState {
     private _isLoading = $state(false);
     private _isShowCreateThemeModal = $state(false);
     private _customThemeName = $state("");
+    private _isShowFileSidebar = $state(false);
 
     setMarkdownText(text: string) {
         if (text !== this.markdownText) {
@@ -252,6 +253,14 @@ class GlobalState {
 
     get customThemeName(): string {
         return this._customThemeName;
+    }
+
+    get isShowFileSidebar() {
+        return this._isShowFileSidebar;
+    }
+
+    set isShowFileSidebar(value: boolean) {
+        this._isShowFileSidebar = value;
     }
 
     private async loadThemeCss(themeId: string) {

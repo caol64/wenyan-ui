@@ -32,3 +32,10 @@ export interface FrontMatterResult {
     author?: string;
     source_url?: string;
 }
+
+export interface FileEntry {
+    name: string;
+    path: string;
+    isDirectory: boolean;
+    children?: FileEntry[];
+}

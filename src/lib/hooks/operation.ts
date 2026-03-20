@@ -10,12 +10,14 @@ const FOOTNOTE_CLICK_KEY = Symbol("FOOTNOTE_CLICK");
 const EXPORT_IMAGE_KEY = Symbol("EXPORT_IMAGE");
 const PUBLISH_ARTICLE_KEY = Symbol("PUBLISH_ARTICLE");
 const IMPORT_CSS_KEY = Symbol("IMPORT_CSS");
+const HANDLE_FILE_OPEN_KEY = Symbol("HANDLE_FILE_OPEN");
 
 type CopyClickFn = () => void;
 type FootnoteClickFn = (isEnabled: boolean) => void;
 type ExportImageClickFn = () => void;
 type PublishArticleClickFn = () => void;
 type ImportCssClickFn = (url: string, name: string) => void;
+type HandleFileOpenFn = (path: string) => void;
 
 export function setCopyClick(fn: CopyClickFn) {
     setContext(COPY_CLICK_KEY, fn);
@@ -81,5 +83,19 @@ export function getImportCssClick(): ImportCssClickFn {
         currentTheme.css = cssText;
         currentTheme.id = `0:${themeId}`;
         globalState.customThemeName = name;
+    });
+}
+
+export function setHandleFileOpen(fn: HandleFileOpenFn) {
+    setContext(HANDLE_FILE_OPEN_KEY, fn);
+}
+
+export function getHandleFileOpen(): HandleFileOpenFn {
+    return getContext<HandleFileOpenFn>(HANDLE_FILE_OPEN_KEY) ?? (async (path: string) => {
+        globalState.setAlertMessage({
+            type: "info",
+            title: "打开文件",
+            message: "网页版无法打开本地文件，请使用桌面客户端。",
+        });
     });
 }

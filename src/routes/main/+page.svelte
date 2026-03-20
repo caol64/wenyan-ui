@@ -13,6 +13,7 @@
         themeStore,
         indexedDbThemeStorageAdapter,
         CreateThemeModal,
+        FileSidebar,
     } from "$lib";
     import ConfirmModal from "$lib/layouts/ConfirmModal.svelte";
     import { onMount } from "svelte";
@@ -31,9 +32,12 @@
     }
 </script>
 
-<div class="flex h-screen w-full flex-col overflow-hidden">
+<div class="flex h-screen w-full flex-col overflow-hidden relative">
     <TitleBar />
-    <div class="flex h-full w-full flex-col overflow-hidden md:flex-row">
+    <div class="flex h-full w-full flex-col overflow-hidden md:flex-row relative">
+        {#if globalState.isShowFileSidebar}
+            <FileSidebar />
+        {/if}
         <MainPage />
 
         {#if globalState.judgeSidebarOpen()}
@@ -46,4 +50,7 @@
 
 <AlertModal />
 <ConfirmModal />
-<CreateThemeModal isOpen={globalState.isShowCreateThemeModal} onClose={() => (globalState.isShowCreateThemeModal = false)} />
+<CreateThemeModal
+    isOpen={globalState.isShowCreateThemeModal}
+    onClose={() => (globalState.isShowCreateThemeModal = false)}
+/>
