@@ -19,5 +19,39 @@ export function setImageProcessorAction(fn: ImageProcessorAction) {
 }
 
 export function getImageProcessorAction(): ImageProcessorAction {
-    return getContext<ImageProcessorAction>(IMAGE_PROCESSOR_ACTION_KEY) ?? (() => {});
+    return getContext<ImageProcessorAction>(IMAGE_PROCESSOR_ACTION_KEY) ?? defaultImageProcessorAction;
 }
+
+
+const defaultImageProcessorAction: ImageProcessorAction = (node) => {
+    const run = async () => {
+        const images = node.querySelectorAll<HTMLImageElement>("img");
+        if (images.length === 0) return;
+
+        for (const img of images) {
+            const dataSrc = img.getAttribute("src");
+
+            if (dataSrc && dataSrc.startsWith("https://mmbiz.qpic.cn/")) {
+                img.setAttribute("referrerpolicy", "no-referrer");
+            }
+
+        }
+    };
+
+    // 首次运行
+    run();
+
+    // 如果内容动态变化，可以用 MutationObserver
+    const observer = new MutationObserver(() => run());
+
+    observer.observe(node, {
+        childList: true,
+        subtree: true,
+    });
+
+    return {
+        destroy() {
+            observer.disconnect();
+        },
+    };
+};

@@ -12,9 +12,14 @@ export async function defaultExportImageHandler() {
 }
 
 async function exportImage() {
+    let bgColor = window.getComputedStyle(document.body).backgroundColor;
+    // 如果获取到的是透明色 (rgba(0, 0, 0, 0)) 或者 transparent，设置为白色
+    if (bgColor === "rgba(0, 0, 0, 0)" || bgColor === "transparent") {
+        bgColor = "#ffffff";
+    }
     const dataUrl = await domToPng(document.getElementById("wenyan")!, {
         scale: 2, // 高清
-        backgroundColor: "#ffffff", // 强制背景白
+        backgroundColor: bgColor,
         fetch: {
             requestInit: { mode: "cors" },
         },
