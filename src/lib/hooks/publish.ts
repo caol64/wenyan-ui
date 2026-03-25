@@ -1,9 +1,14 @@
 import { setContext, getContext } from "svelte";
 import { globalState } from "../wenyan.svelte";
 import { PUBLISH_ARTICLE_KEY, PUBLISH_ARTICLE_TO_DRAFT_KEY, PUBLISH_HELP_KEY } from "./symbols";
-import type { WechatPublishOptions } from "@wenyan-md/core/wechat";
+import type { WechatPublishOptions, WechatUploadResponse } from "@wenyan-md/core/wechat";
 
-type PublishArticleClickFn = (wenyanElement: HTMLElement) => void;
+type PublishArticleClickFn = (
+    wenyanElement: HTMLElement,
+    handlePublishHelpClick: PublishHelpClickFn,
+    handleUploadImage: (url: string) => Promise<WechatUploadResponse>,
+    handlePublishArticleToDraft: PublishArticleToDraftFn,
+) => void;
 type PublishHelpClickFn = () => void;
 type PublishArticleToDraftFn = (publishOption: WechatPublishOptions) => Promise<string>;
 

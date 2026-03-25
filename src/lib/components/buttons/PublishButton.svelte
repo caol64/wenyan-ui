@@ -1,13 +1,17 @@
 <script lang="ts">
+    import { getUploadImage } from "../../hooks/upload";
     import { getGetWenyanElement } from "../../hooks/operation";
-    import { getPublishArticleClick } from "../../hooks/publish";
+    import { getPublishArticleClick, getPublishArticleToDraft, getPublishHelpClick } from "../../hooks/publish";
     import Upload from "../icons/Upload.svelte";
 
     const onPublish = getPublishArticleClick();
     const getWenyanElement = getGetWenyanElement();
+    const handlePublishHelpClick = getPublishHelpClick();
+    const handleUploadImage = getUploadImage();
+    const handlePublishArticleToDraft = getPublishArticleToDraft();
 
     async function handlePublish() {
-        onPublish(getWenyanElement());
+        onPublish(getWenyanElement(), handlePublishHelpClick, handleUploadImage, handlePublishArticleToDraft);
     }
 </script>
 

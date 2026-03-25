@@ -1,19 +1,19 @@
+import type { WechatUploadResponse, WechatPublishOptions } from "@wenyan-md/core/wechat";
 import { globalState, wenyanCopier, wenyanRenderer } from "../wenyan.svelte";
-import { getPublishArticleToDraft, getPublishHelpClick } from "../hooks/publish";
-import { getUploadImage } from "../hooks/upload";
 
-const handlePublishClick = getPublishHelpClick();
-const handleUploadImage = getUploadImage();
-const handlePublishArticleToDraft = getPublishArticleToDraft();
-
-export async function defaultPublishHandler(wenyanElement: HTMLElement) {
+export async function defaultPublishHandler(
+    wenyanElement: HTMLElement,
+    handlePublishHelpClick: () => void,
+    handleUploadImage: (url: string) => Promise<WechatUploadResponse>,
+    handlePublishArticleToDraft: (publishOption: WechatPublishOptions) => Promise<string>,
+) {
     try {
         globalState.isLoading = true;
         const { title, cover, author, source_url } = wenyanRenderer.frontMatterResult;
         if (!title) throw new Error("未能找到文章标题");
 
         // 处理文档中的图片资源，上传到微信服务器并替换为微信服务器的URL，返回第一张图片的media_id作为封面备用
-        const firstImageId = await uploadImages(wenyanElement);
+        const firstImageId = await uploadImages(wenyanElement, handleUploadImage);
         let coverImageId = "";
         // 处理frontmatter中的cover字段，如果存在，则上传并替换为media_id
         if (cover) {
@@ -50,7 +50,7 @@ export async function defaultPublishHandler(wenyanElement: HTMLElement) {
         globalState.setConfirmMessage({
             message: error instanceof Error ? error.message : String(error),
             action: async () => {
-                handlePublishClick();
+                handlePublishHelpClick();
             },
             actionLabel: "查看教程",
         });
@@ -59,7 +59,10 @@ export async function defaultPublishHandler(wenyanElement: HTMLElement) {
     }
 }
 
-async function uploadImages(wenyanElement: HTMLElement): Promise<string> {
+async function uploadImages(
+    wenyanElement: HTMLElement,
+    handleUploadImage: (url: string) => Promise<WechatUploadResponse>,
+): Promise<string> {
     const images = Array.from(wenyanElement.querySelectorAll("img"));
     const uploadPromises = images.map(async (element) => {
         const dataSrc = element.getAttribute("src");
