@@ -1,10 +1,7 @@
-import { defaultEditorDropHandler, defaultEditorPasteHandler } from "../services/editorHandler";
+import { defaultEditorDropHandler, defaultEditorPasteHandler } from "../services/defaultEditorHandler";
 import type { EditorView } from "@codemirror/view";
 import { setContext, getContext } from "svelte";
-
-const EDITOR_CLICK_KEY = Symbol("EDITOR_CLICK");
-const EDITOR_PASTE_KEY = Symbol("EDITOR_PASTE");
-const EDITOR_DROP_KEY = Symbol("EDITOR_DROP");
+import { EDITOR_CLICK_KEY, EDITOR_DROP_KEY, EDITOR_PASTE_KEY } from "./symbols";
 
 type EditorClickFn = () => void;
 type EditorPasteFn = (event: ClipboardEvent, view: EditorView) => void;

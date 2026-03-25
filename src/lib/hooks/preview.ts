@@ -1,8 +1,8 @@
-import type { ImageProcessorAction } from "../types";
 import { setContext, getContext } from "svelte";
+import type { Action } from "svelte/action";
+import { IMAGE_PROCESSOR_ACTION_KEY, PREVIEW_CLICK_KEY } from "./symbols";
 
-const PREVIEW_CLICK_KEY = Symbol("PREVIEW_CLICK");
-const IMAGE_PROCESSOR_ACTION_KEY = Symbol("IMAGE_PROCESSOR_ACTION");
+export type ImageProcessorAction = Action<HTMLElement>;
 
 type PreviewClickFn = () => void;
 
@@ -22,7 +22,6 @@ export function getImageProcessorAction(): ImageProcessorAction {
     return getContext<ImageProcessorAction>(IMAGE_PROCESSOR_ACTION_KEY) ?? defaultImageProcessorAction;
 }
 
-
 const defaultImageProcessorAction: ImageProcessorAction = (node) => {
     const run = async () => {
         const images = node.querySelectorAll<HTMLImageElement>("img");
@@ -34,7 +33,6 @@ const defaultImageProcessorAction: ImageProcessorAction = (node) => {
             if (dataSrc && dataSrc.startsWith("https://mmbiz.qpic.cn/")) {
                 img.setAttribute("referrerpolicy", "no-referrer");
             }
-
         }
     };
 

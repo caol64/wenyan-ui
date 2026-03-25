@@ -1,8 +1,17 @@
 import { setContext, getContext } from "svelte";
+import { UPLOAD_HELP_KEY, UPLOAD_IMAGE_KEY } from "./symbols";
+import type { WechatUploadResponse } from "@wenyan-md/core/wechat";
 
-const UPLOAD_HELP_KEY = Symbol("UPLOAD_HELP");
-
+type UploadImageFn = (url: string) => Promise<WechatUploadResponse>;
 type UploadHelpClickFn = () => void;
+
+export function setUploadImage(fn: UploadImageFn) {
+    setContext(UPLOAD_IMAGE_KEY, fn);
+}
+
+export function getUploadImage(): UploadImageFn {
+    return getContext<UploadImageFn>(UPLOAD_IMAGE_KEY);
+}
 
 export function setUploadHelpClick(fn: UploadHelpClickFn) {
     setContext(UPLOAD_HELP_KEY, fn);

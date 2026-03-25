@@ -1,7 +1,5 @@
 import { setContext, getContext } from "svelte";
-
-const RESET_TOKEN_KEY = Symbol("RESET_TOKEN");
-const AUTO_CACHE_CHANGE_KEY = Symbol("AUTO_CACHE_CHANGE");
+import { AUTO_CACHE_CHANGE_KEY, RESET_TOKEN_KEY } from "./symbols";
 
 type ResetTokenClickFn = () => void;
 type AutoCacheChangeClickFn = () => void;

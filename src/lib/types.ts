@@ -1,5 +1,3 @@
-import type { Action } from "svelte/action";
-
 export type Platform = "wechat" | "toutiao" | "zhihu" | "juejin" | "medium";
 export type CopyContentType = "html" | "txt";
 
@@ -21,8 +19,6 @@ export interface CurrentTheme {
     name: string;
     css: string;
 }
-
-export type ImageProcessorAction = Action<HTMLElement>;
 
 export interface FrontMatterResult {
     body: string;

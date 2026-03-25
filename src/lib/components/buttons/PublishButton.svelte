@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { getPublishArticleClick } from "../../hooks/operation";
+    import { getGetWenyanElement } from "../../hooks/operation";
+    import { getPublishArticleClick } from "../../hooks/publish";
     import Upload from "../icons/Upload.svelte";
 
     const onPublish = getPublishArticleClick();
+    const getWenyanElement = getGetWenyanElement();
 
     async function handlePublish() {
-        onPublish();
+        onPublish(getWenyanElement());
     }
 </script>
 

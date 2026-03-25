@@ -1,7 +1,7 @@
 <script lang="ts">
     import { credentialStore } from "../../../stores/credentialStore.svelte";
     import { getResetTokenClick } from "../../../hooks/setting";
-    import { getUploadHelpClick } from "../../../hooks/link";
+    import { getUploadHelpClick } from "../../../hooks/upload";
 
     let wechat = credentialStore.wechat;
     let debounceTimer: ReturnType<typeof setTimeout>;
