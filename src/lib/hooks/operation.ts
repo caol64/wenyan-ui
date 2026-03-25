@@ -10,15 +10,19 @@ import {
     FOOTNOTE_CLICK_KEY,
     GET_WENYAN_ELEMENT_KEY,
     HANDLE_FILE_OPEN_KEY,
+    HANDLE_MARKDOWN_CONTENT_KEY,
     IMPORT_CSS_KEY,
+    MARKDOWN_FILE_DROP_KEY,
 } from "./symbols";
 
 type GetWenyanElementFn = () => HTMLElement;
-type CopyClickFn = () => void;
-type FootnoteClickFn = (isEnabled: boolean) => void;
-type ExportImageClickFn = () => void;
-type ImportCssClickFn = (url: string, name: string) => void;
-type HandleFileOpenFn = (path: string) => void;
+type CopyClickFn = () => Promise<void>;
+type FootnoteClickFn = (isEnabled: boolean) => Promise<void>;
+type ExportImageClickFn = () => Promise<void>;
+type ImportCssClickFn = (url: string, name: string) => Promise<void>;
+type HandleFileOpenFn = (path: string) => Promise<void>;
+type MarkdownFileDropFn = () => Promise<void>;
+type HandleMarkdownContentFn = (text: string) => Promise<string>;
 
 export function setGetWenyanElement(fn: GetWenyanElementFn) {
     setContext(GET_WENYAN_ELEMENT_KEY, fn);
@@ -96,6 +100,22 @@ export function getHandleFileOpen(): HandleFileOpenFn {
             });
         })
     );
+}
+
+export function setMarkdownFileDrop(fn: MarkdownFileDropFn) {
+    setContext(MARKDOWN_FILE_DROP_KEY, fn);
+}
+
+export function getMarkdownFileDrop(): MarkdownFileDropFn {
+    return getContext<MarkdownFileDropFn>(MARKDOWN_FILE_DROP_KEY);
+}
+
+export function setHandleMarkdownContent(fn: HandleMarkdownContentFn) {
+    setContext(HANDLE_MARKDOWN_CONTENT_KEY, fn);
+}
+
+export function getHandleMarkdownContent(): HandleMarkdownContentFn {
+    return getContext<HandleMarkdownContentFn>(HANDLE_MARKDOWN_CONTENT_KEY);
 }
 
 async function defaultCopyHandler() {

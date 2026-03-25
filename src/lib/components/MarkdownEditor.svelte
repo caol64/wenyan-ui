@@ -11,12 +11,17 @@
     import { globalState } from "../wenyan.svelte";
     import { getEditorClick, getEditorPaste, getEditorDrop } from "../hooks/editor";
     import { monospace } from "@wenyan-md/core";
+    import { getHandleMarkdownContent, getMarkdownFileDrop } from "../hooks/operation";
+    import { getUploadBlobImage } from "../hooks/upload";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
     const onPaste = getEditorPaste();
     const onDrop = getEditorDrop();
     const onEditorClick = getEditorClick();
+    const onHandleMarkdownContent = getHandleMarkdownContent();
+    const onMarkdownFileDrop = getMarkdownFileDrop();
+    const onUploadBlobImage = getUploadBlobImage();
 
     let editorElement: HTMLDivElement;
     let view: EditorView;
@@ -60,10 +65,10 @@
                 }),
                 EditorView.domEventHandlers({
                     paste: (event, view) => {
-                        onPaste?.(event, view);
+                        onPaste?.(event, view, onHandleMarkdownContent, onUploadBlobImage);
                     },
                     drop: (event, view) => {
-                        onDrop?.(event, view);
+                        onDrop?.(event, view, onHandleMarkdownContent, onUploadBlobImage, onMarkdownFileDrop);
                     },
                 }),
             ],

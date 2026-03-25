@@ -8,6 +8,8 @@ export const FOOTNOTE_CLICK_KEY = Symbol("FOOTNOTE_CLICK");
 export const EXPORT_IMAGE_KEY = Symbol("EXPORT_IMAGE");
 export const IMPORT_CSS_KEY = Symbol("IMPORT_CSS");
 export const HANDLE_FILE_OPEN_KEY = Symbol("HANDLE_FILE_OPEN");
+export const MARKDOWN_FILE_DROP_KEY = Symbol("MARKDOWN_FILE_DROP");
+export const HANDLE_MARKDOWN_CONTENT_KEY = Symbol("HANDLE_MARKDOWN_CONTENT");
 
 export const PREVIEW_CLICK_KEY = Symbol("PREVIEW_CLICK");
 export const IMAGE_PROCESSOR_ACTION_KEY = Symbol("IMAGE_PROCESSOR_ACTION");
@@ -20,4 +22,5 @@ export const RESET_TOKEN_KEY = Symbol("RESET_TOKEN");
 export const AUTO_CACHE_CHANGE_KEY = Symbol("AUTO_CACHE_CHANGE");
 
 export const UPLOAD_IMAGE_KEY = Symbol("UPLOAD_IMAGE");
+export const UPLOAD_BLOB_IMAGE_KEY = Symbol("UPLOAD_BLOB_IMAGE");
 export const UPLOAD_HELP_KEY = Symbol("UPLOAD_HELP");

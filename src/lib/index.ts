@@ -20,4 +20,4 @@ export * from "./hooks/upload";
 
 // services
 export * from "./services/defaultPublishHandler";
-export { canHandleFile } from "./services/defaultEditorHandler";
+export * from "./services/defaultEditorHandler";
