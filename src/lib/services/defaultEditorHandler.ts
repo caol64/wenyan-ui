@@ -26,6 +26,6 @@ export function defaultEditorDropHandler(event: DragEvent, view: EditorView) {
     }
 }
 
-function canHandleFile(file: File) {
+export function canHandleFile(file: File) {
     return file && imgType.includes(file.type);
 }

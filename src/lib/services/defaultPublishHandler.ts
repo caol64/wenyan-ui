@@ -1,14 +1,6 @@
+import { globalState, wenyanCopier, wenyanRenderer } from "../wenyan.svelte";
 import { getPublishArticleToDraft, getPublishHelpClick } from "../hooks/publish";
 import { getUploadImage } from "../hooks/upload";
-import { globalState, wenyanRenderer, wenyanCopier } from "@wenyan-md/ui";
-
-export interface ArticleOptions {
-    title: string;
-    content: string;
-    cover?: string;
-    author?: string;
-    source_url?: string;
-}
 
 const handlePublishClick = getPublishHelpClick();
 const handleUploadImage = getUploadImage();

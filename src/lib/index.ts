@@ -17,3 +17,7 @@ export * from "./hooks/preview";
 export * from "./hooks/publish";
 export * from "./hooks/setting";
 export * from "./hooks/upload";
+
+// services
+export * from "./services/defaultPublishHandler";
+export { canHandleFile } from "./services/defaultEditorHandler";
