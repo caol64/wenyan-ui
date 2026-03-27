@@ -24,6 +24,11 @@ export function comboCodeblockSettings(css: string, codeblockSettings: Codeblock
                 value: settings.fontFamily,
                 append: true,
             },
+            {
+                property: "font-size",
+                value: settings.fontSize,
+                append: true,
+            },
         ],
         "#wenyan pre": [
             {
