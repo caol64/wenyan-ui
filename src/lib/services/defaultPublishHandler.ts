@@ -15,20 +15,26 @@ export async function defaultPublishHandler(
         // 处理文档中的图片资源，上传到微信服务器并替换为微信服务器的URL，返回第一张图片的media_id作为封面备用
         const firstImageId = await uploadImages(wenyanElement, handleUploadImage);
         let coverImageId = "";
-        // 处理frontmatter中的cover字段，如果存在，则上传并替换为media_id
-        if (cover) {
-            const uploadResult = await handleUploadImage(cover);
-            coverImageId = uploadResult.media_id;
-        } else {
-            // 如果frontmatter中没有cover字段但文章内容中有图片，则使用第一张图片作为封面
-            if (firstImageId.startsWith("https://mmbiz.qpic.cn")) {
-                // 如果是url，需要将其转换为media_id
-                const uploadResult = await handleUploadImage(firstImageId);
+        try {
+            // 处理frontmatter中的cover字段，如果存在，则上传并替换为media_id
+            if (cover) {
+                const uploadResult = await handleUploadImage(cover);
                 coverImageId = uploadResult.media_id;
             } else {
-                // 如果已经是media_id了，直接使用
-                coverImageId = firstImageId;
+                // 如果frontmatter中没有cover字段但文章内容中有图片，则使用第一张图片作为封面
+                if (firstImageId.startsWith("https://mmbiz.qpic.cn")) {
+                    // 如果是url，需要将其转换为media_id
+                    const uploadResult = await handleUploadImage(firstImageId);
+                    coverImageId = uploadResult.media_id;
+                } else {
+                    // 如果已经是media_id了，直接使用
+                    coverImageId = firstImageId;
+                }
             }
+        } catch (error) {
+            // 不要抛出异常
+            console.warn("封面图片上传失败", error);
+            return;
         }
         if (!coverImageId) {
             throw new Error("未能找到文章封面");
