@@ -4,15 +4,57 @@
     import { wenyanRenderer, globalState } from "../wenyan.svelte";
     import { getMacStyleCss } from "@wenyan-md/core";
     import { getImageProcessorAction, getPreviewClick } from "../hooks/preview";
+    import mermaid from "mermaid";
 
     let { scrollRef = $bindable() }: { scrollRef?: HTMLElement | null } = $props();
 
     const onPreviewClick = getPreviewClick();
     const imageProcessorAction = getImageProcessorAction();
 
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: "default",
+        securityLevel: "loose",
+    });
+
     $effect(() => {
         wenyanRenderer.render(globalState.getMarkdownText());
+        setTimeout(renderMermaid, 100);
     });
+
+    async function renderMermaid() {
+        const section = document.getElementById("wenyan");
+        if (!section) return;
+
+        const preElements = section.querySelectorAll<HTMLPreElement>("pre");
+        for (const preElement of preElements) {
+            if (preElement.getAttribute("data-mermaid-processed")) {
+                continue;
+            }
+            
+            const codeElement = preElement.querySelector<HTMLElement>("code");
+            if (!codeElement) continue;
+            
+            const className = codeElement.className || '';
+            const isMermaid = className.includes('language-mermaid') || 
+                             className.includes('lang-mermaid');
+            
+            if (!isMermaid) continue;
+            
+            preElement.setAttribute("data-mermaid-processed", "true");
+
+            try {
+                const graphDefinition = codeElement.innerText?.trim() || "";
+                if (!graphDefinition) continue;
+
+                const { svg } = await mermaid.render("mermaid-" + Math.random().toString(36).substring(2), graphDefinition);
+                preElement.innerHTML = svg;
+            } catch (error) {
+                console.error("Mermaid render error:", error);
+                preElement.innerHTML = `<p style="color: red;">Mermaid 语法错误</p>`;
+            }
+        }
+    }
 
     $effect(() => {
         updateTheme(globalState.getCurrentThemeCss());
