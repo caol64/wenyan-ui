@@ -1,19 +1,20 @@
 import DOMPurify from "dompurify";
 import {
+    createBrowserMermaidRenderer,
     createWenyanCore,
     getContentForMedium,
     getContentForToutiao,
     getContentForZhihu,
     getHlTheme,
     getTheme,
+    type FrontMatterResult,
+    type WenyanCoreInstance,
 } from "@wenyan-md/core";
-import type { AlertMessage, ConfirmMessage, CurrentTheme, FrontMatterResult, Platform } from "./types";
+import type { AlertMessage, ConfirmMessage, CurrentTheme, Platform } from "./types";
 import { themeStore } from "./stores/themeStore.svelte";
 import { settingsStore } from "./stores/settingsStore.svelte";
 import { articleStore } from "./stores/articleStore.svelte";
 import { comboCodeblockSettings, comboParagraphSettings } from "./services/stylesCombo";
-
-type WenyanCoreInstance = Awaited<ReturnType<typeof createWenyanCore>>;
 
 class WenyanCoreManager {
     // 核心实例
@@ -26,7 +27,9 @@ class WenyanCoreManager {
         if (this.instance) return this.instance;
 
         if (!this.initPromise) {
-            this.initPromise = createWenyanCore().then((core) => {
+            this.initPromise = createWenyanCore({
+                mermaid: { enabled: true, renderer: createBrowserMermaidRenderer() },
+            }).then((core) => {
                 this.instance = core; // 更新状态，触发依赖更新
                 return core;
             });
@@ -42,7 +45,7 @@ const coreManager = new WenyanCoreManager();
 class WenyanRenderer {
     html = $state("");
     postHandlerContent = "";
-    frontMatterResult: FrontMatterResult = { body: "" };
+    frontMatterResult: FrontMatterResult = { content: "" };
 
     constructor() {
         // 初始化时自动预加载核心库
@@ -60,7 +63,7 @@ class WenyanRenderer {
 
             // 处理 FrontMatter
             this.frontMatterResult = await core.handleFrontMatter(markdownText);
-            let body = this.frontMatterResult.body;
+            let body = this.frontMatterResult.content;
 
             this.postHandlerContent = body;
             // 渲染
