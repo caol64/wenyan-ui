@@ -67,5 +67,16 @@
             <span class="h-4"></span> 图床设置
         </button>
 
+        <!-- 独立项：其它设置 -->
+        <button
+            class="w-full text-left px-3 py-2 text-sm rounded-md transition-colors cursor-pointer flex items-center gap-2 text-gray-700 dark:text-gray-300 {activeId ===
+            'other'
+                ? 'bg-gray-100 dark:bg-zinc-800 font-medium'
+                : 'hover:bg-gray-100 dark:hover:bg-zinc-800'}"
+            onclick={() => selectItem("other")}
+        >
+            <span class="h-4"></span> 其它设置
+        </button>
+
     </nav>
 </div>

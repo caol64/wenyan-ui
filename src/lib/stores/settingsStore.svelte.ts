@@ -22,12 +22,17 @@ export interface UploadSettings {
     autoCache: boolean;
 }
 
+export interface OtherSettings {
+    autoSave: boolean;
+}
+
 export interface Settings {
     wechatTheme: string;
     enabledImageHost?: string;
     paragraphSettings: ParagraphSettings;
     codeblockSettings: CodeblockSettings;
     uploadSettings: UploadSettings;
+    otherSettings: OtherSettings;
 }
 
 export interface SettingsStorageAdapter {
@@ -62,6 +67,9 @@ export const DEFAULT_SETTINGS: Settings = {
         autoUploadNetwork: false,
         autoCache: false,
     },
+    otherSettings: {
+        autoSave: false,
+    },
 };
 
 class SettingsStore {
@@ -86,6 +94,10 @@ class SettingsStore {
                 uploadSettings: {
                     ...DEFAULT_SETTINGS.uploadSettings,
                     ...(loadedSettings?.uploadSettings || {}),
+                },
+                otherSettings: {
+                    ...DEFAULT_SETTINGS.otherSettings,
+                    ...(loadedSettings?.otherSettings || {}),
                 },
             };
         } catch (error) {
@@ -131,6 +143,14 @@ class SettingsStore {
 
     set uploadSettings(value: UploadSettings) {
         this._settings.uploadSettings = value;
+    }
+
+    get otherSettings(): OtherSettings {
+        return this._settings.otherSettings;
+    }
+
+    set otherSettings(value: OtherSettings) {
+        this._settings.otherSettings = value;
     }
 
     async saveSettings() {

@@ -11,7 +11,7 @@
     const imageProcessorAction = getImageProcessorAction();
 
     $effect(() => {
-        wenyanRenderer.render(globalState.getMarkdownText());
+        wenyanRenderer.render(globalState.getMarkdownText(), globalState.getPlatform());
     });
 
     $effect(() => {

@@ -134,6 +134,6 @@ function defaultFootnoteHandler(isEnabled: boolean) {
         addFootnotes(wenyanElement);
         wenyanRenderer.html = wenyanElement.innerHTML;
     } else {
-        wenyanRenderer.render(globalState.getMarkdownText());
+        wenyanRenderer.render(globalState.getMarkdownText(), globalState.getPlatform());
     }
 }

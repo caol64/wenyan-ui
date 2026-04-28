@@ -52,7 +52,7 @@ class WenyanRenderer {
         coreManager.get();
     }
 
-    async render(markdownText: string) {
+    async render(markdownText: string, platform: Platform) {
         if (!markdownText) {
             this.html = "";
             return;
@@ -67,7 +67,8 @@ class WenyanRenderer {
 
             this.postHandlerContent = body;
             // 渲染
-            this.html = await core.renderMarkdown(body);
+            const disableMermaid = platform === "zhihu" || platform === "medium";
+            this.html = await core.renderMarkdown(body, disableMermaid);
         } catch (error) {
             console.error("Wenyan render error:", error);
             this.html = `<p style="color:red">Render Error</p>`;
